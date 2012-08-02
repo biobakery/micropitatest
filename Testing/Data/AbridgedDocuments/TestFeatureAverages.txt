@@ -1,0 +1,7 @@
+TID	700098986	700037470	700098982	700098980	700098988
+STSite	L_Antecubital_fossa	L_Retroauricular_crease	L_Retroauricular_crease	Subgingival_plaque	R_Antecubital_fossa
+Bacteria|Firmicutes|Clostridia|Clostridiales|Clostridiaceae|Clostridium|72	1	6	0	12	1
+Bacteria|unclassified|4904	0	0	0	43	2
+Bacteria|Firmicutes|Bacilli|Lactobacillales|Lactobacillaceae|Lactobacillus|1361	3	45	0	29	3
+Bacteria|3417	0	0	0	34	4
+Bacteria|Firmicutes|Bacilli|Bacillales|Bacillaceae|unclassified|1368	5	6	0	2	5
