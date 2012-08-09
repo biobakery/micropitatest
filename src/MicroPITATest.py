@@ -29,6 +29,13 @@ import re
 import unittest
 
 class MicroPITATest(unittest.TestCase):
+
+#Classes of samples (needed for evaluation)
+lsComplexity = []
+lsTaxa = []
+lsMaxVariance = []
+lsMinVariance = []
+
 #####Test funcGetTopRankedSamples
     def testfuncGetTopRankedSamplesForGoodCase1(self):
         
@@ -4614,7 +4621,6 @@ class MicroPITATest(unittest.TestCase):
             os.remove(sFile)
 
         #Generate output file
-        
         errors = not (commandLine.runCommandLine(lsCommandline) and os.path.exists(strOutputFile))
 
         #Check for correct output files
