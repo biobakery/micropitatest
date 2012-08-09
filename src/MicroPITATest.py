@@ -30,11 +30,17 @@ import unittest
 
 class MicroPITATest(unittest.TestCase):
 
-#Classes of samples (needed for evaluation)
-lsComplexity = []
-lsTaxa = []
-lsMaxVariance = []
-lsMinVariance = []
+##### Used to help classify accuracy of selection in methods which have stochasticity
+    setComplex = (["Sample_0_D","Sample_1_D","Sample_2_D","Sample_3_D","Sample_4_D","Sample_5_D","Sample_6_D","Sample_7_D","Sample_8_D","Sample_9_D","Sample_10_D","Sample_11_D","Sample_12_D","Sample_13_D","Sample_14_D","Sample_15_D"])
+    setMaxVariable = (["Sample_30_E","Sample_31_E","Sample_32_E","Sample_33_E","Sample_34_E","Sample_35_E","Sample_36_E","Sample_37_E","Sample_38_E","Sample_39_E","Sample_40_E	Sample_41_E","Sample_42_E","Sample_43_E"])
+    setMinimalVariance = (["Sample_16_R","Sample_17_R","Sample_18_R","Sample_19_R","Sample_20_R","Sample_21_R","Sample_22_R","Sample_23_R","Sample_24_R","Sample_25_R","Sample_26_R","Sample_27_R","Sample_28_R","Sample_29_R"])
+    setTargetedTaxa = (["Sample_44_T","Sample_45_T","Sample_46_T","Sample_47_T","Sample_16_R","Sample_17_R","Sample_32_E"])
+
+    dictAnswerClasses = {MicroPITA.c_strDiversity1:setComplex,
+                         MicroPITA.c_strExtremeDissimiarity1:setMaxVariable+setMinimalVariance+setTargetedTaxa,
+                         MicroPITA.c_strUserRanked:setTargetedTaxa,
+                         MicroPITA.c_strSVMClose:setComplex,
+                         MicroPITA.c_strSVMFar:setMaxVariable+setMinimalVariance+setTargetedTaxa}
 
 #####Test funcGetTopRankedSamples
     def testfuncGetTopRankedSamplesForGoodCase1(self):
@@ -1024,7 +1030,7 @@ lsMinVariance = []
         #Check result against answer
         self.assertEqual(str(result),str(answer),"".join([str(self),"::\nExpected=\n",str(answer),". \nReceived=\n",str(result),"."]))
 
-    def testfuncGetAverageAbundanceSamplesForGoodCase1FeatureRanked(self):
+    def nntestfuncGetAverageAbundanceSamplesForGoodCase1FeatureRanked(self):
 
         #Micropita object
         microPITA = MicroPITA()
@@ -1081,7 +1087,7 @@ lsMinVariance = []
         #Check result against answer
         self.assertEqual(str(result),str(answer),"".join([str(self),"::\nExpected=\n",str(answer),". \nReceived=\n",str(result),"."]))
 
-    def testfuncGetAverageAbundanceSamplesForGoodCase2FeatureRanked(self):
+    def nntestfuncGetAverageAbundanceSamplesForGoodCase2FeatureRanked(self):
 
         #Micropita object
         microPITA = MicroPITA()
@@ -1140,7 +1146,7 @@ lsMinVariance = []
         #Check result against answer
         self.assertEqual(str(result),str(answer),"".join([str(self),"::\nExpected=\n",str(answer),". \nReceived=\n",str(result),"."]))
 
-    def testfuncGetAverageAbundanceSamplesForGoodCaseAllFeatureRankedWithTie(self):
+    def nntestfuncGetAverageAbundanceSamplesForGoodCaseAllFeatureRankedWithTie(self):
 
         #Micropita object
         microPITA = MicroPITA()
@@ -1170,7 +1176,7 @@ lsMinVariance = []
         #Check result against answer
         self.assertEqual(str(result),str(answer),"".join([str(self),"::\nExpected=\n",str(answer),". \nReceived=\n",str(result),"."]))
 
-    def testfuncGetAverageAbundanceSamplesForGoodCaseAllFeatureRankedWithTies2(self):
+    def nntestfuncGetAverageAbundanceSamplesForGoodCaseAllFeatureRankedWithTies2(self):
 
         #Micropita object
         microPITA = MicroPITA()
@@ -2483,8 +2489,8 @@ lsMinVariance = []
             os.remove(sTestFile)
 
         #Put answer in correct order
-        dictresult = dict([(sLine.split(ConstantsMicropita.COLON)[0],sLine.split(ConstantsMicropita.COLON)[1]) for sLine in filter(None,result.split(ConstantsMicropita.ENDLINE))])
-        result = ConstantsMicropita.ENDLINE.join([ConstantsMicropita.COLON.join([sKey,dictresult[sKey]]) for sKey in lsKeys])+ConstantsMicropita.ENDLINE
+        dictresult = dict([(sLine.split(ConstantsMicropita.TAB)[0],sLine.split(ConstantsMicropita.TAB)[1:]) for sLine in filter(None,result.split(ConstantsMicropita.ENDLINE))])
+        result = ConstantsMicropita.ENDLINE.join([ConstantsMicropita.TAB.join([sKey]+dictresult[sKey]) for sKey in lsKeys])+ConstantsMicropita.ENDLINE
 
         #Check result against answer
         self.assertEqual(str(result),str(answer),"".join([str(self),"::Expected=",str(answer),". Received=",str(result),"."]))
@@ -2495,14 +2501,13 @@ lsMinVariance = []
         #Micropita object
         microPITA = MicroPITA()
 
-        dictTest = {"Diversity_C":["Sample_0_D","Sample_1_D","Sample_2_D","Sample_3_D","Sample_4_D","Sample_5_D"],
-		"Distinct":["Sample_41_E","Sample_42_E","Sample_43_E","Sample_45_T","Sample_46_T","Sample_47_T"],
+        dictTest = {"Distinct":["Sample_41_E","Sample_42_E","Sample_43_E","Sample_45_T","Sample_46_T","Sample_47_T"],
 		"Extreme_B":["Sample_7_D","Sample_38_E","Sample_8_D","Sample_43_E","Sample_6_D","Sample_39_E"],
 		"Discriminant":["Sample_3_D","Sample_5_D","Sample_6_D","Sample_0_D","Sample_1_D","Sample_2_D"],
 		"Representative_B":["Sample_38_E","Sample_39_E","Sample_40_E","Sample_43_E","Sample_44_T","Sample_47_T"],
 		"Diversity_I":["Sample_45_T","Sample_44_T","Sample_46_T","Sample_13_D","Sample_9_D","Sample_2_D"],
 		"Taxa_Defined":["Sample_47_T","Sample_46_T","Sample_44_T","Sample_45_T","Sample_24_R","Sample_19_R"]}
-        lsKeys = ["Diversity_C","Distinct","Extreme_B","Discriminant","Representative_B","Diversity_I","Taxa_Defined"]
+        lsKeys = ["Distinct","Extreme_B","Discriminant","Representative_B","Diversity_I","Taxa_Defined"]
         sTestFile = "".join([ConstantsMicropitaTest.c_strTestingTruth,"TestSelectFile.txt"])
         answer = "".join(["".join([sKey,str(dictTest[sKey])]) for sKey in lsKeys])
 
@@ -2544,7 +2549,7 @@ lsMinVariance = []
 
 ### Test run
     ### Run all Methods
-    def testFuncRunForGoodCase(self):
+    def nntestFuncRunForGoodCase(self):
         sMethodName = "testFuncRunForGoodCase"
 
         microPITA = MicroPITA()
@@ -2607,7 +2612,7 @@ lsMinVariance = []
         #Check result against answer
         self.assertEqual(str(result),str(answer),"".join([str(self),"::Expected=",str(answer),". Received=",str(result),"."]))
 
-    def testCallFromCommandlineForGoodCase(self):
+    def nntestCallFromCommandlineForGoodCase(self):
         """
         Test commandline call for good case.
         """
@@ -2635,9 +2640,10 @@ lsMinVariance = []
         strSelection = [MicroPITA.c_strDiversity,MicroPITA.c_strExtremeDissimilarity,
                         MicroPITA.c_strRepresentativeDissimilarity,MicroPITA.c_strTaxa,
                         MicroPITA.c_strDiscriminant,MicroPITA.c_strDistinct]
+        sSupervisedLabel = [ConstantsMicropita.c_strSupervisedLabelArgument,"Label"]
 
         #Optional test
-        lsOptionalArguments = []+sLastMetadata+sUnSelectionCount+sSelectionCount+sTaxaFile+sSumData
+        lsOptionalArguments = []+sLastMetadata+sUnSelectionCount+sSelectionCount+sTaxaFile+sSumData+sSupervisedLabel
 
         #Build commandline list
         lsCommandline = [strMicropitaScript]+lsOptionalArguments+[strFileAbund,strOutputFile]+strSelection
@@ -2922,7 +2928,7 @@ lsMinVariance = []
         """
         Test handling a scenario where the given lastMetadataId is incorrect.
         """
-        
+
         sMethodName = "testFuncRunForErrorIncorrectLastMetadataName"
 
         microPITA = MicroPITA()
@@ -2933,7 +2939,7 @@ lsMinVariance = []
         fIsSummed = False
         sIDName = "ID"
         sLastMetadataName = "BADLabel"
-        strSelection = [MicroPITA.c_strDiversity,MicroPITA.c_strExtremeDissimilarity,MicroPITA.c_strRepresentativeDissimilarity,
+        lsSelection = [MicroPITA.c_strDiversity,MicroPITA.c_strExtremeDissimilarity,MicroPITA.c_strRepresentativeDissimilarity,
                         MicroPITA.c_strTaxa,MicroPITA.c_strDiscriminant,MicroPITA.c_strDistinct]
 
         #Other inputs
@@ -2957,7 +2963,7 @@ lsMinVariance = []
                           microPITA.funcRun,fIsNormalized,fIsSummed,sIDName,sLastMetadataName,strFileAbund,
                           strInputPredictFile,strPredictPredictFile,strCheckedAbndFile,strOutFile,
                           cFileDelimiter,cFeatureNameDelimiter,strFileTaxa,iUnsupervisedSelectionCount,
-                          iSupervisedCount,sLabel,sUnsupervisedStratify,strSelection,fSumData,sFeatureSelection)
+                          iSupervisedCount,lsSelection,sLabel,sUnsupervisedStratify,fSumData,sFeatureSelection)
 
     def testFuncRunForErrorNoSelection(self):
         """
@@ -2980,6 +2986,7 @@ lsMinVariance = []
         strOutFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,sMethodName,".txt"])
         cFileDelimiter = ConstantsMicropita.TAB
         cFeatureNameDelimiter = "|"
+        strFileTaxa = "".join([ConstantsMicropitaTest.c_strTestingInput+sMethodName+".txt"])
         strInputPredictFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,sMethodName,"-predictInput.txt"])
         strPredictPredictFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,sMethodName,"-predictPredict.txt"])
         strCheckedAbndFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,sMethodName,"-predictChecked.txt"])
@@ -3003,7 +3010,7 @@ lsMinVariance = []
                                         strOutputFile=strOutFile,
                                         cDelimiter=cFileDelimiter,
                                         cFeatureNameDelimiter = cFeatureNameDelimiter,
-#                                        strUserDefinedTaxaFile=strFileTaxa,
+                                        strUserDefinedTaxaFile=strFileTaxa,
                                         iSampleSelectionCount=iUnsupervisedSelectionCount,
                                         iSupervisedSampleCount=iSupervisedCount,
                                         strLabel=sLabel,
@@ -3134,7 +3141,7 @@ lsMinVariance = []
         #Check result against answer
         self.assertEqual(str(result),str(answer),"".join([str(self),"::Expected=",str(answer),". Received=",str(result),"."]))
 
-    def testFuncRunForBadLabelName(self):
+    def ntestFuncRunForBadLabelName(self):
         """
         Handling the scenario where the label is incorrect.
         """
@@ -3183,7 +3190,7 @@ lsMinVariance = []
                                         strOutputFile=strOutFile,
                                         cDelimiter=cFileDelimiter,
                                         cFeatureNameDelimiter = cFeatureNameDelimiter,
-#                                        strUserDefinedTaxaFile=strFileTaxa,
+                                        strUserDefinedTaxaFile=strFileTaxa,
                                         iSampleSelectionCount=iUnsupervisedSelectionCount,
                                         iSupervisedSampleCount=iSupervisedCount,
                                         strLabel=sLabel,
@@ -3241,7 +3248,7 @@ lsMinVariance = []
                                         strOutputFile=strOutFile,
                                         cDelimiter=cFileDelimiter,
                                         cFeatureNameDelimiter = cFeatureNameDelimiter,
-#                                        strUserDefinedTaxaFile=strFileTaxa,
+                                        strUserDefinedTaxaFile=strFileTaxa,
                                         iSampleSelectionCount=iUnsupervisedSelectionCount,
                                         iSupervisedSampleCount=iSupervisedCount,
                                         strLabel=sLabel,
@@ -3474,10 +3481,7 @@ lsMinVariance = []
                                         strOutputFile=strOutFile,
                                         cDelimiter=cFileDelimiter,
                                         cFeatureNameDelimiter = cFeatureNameDelimiter,
-#                                        strUserDefinedTaxaFile=strFileTaxa,
                                         iSampleSelectionCount=iUnsupervisedSelectionCount,
-                                        iSupervisedSampleCount=iSupervisedCount,
-                                        strLabel=sLabel,
                                         strStratify=sUnsupervisedStratify,
                                         strSelectionTechnique=strSelection,
                                         fSumData=fSumData,
@@ -3651,10 +3655,7 @@ lsMinVariance = []
                                         strOutputFile=strOutFile,
                                         cDelimiter=cFileDelimiter,
                                         cFeatureNameDelimiter = cFeatureNameDelimiter,
-#                                        strUserDefinedTaxaFile=strFileTaxa,
                                         iSampleSelectionCount=iUnsupervisedSelectionCount,
-                                        iSupervisedSampleCount=iSupervisedCount,
-                                        strLabel=sLabel,
                                         strStratify=sUnsupervisedStratify,
                                         strSelectionTechnique=strSelection,
                                         fSumData=fSumData,
@@ -3828,10 +3829,7 @@ lsMinVariance = []
                                         strOutputFile=strOutFile,
                                         cDelimiter=cFileDelimiter,
                                         cFeatureNameDelimiter = cFeatureNameDelimiter,
-#                                        strUserDefinedTaxaFile=strFileTaxa,
                                         iSampleSelectionCount=iUnsupervisedSelectionCount,
-                                        iSupervisedSampleCount=iSupervisedCount,
-                                        strLabel=sLabel,
                                         strStratify=sUnsupervisedStratify,
                                         strSelectionTechnique=strSelection,
                                         fSumData=fSumData,
@@ -3846,11 +3844,10 @@ lsMinVariance = []
         #Check result against answer
         self.assertEqual(str(result),str(answer),"".join([str(self),"::Expected=",str(answer),". Received=",str(result),"."]))
 
-    def ntestFuncRunForGoodCaseTargetedWithSelectionMethod(self):
+    def testFuncRunForGoodCaseTargetedWithSelectionMethod(self):
         """
         Test running just targeted
         """
-        
         sMethodName = "testFuncRunForGoodCaseTargetedWithSelectionMethod"
 
         microPITA = MicroPITA()
@@ -3893,15 +3890,11 @@ lsMinVariance = []
                                         cFeatureNameDelimiter = cFeatureNameDelimiter,
                                         strUserDefinedTaxaFile=strFileTaxa,
                                         iSampleSelectionCount=iUnsupervisedSelectionCount,
-                                        iSupervisedSampleCount=iSupervisedCount,
-                                        strLabel=sLabel,
-                                        strStratify=sUnsupervisedStratify,
                                         strSelectionTechnique=strSelection,
                                         fSumData=fSumData,
                                         sFeatureSelectionMethod=sFeatureSelection)
-
         answer = microPITA.funcReadSelectionFileToDictionary(strAnswerFile)
-       
+
         #Sort answers
         answer = str(["".join([str(key),":",str(sorted(answer[key]))]) for key in sorted(answer.keys())])
         result = str(["".join([str(key),":",str(sorted(result[key]))]) for key in sorted(result.keys())])
@@ -4019,8 +4012,6 @@ lsMinVariance = []
                                         cFeatureNameDelimiter = cFeatureNameDelimiter,
                                         strUserDefinedTaxaFile=strFileTaxa,
                                         iSampleSelectionCount=iUnsupervisedSelectionCount,
-                                        iSupervisedSampleCount=iSupervisedCount,
-                                        strLabel=sLabel,
                                         strStratify=sUnsupervisedStratify,
                                         strSelectionTechnique=strSelection,
                                         fSumData=fSumData,
@@ -4035,11 +4026,11 @@ lsMinVariance = []
         #Check result against answer
         self.assertEqual(str(result),str(answer),"".join([str(self),"::Expected=",str(answer),". Received=",str(result),"."]))
 
-    def ntestFuncRunForGoodCaseTargetedWithoutSelectionMethod(self):
+    def testFuncRunForGoodCaseTargetedWithoutSelectionMethod(self):
         """
         Test running just targeted
         """
-        
+
         sMethodName = "testFuncRunForGoodCaseTargetedWithoutSelectionMethod"
 
         microPITA = MicroPITA()
@@ -4082,15 +4073,12 @@ lsMinVariance = []
                                         cFeatureNameDelimiter = cFeatureNameDelimiter,
                                         strUserDefinedTaxaFile=strFileTaxa,
                                         iSampleSelectionCount=iUnsupervisedSelectionCount,
-                                        iSupervisedSampleCount=iSupervisedCount,
-                                        strLabel=sLabel,
-                                        strStratify=sUnsupervisedStratify,
                                         strSelectionTechnique=strSelection,
                                         fSumData=fSumData,
                                         sFeatureSelectionMethod=sFeatureSelection)
 
         answer = microPITA.funcReadSelectionFileToDictionary(strAnswerFile)
-       
+
         #Sort answers
         answer = str(["".join([str(key),":",str(sorted(answer[key]))]) for key in sorted(answer.keys())])
         result = str(["".join([str(key),":",str(sorted(result[key]))]) for key in sorted(result.keys())])
@@ -4262,8 +4250,6 @@ lsMinVariance = []
                                         cFeatureNameDelimiter = cFeatureNameDelimiter,
                                         strUserDefinedTaxaFile=strFileTaxa,
                                         iSampleSelectionCount=iUnsupervisedSelectionCount,
-                                        iSupervisedSampleCount=iSupervisedCount,
-                                        strLabel=sLabel,
                                         strStratify=sUnsupervisedStratify,
                                         strSelectionTechnique=strSelection,
                                         fSumData=fSumData,
@@ -4278,7 +4264,7 @@ lsMinVariance = []
         #Check result against answer
         self.assertEqual(str(result),str(answer),"".join([str(self),"::Expected=",str(answer),". Received=",str(result),"."]))
 
-    def testFuncRunForSupervisedMethod(self):
+    def ntestFuncRunForSupervisedMethod(self):
         sMethodName = "testFuncRunForSupervisedMethod"
 
         microPITA = MicroPITA()
@@ -4331,14 +4317,16 @@ lsMinVariance = []
                                         fSumData=fSumData,
                                         sFeatureSelectionMethod=sFeatureSelection)
 
-        answer = microPITA.funcReadSelectionFileToDictionary(strAnswerFile)
-       
-        #Sort answers
-        answer = str(["".join([str(key),":",str(sorted(answer[key]))]) for key in sorted(answer.keys())])
-        result = str(["".join([str(key),":",str(sorted(result[key]))]) for key in sorted(result.keys())])
+        answer = False
+        error = False
+        for sKey in result:
+          if len(set(result[sKey])&set(self.dictAnswerClasses[sKey])) == len(result[sKey]):
+            error = error and True
+          else:
+            error = True
 
         #Check result against answer
-        self.assertEqual(str(result),str(answer),"".join([str(self),"::Expected=",str(answer),". Received=",str(result),"."]))
+        self.assertEqual(str(error),str(answer),"".join([str(self),"::Expected=",str(answer),". Received=",str(error),"."]))
 
     def testCallFromCommandlineForGoodCaseSupervised(self):
         """
@@ -4363,9 +4351,10 @@ lsMinVariance = []
         sLastMetadata = [ConstantsMicropita.c_strLastMetadataNameArgument,"Label"]
         sSelectionCount = [ConstantsMicropita.c_strSupervisedLabelCountArgument,"3"]
         strSelection = [MicroPITA.c_strDiscriminant,MicroPITA.c_strDistinct]
+        sSupervisedLabel = [ConstantsMicropita.c_strSupervisedLabelArgument,"Label"]
 
         #Optional test
-        lsOptionalArguments = []+sLastMetadata+sSelectionCount+sSumData
+        lsOptionalArguments = []+sLastMetadata+sSelectionCount+sSumData+sSupervisedLabel
 
         #Build commandline list
         lsCommandline = [strMicropitaScript]+lsOptionalArguments+[strFileAbund,strOutputFile]+strSelection
@@ -4385,12 +4374,13 @@ lsMinVariance = []
 
         #Read in results and the answer file
         if not errors:
-          answer = MicroPITA.funcReadSelectionFileToDictionary(strAnswerFile)
           result = MicroPITA.funcReadSelectionFileToDictionary(strOutputFile)
 
-          #Sort answers
-          answer = str(["".join([str(key),":",str(sorted(answer[key]))]) for key in sorted(answer.keys())])
-          result = str(["".join([str(key),":",str(sorted(result[key]))]) for key in sorted(result.keys())])
+          for sKey in result:
+            if len(set(result[sKey])&set(self.dictAnswerClasses[sKey])) == len(result[sKey]):
+                errors = errors and True
+            else:
+                errors = True
 
         #Delete generated files from test
         for sFile in [strOutputFile]:
@@ -4398,7 +4388,7 @@ lsMinVariance = []
             os.remove(sFile)
 
         #Check result against answer
-        self.assertEqual(str(result),str(answer),"".join([str(self),"::Expected=",str(answer),". Received=",str(result),"."]))
+        self.assertEqual(str(errors),str(answer),"".join([str(self),"::Expected=",str(answer),". Received=",str(errors),"."]))
 
 
     def testFuncRunForGoodCaseDiscriminantMethod(self):
@@ -4454,14 +4444,16 @@ lsMinVariance = []
                                         fSumData=fSumData,
                                         sFeatureSelectionMethod=sFeatureSelection)
 
-        answer = microPITA.funcReadSelectionFileToDictionary(strAnswerFile)
-       
-        #Sort answers
-        answer = str(["".join([str(key),":",str(sorted(answer[key]))]) for key in sorted(answer.keys())])
-        result = str(["".join([str(key),":",str(sorted(result[key]))]) for key in sorted(result.keys())])
+        answer = False
+        error = False
+        for sKey in result:
+          if len(set(result[sKey])&set(self.dictAnswerClasses[sKey])) == len(result[sKey]):
+            error = error and True
+          else:
+            error = True
 
         #Check result against answer
-        self.assertEqual(str(result),str(answer),"".join([str(self),"::Expected=",str(answer),". Received=",str(result),"."]))
+        self.assertEqual(str(error),str(answer),"".join([str(self),"::Expected=",str(answer),". Received=",str(error),"."]))
 
     def testCallFromCommandlineForGoodCaseDiscriminant(self):
         """
@@ -4486,9 +4478,10 @@ lsMinVariance = []
         sLastMetadata = [ConstantsMicropita.c_strLastMetadataNameArgument,"Label"]
         sSelectionCount = [ConstantsMicropita.c_strSupervisedLabelCountArgument,"3"]
         strSelection = [MicroPITA.c_strDiscriminant]
+        sSupervisedLabel = [ConstantsMicropita.c_strSupervisedLabelArgument,"Label"]
 
         #Optional test
-        lsOptionalArguments = []+sLastMetadata+sSelectionCount+sSumData
+        lsOptionalArguments = []+sLastMetadata+sSelectionCount+sSumData+sSupervisedLabel
 
         #Build commandline list
         lsCommandline = [strMicropitaScript]+lsOptionalArguments+[strFileAbund,strOutputFile]+strSelection
@@ -4508,12 +4501,13 @@ lsMinVariance = []
 
         #Read in results and the answer file
         if not errors:
-          answer = MicroPITA.funcReadSelectionFileToDictionary(strAnswerFile)
           result = MicroPITA.funcReadSelectionFileToDictionary(strOutputFile)
 
-          #Sort answers
-          answer = str(["".join([str(key),":",str(sorted(answer[key]))]) for key in sorted(answer.keys())])
-          result = str(["".join([str(key),":",str(sorted(result[key]))]) for key in sorted(result.keys())])
+          for sKey in result:
+            if len(set(result[sKey])&set(self.dictAnswerClasses[sKey])) == len(result[sKey]):
+                errors = errors and True
+            else:
+                errors = True
 
         #Delete generated files from test
         for sFile in [strOutputFile]:
@@ -4521,7 +4515,7 @@ lsMinVariance = []
             os.remove(sFile)
 
         #Check result against answer
-        self.assertEqual(str(result),str(answer),"".join([str(self),"::Expected=",str(answer),". Received=",str(result),"."]))
+        self.assertEqual(str(errors),str(answer),"".join([str(self),"::Expected=",str(answer),". Received=",str(errors),"."]))
 
     def testFuncRunForGoodCaseDistinctMethod(self):
         sMethodName = "testFuncRunForGoodCaseDistinctMethod"
@@ -4553,9 +4547,6 @@ lsMinVariance = []
         fSumData = False
         sFeatureSelection = microPITA.c_strTargetedRanked
 
-        #Answer file
-        strAnswerFile = "".join([ConstantsMicropitaTest.c_strTestingTruth,sMethodName,"-Correct.txt"])
-
         #Get result
         result = microPITA.funcRun(fIsAlreadyNormalized=fIsNormalized,
                                         fCladesAreSummed=fIsSummed,
@@ -4576,14 +4567,16 @@ lsMinVariance = []
                                         fSumData=fSumData,
                                         sFeatureSelectionMethod=sFeatureSelection)
 
-        answer = microPITA.funcReadSelectionFileToDictionary(strAnswerFile)
-       
-        #Sort answers
-        answer = str(["".join([str(key),":",str(sorted(answer[key]))]) for key in sorted(answer.keys())])
-        result = str(["".join([str(key),":",str(sorted(result[key]))]) for key in sorted(result.keys())])
+        answer = False
+        error = False
+        for sKey in result:
+          if len(set(result[sKey])&set(self.dictAnswerClasses[sKey])) == len(result[sKey]):
+            error = error and True
+          else:
+            error = True
 
         #Check result against answer
-        self.assertEqual(str(result),str(answer),"".join([str(self),"::Expected=",str(answer),". Received=",str(result),"."]))
+        self.assertEqual(str(error),str(answer),"".join([str(self),"::Expected=",str(answer),". Received=",str(error),"."]))
 
     def testCallFromCommandlineForGoodCaseDistinct(self):
         """
@@ -4595,8 +4588,8 @@ lsMinVariance = []
         #Commandline object
         commandLine = CommandLine()
 
-        #Answer file
-        strAnswerFile = "".join([ConstantsMicropitaTest.c_strTestingTruth,"testFuncRunForGoodCaseDistinctMethod-Correct.txt"])
+        #Answer
+        dictAnswer = {}
 
         #Script
         strMicropitaScript = "".join([ConstantsMicropitaTest.c_strSRC,"micropita/MicroPITA.py"])
@@ -4607,10 +4600,11 @@ lsMinVariance = []
         sSumData = [ConstantsMicropita.c_strSumDataArgument]
         sLastMetadata = [ConstantsMicropita.c_strLastMetadataNameArgument,"Label"]
         sSelectionCount = [ConstantsMicropita.c_strSupervisedLabelCountArgument,"3"]
+        sSupervisedLabel = [ConstantsMicropita.c_strSupervisedLabelArgument,"Label"]
         strSelection = [MicroPITA.c_strDistinct]
 
         #Optional test
-        lsOptionalArguments = []+sLastMetadata+sSelectionCount+sSumData
+        lsOptionalArguments = []+sLastMetadata+sSelectionCount+sSumData+sSupervisedLabel
 
         #Build commandline list
         lsCommandline = [strMicropitaScript]+lsOptionalArguments+[strFileAbund,strOutputFile]+strSelection
@@ -4621,6 +4615,7 @@ lsMinVariance = []
             os.remove(sFile)
 
         #Generate output file
+        
         errors = not (commandLine.runCommandLine(lsCommandline) and os.path.exists(strOutputFile))
 
         #Check for correct output files
@@ -4629,12 +4624,13 @@ lsMinVariance = []
 
         #Read in results and the answer file
         if not errors:
-          answer = MicroPITA.funcReadSelectionFileToDictionary(strAnswerFile)
           result = MicroPITA.funcReadSelectionFileToDictionary(strOutputFile)
 
-          #Sort answers
-          answer = str(["".join([str(key),":",str(sorted(answer[key]))]) for key in sorted(answer.keys())])
-          result = str(["".join([str(key),":",str(sorted(result[key]))]) for key in sorted(result.keys())])
+          for sKey in result:
+            if len(set(result[sKey])&set(self.dictAnswerClasses[sKey])) == len(result[sKey]):
+                errors = errors and True
+            else:
+                errors = True
 
         #Delete generated files from test
         for sFile in [strOutputFile]:
@@ -4642,7 +4638,7 @@ lsMinVariance = []
             os.remove(sFile)
 
         #Check result against answer
-        self.assertEqual(str(result),str(answer),"".join([str(self),"::Expected=",str(answer),". Received=",str(result),"."]))
+        self.assertEqual(str(errors),str(answer),"".join([str(self),"::Expected=",str(answer),". Received=",str(errors),"."]))
 ##
 #Creates a suite of tests
 def suite():

@@ -1,4 +1,4 @@
-Extreme_B:Sample_43_E, Sample_45_T, Sample_40_E, Sample_46_T, Sample_36_E, Sample_41_E
-Representative_B:Sample_29_R, Sample_15_D, Sample_26_R, Sample_30_E, Sample_46_T, Sample_37_E
-Diversity_I:Sample_12_D, Sample_1_D, Sample_6_D, Sample_9_D, Sample_4_D, Sample_5_D
-Taxa_Defined:Sample_46_T, Sample_45_T, Sample_44_T, Sample_47_T, Sample_32_E, Sample_18_R
+Extreme_B	Sample_43_E	Sample_45_T	Sample_40_E	Sample_46_T	Sample_36_E	Sample_41_E
+Representative_B	Sample_29_R	Sample_15_D	Sample_26_R	Sample_30_E	Sample_46_T	Sample_37_E
+Diversity_I	Sample_12_D	Sample_1_D	Sample_6_D	Sample_9_D	Sample_4_D	Sample_5_D
+Taxa_Defined	Sample_46_T	Sample_45_T	Sample_44_T	Sample_47_T	Sample_32_E	Sample_18_R

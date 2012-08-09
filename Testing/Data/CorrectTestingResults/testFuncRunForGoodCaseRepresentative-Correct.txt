@@ -1,1 +1,1 @@
-Representative_B:Sample_29_R, Sample_15_D, Sample_26_R, Sample_30_E, Sample_46_T, Sample_37_E
+Representative_B	Sample_29_R	Sample_15_D	Sample_26_R	Sample_30_E	Sample_46_T	Sample_37_E
