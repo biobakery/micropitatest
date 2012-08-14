@@ -24,6 +24,7 @@ from micropita.src.breadcrumbs.SVM import SVM
 from micropita.src.breadcrumbs.UtilityMath import UtilityMath
 import mlpy
 import numpy as np
+import operator
 import os
 import re
 import unittest
@@ -36,11 +37,11 @@ class MicroPITATest(unittest.TestCase):
     setMinimalVariance = (["Sample_16_R","Sample_17_R","Sample_18_R","Sample_19_R","Sample_20_R","Sample_21_R","Sample_22_R","Sample_23_R","Sample_24_R","Sample_25_R","Sample_26_R","Sample_27_R","Sample_28_R","Sample_29_R"])
     setTargetedTaxa = (["Sample_44_T","Sample_45_T","Sample_46_T","Sample_47_T","Sample_16_R","Sample_17_R","Sample_32_E"])
 
-    dictAnswerClasses = {MicroPITA.c_strDiversity1:setComplex,
-                         MicroPITA.c_strExtremeDissimiarity1:setMaxVariable+setMinimalVariance+setTargetedTaxa,
-                         MicroPITA.c_strUserRanked:setTargetedTaxa,
-                         MicroPITA.c_strSVMClose:setComplex,
-                         MicroPITA.c_strSVMFar:setMaxVariable+setMinimalVariance+setTargetedTaxa}
+    dictAnswerClasses = {ConstantsMicropita.c_strDiversity1:setComplex,
+                         ConstantsMicropita.c_strExtremeDissimiarity1:setMaxVariable+setMinimalVariance+setTargetedTaxa,
+                         ConstantsMicropita.c_strUserRanked:setTargetedTaxa,
+                         ConstantsMicropita.c_strSVMClose:setComplex,
+                         ConstantsMicropita.c_strSVMFar:setMaxVariable+setMinimalVariance+setTargetedTaxa}
 
 #####Test funcGetTopRankedSamples
     def testfuncGetTopRankedSamplesForGoodCase1(self):
@@ -159,7 +160,7 @@ class MicroPITATest(unittest.TestCase):
         #Generate data
         #Inputs
         inputFile = "".join([ConstantsMicropitaTest.c_strTestingInput+"DiversityTest.pcl"])
-        delimiter = ConstantsMicropita.TAB
+        delimiter = ConstantsMicropita.c_cTab
         sNameRow = "ID"
         sLastMetadata = "Inverse_Simpson"
         cFeatureDelimiter = "|"
@@ -189,12 +190,12 @@ class MicroPITATest(unittest.TestCase):
         #Inputs
         normalize = True
         microPITA = MicroPITA()
-        metric = [microPITA.c_strInverseSimpsonDiversity]
+        metric = [ConstantsMicropita.c_strInverseSimpsonDiversity]
 
         #Generate data
         #Inputs
         inputFile = "".join([ConstantsMicropitaTest.c_strTestingInput+"DiversityTest.pcl"])
-        delimiter = ConstantsMicropita.TAB
+        delimiter = ConstantsMicropita.c_cTab
         sNameRow = "ID"
         sLastMetadata = "Inverse_Simpson"
         cFeatureDelimiter = "|"
@@ -224,12 +225,12 @@ class MicroPITATest(unittest.TestCase):
         #Inputs
         normalize = True
         microPITA = MicroPITA()
-        metric = [microPITA.c_strInverseSimpsonDiversity]
+        metric = [ConstantsMicropita.c_strInverseSimpsonDiversity]
 
         #Generate data
         #Inputs
         inputFile = "".join([ConstantsMicropitaTest.c_strTestingInput+"DiversityTest.pcl"])
-        delimiter = ConstantsMicropita.TAB
+        delimiter = ConstantsMicropita.c_cTab
         sNameRow = "ID"
         sLastMetadata = "Inverse_Simpson"
         cFeatureDelimiter = "|"
@@ -259,12 +260,12 @@ class MicroPITATest(unittest.TestCase):
         #Inputs
         normalize = True
         microPITA = MicroPITA()
-        metric = [microPITA.c_strInverseSimpsonDiversity]
+        metric = [ConstantsMicropita.c_strInverseSimpsonDiversity]
 
         #Generate data
         #Inputs
         inputFile = "".join([ConstantsMicropitaTest.c_strTestingInput+"DiversityTest.pcl"])
-        delimiter = ConstantsMicropita.TAB
+        delimiter = ConstantsMicropita.c_cTab
         sNameRow = "ID"
         sLastMetadata = "Inverse_Simpson"
         cFeatureDelimiter = "|"
@@ -294,12 +295,12 @@ class MicroPITATest(unittest.TestCase):
         #Inputs
         normalize = True
         microPITA = MicroPITA()
-        metric = [microPITA.c_strInverseSimpsonDiversity]
+        metric = [ConstantsMicropita.c_strInverseSimpsonDiversity]
 
         #Generate data
         #Inputs
         inputFile = "".join([ConstantsMicropitaTest.c_strTestingInput+"DiversityTest.pcl"])
-        delimiter = ConstantsMicropita.TAB
+        delimiter = ConstantsMicropita.c_cTab
         sNameRow = "ID"
         sLastMetadata = "Inverse_Simpson"
         cFeatureDelimiter = "|"
@@ -329,12 +330,12 @@ class MicroPITATest(unittest.TestCase):
         #Inputs
         normalize = True
         microPITA = MicroPITA()
-        metric = [microPITA.c_strInverseSimpsonDiversity]
+        metric = [ConstantsMicropita.c_strInverseSimpsonDiversity]
 
         #Generate data
         #Inputs
         inputFile = "".join([ConstantsMicropitaTest.c_strTestingInput+"DiversityTest.pcl"])
-        delimiter = ConstantsMicropita.TAB
+        delimiter = ConstantsMicropita.c_cTab
         sNameRow = "ID"
         sLastMetadata = "Inverse_Simpson"
         cFeatureDelimiter = "|"
@@ -364,12 +365,12 @@ class MicroPITATest(unittest.TestCase):
         #Inputs
         normalize = True
         microPITA = MicroPITA()
-        metric = [microPITA.c_strInverseSimpsonDiversity]
+        metric = [ConstantsMicropita.c_strInverseSimpsonDiversity]
 
         #Generate data
         #Inputs
         inputFile = "".join([ConstantsMicropitaTest.c_strTestingInput+"DiversityTest.pcl"])
-        delimiter = ConstantsMicropita.TAB
+        delimiter = ConstantsMicropita.c_cTab
         sNameRow = "ID"
         sLastMetadata = "Inverse_Simpson"
         cFeatureDelimiter = "|"
@@ -399,12 +400,12 @@ class MicroPITATest(unittest.TestCase):
         #Inputs
         normalize = True
         microPITA = MicroPITA()
-        metric = [microPITA.c_strInverseSimpsonDiversity]
+        metric = [ConstantsMicropita.c_strInverseSimpsonDiversity]
 
         #Generate data
         #Inputs
         inputFile = "".join([ConstantsMicropitaTest.c_strTestingInput+"DiversityTest.pcl"])
-        delimiter = ConstantsMicropita.TAB
+        delimiter = ConstantsMicropita.c_cTab
         sNameRow = "ID"
         sLastMetadata = "Inverse_Simpson"
         cFeatureDelimiter = "|"
@@ -434,12 +435,12 @@ class MicroPITATest(unittest.TestCase):
         #Inputs
         normalize = True
         microPITA = MicroPITA()
-        metric = [microPITA.c_strChao1Diversity]
+        metric = [ConstantsMicropita.c_strChao1Diversity]
 
         #Generate data
         #Inputs
         inputFile = "".join([ConstantsMicropitaTest.c_strTestingInput+"DiversityTest.pcl"])
-        delimiter = ConstantsMicropita.TAB
+        delimiter = ConstantsMicropita.c_cTab
         sNameRow = "ID"
         sLastMetadata = "Inverse_Simpson"
         cFeatureDelimiter = "|"
@@ -469,12 +470,12 @@ class MicroPITATest(unittest.TestCase):
         #Inputs
         normalize = True
         microPITA = MicroPITA()
-        metric = [microPITA.c_strChao1Diversity]
+        metric = [ConstantsMicropita.c_strChao1Diversity]
 
         #Generate data
         #Inputs
         inputFile = "".join([ConstantsMicropitaTest.c_strTestingInput+"DiversityTest.pcl"])
-        delimiter = ConstantsMicropita.TAB
+        delimiter = ConstantsMicropita.c_cTab
         sNameRow = "ID"
         sLastMetadata = "Inverse_Simpson"
         cFeatureDelimiter = "|"
@@ -504,12 +505,12 @@ class MicroPITATest(unittest.TestCase):
         #Inputs
         normalize = True
         microPITA = MicroPITA()
-        metric = [microPITA.c_strChao1Diversity]
+        metric = [ConstantsMicropita.c_strChao1Diversity]
 
         #Generate data
         #Inputs
         inputFile = "".join([ConstantsMicropitaTest.c_strTestingInput+"DiversityTest.pcl"])
-        delimiter = ConstantsMicropita.TAB
+        delimiter = ConstantsMicropita.c_cTab
         sNameRow = "ID"
         sLastMetadata = "Inverse_Simpson"
         cFeatureDelimiter = "|"
@@ -539,12 +540,12 @@ class MicroPITATest(unittest.TestCase):
         #Inputs
         normalize = True
         microPITA = MicroPITA()
-        metric = [microPITA.c_strChao1Diversity]
+        metric = [ConstantsMicropita.c_strChao1Diversity]
 
         #Generate data
         #Inputs
         inputFile = "".join([ConstantsMicropitaTest.c_strTestingInput+"DiversityTest.pcl"])
-        delimiter = ConstantsMicropita.TAB
+        delimiter = ConstantsMicropita.c_cTab
         sNameRow = "ID"
         sLastMetadata = "Inverse_Simpson"
         cFeatureDelimiter = "|"
@@ -574,12 +575,12 @@ class MicroPITATest(unittest.TestCase):
         #Inputs
         normalize = True
         microPITA = MicroPITA()
-        metric = [microPITA.c_strChao1Diversity]
+        metric = [ConstantsMicropita.c_strChao1Diversity]
 
         #Generate data
         #Inputs
         inputFile = "".join([ConstantsMicropitaTest.c_strTestingInput+"DiversityTest.pcl"])
-        delimiter = ConstantsMicropita.TAB
+        delimiter = ConstantsMicropita.c_cTab
         sNameRow = "ID"
         sLastMetadata = "Inverse_Simpson"
         cFeatureDelimiter = "|"
@@ -609,12 +610,12 @@ class MicroPITATest(unittest.TestCase):
         #Inputs
         normalize = True
         microPITA = MicroPITA()
-        metric = [microPITA.c_strChao1Diversity,microPITA.c_strInverseSimpsonDiversity]
+        metric = [ConstantsMicropita.c_strChao1Diversity,ConstantsMicropita.c_strInverseSimpsonDiversity]
 
         #Generate data
         #Inputs
         inputFile = "".join([ConstantsMicropitaTest.c_strTestingInput+"DiversityTest.pcl"])
-        delimiter = ConstantsMicropita.TAB
+        delimiter = ConstantsMicropita.c_cTab
         sNameRow = "ID"
         sLastMetadata = "Inverse_Simpson"
         cFeatureDelimiter = "|"
@@ -645,7 +646,7 @@ class MicroPITATest(unittest.TestCase):
 
         #Inputs
         inputFile = "".join([ConstantsMicropitaTest.c_strTestingInput+"hq.otu_04-nul-nul-mtd-trn-flt-abridged.txt"])
-        delimiter = ConstantsMicropita.TAB
+        delimiter = ConstantsMicropita.c_cTab
         sNameRow = "TID"
         sLastMetadata = "STSite"
         cFeatureDelimiter = "|"
@@ -657,7 +658,7 @@ class MicroPITATest(unittest.TestCase):
                                              sLastMetadata = sLastMetadata, cFeatureNameDelimiter=cFeatureDelimiter)
 
         microPITA = MicroPITA()
-        metric = microPITA.c_strBrayCurtisDissimilarity
+        metric = ConstantsMicropita.c_strBrayCurtisDissimilarity
 
         #Generate data
         abundance = rawData.funcGetAbundanceCopy()
@@ -679,7 +680,7 @@ class MicroPITATest(unittest.TestCase):
 
         #Inputs
         inputFile = "".join([ConstantsMicropitaTest.c_strTestingInput+"hq.otu_04-nul-nul-mtd-trn-flt-abridged.txt"])
-        delimiter = ConstantsMicropita.TAB
+        delimiter = ConstantsMicropita.c_cTab
         sNameRow = "TID"
         sLastMetadata = "STSite"
         cFeatureDelimiter = "|"
@@ -691,7 +692,7 @@ class MicroPITATest(unittest.TestCase):
                                              sLastMetadata = sLastMetadata, cFeatureNameDelimiter=cFeatureDelimiter)
 
         microPITA = MicroPITA()
-        metric = microPITA.c_strBrayCurtisDissimilarity
+        metric = ConstantsMicropita.c_strBrayCurtisDissimilarity
 
         #Generate data
         abundance = rawData.funcGetAbundanceCopy()
@@ -713,14 +714,14 @@ class MicroPITATest(unittest.TestCase):
 
         #Inputs
         inputFile = "".join([ConstantsMicropitaTest.c_strTestingInput+"hq.otu_04-nul-nul-mtd-trn-flt-abridged.txt"])
-        delimiter = ConstantsMicropita.TAB
+        delimiter = ConstantsMicropita.c_cTab
         sNameRow = "TID"
         sLastMetadata = "STSite"
         cFeatureDelimiter = "|"
         fIsSummed = False
         fIsNormalized = True
         microPITA = MicroPITA()
-        metric = microPITA.c_strInvBrayCurtisDissimilarity
+        metric = ConstantsMicropita.c_strInvBrayCurtisDissimilarity
 
         rawData = AbundanceTable.funcMakeFromFile(strInputFile=inputFile, fIsNormalized=fIsNormalized, fIsSummed=fIsSummed,
                                              cDelimiter = delimiter, sMetadataID = sNameRow,
@@ -746,14 +747,14 @@ class MicroPITATest(unittest.TestCase):
 
         #Inputs
         inputFile = "".join([ConstantsMicropitaTest.c_strTestingInput+"hq.otu_04-nul-nul-mtd-trn-flt-abridged.txt"])
-        delimiter = ConstantsMicropita.TAB
+        delimiter = ConstantsMicropita.c_cTab
         sNameRow = "TID"
         sLastMetadata = "STSite"
         cFeatureDelimiter = "|"
         fIsSummed = False
         fIsNormalized = True
         microPITA = MicroPITA()
-        metric = microPITA.c_strInvBrayCurtisDissimilarity
+        metric = ConstantsMicropita.c_strInvBrayCurtisDissimilarity
 
         rawData = AbundanceTable.funcMakeFromFile(strInputFile=inputFile, fIsNormalized=fIsNormalized, fIsSummed=fIsSummed,
                                              cDelimiter = delimiter, sMetadataID = sNameRow,
@@ -815,7 +816,7 @@ class MicroPITATest(unittest.TestCase):
         microPITA = MicroPITA()
 
         #Inputs
-        strBetaMetric = microPITA.c_strInvBrayCurtisDissimilarity
+        strBetaMetric = ConstantsMicropita.c_strInvBrayCurtisDissimilarity
         lsSampleNames = ["One","Two","Three","Four","Five","Six"]
         iSelectSampleCount = 1
         npaAbundanceMatrix = np.array([[1,0,0,0,0],[0,1,1,1,1],[0,0,1,1,1],[1,1,0,1,1],[1,1,1,0,1],[1,1,1,1,0]])
@@ -837,7 +838,7 @@ class MicroPITATest(unittest.TestCase):
         microPITA = MicroPITA()
 
         #Inputs
-        strBetaMetric = microPITA.c_strInvBrayCurtisDissimilarity
+        strBetaMetric = ConstantsMicropita.c_strInvBrayCurtisDissimilarity
         lsSampleNames = ["One","Two","Three","Four","Five","Six"]
         iSelectSampleCount = 2
         npaAbundanceMatrix = np.array([[1,0,0,0,0],[0,1,1,1,1],[0,0,1,1,1],[1,1,0,1,1],[1,1,1,0,1],[1,1,1,1,0]])
@@ -859,7 +860,7 @@ class MicroPITATest(unittest.TestCase):
         microPITA = MicroPITA()
 
         #Inputs
-        strBetaMetric = microPITA.c_strInvBrayCurtisDissimilarity
+        strBetaMetric = ConstantsMicropita.c_strInvBrayCurtisDissimilarity
         lsSampleNames = ["One","Two","Three","Four"]
         iSelectSampleCount = 1
         npaAbundanceMatrix = np.array([[1,0,0,0],
@@ -885,7 +886,7 @@ class MicroPITATest(unittest.TestCase):
         microPITA = MicroPITA()
 
         #Inputs
-        strBetaMetric = microPITA.c_strInvBrayCurtisDissimilarity
+        strBetaMetric = ConstantsMicropita.c_strInvBrayCurtisDissimilarity
         lsSampleNames = ["One","Two","Three","Four","Five","Six","Seven","Eight","Nine"]
         iSelectSampleCount = 2
         npaAbundanceMatrix = np.array([[1,0,0,0,0],
@@ -916,7 +917,7 @@ class MicroPITATest(unittest.TestCase):
         microPITA = MicroPITA()
 
         #Inputs
-        strBetaMetric = microPITA.c_strInvBrayCurtisDissimilarity
+        strBetaMetric = ConstantsMicropita.c_strInvBrayCurtisDissimilarity
         lsSampleNames = ["One","Two","Three","Four","Five","Six","Seven","Eight","Nine"]
         iSelectSampleCount = 4
         npaAbundanceMatrix = np.array([[1,0,0,0,0],
@@ -947,7 +948,7 @@ class MicroPITATest(unittest.TestCase):
         microPITA = MicroPITA()
 
         #Inputs
-        strBetaMetric = microPITA.c_strInvBrayCurtisDissimilarity
+        strBetaMetric = ConstantsMicropita.c_strInvBrayCurtisDissimilarity
         lsSampleNames = ["One","Two","Three","Four","Five","Six","Seven","Eight","Nine"]
         iSelectSampleCount = 6
         npaAbundanceMatrix = np.array([[1,0,0,0,0],
@@ -978,7 +979,7 @@ class MicroPITATest(unittest.TestCase):
         microPITA = MicroPITA()
 
         #Inputs
-        strBetaMetric = microPITA.c_strInvBrayCurtisDissimilarity
+        strBetaMetric = ConstantsMicropita.c_strInvBrayCurtisDissimilarity
         lsSampleNames = ["One","Two","Three","Four","Five","Six"]
         iSelectSampleCount = 3
         npaAbundanceMatrix = np.array([[1,0,0,0],
@@ -1009,7 +1010,7 @@ class MicroPITATest(unittest.TestCase):
 
         #Inputs
         inputFile = "".join([ConstantsMicropitaTest.c_strTestingInput+"TestFeatureAverages.txt"])
-        delimiter = ConstantsMicropita.TAB
+        delimiter = ConstantsMicropita.c_cTab
         sNameRow = "TID"
         sLastMetadata = "STSite"
         cFeatureDelimiter = "|"
@@ -1037,7 +1038,7 @@ class MicroPITATest(unittest.TestCase):
 
         #Inputs
         inputFile = "".join([ConstantsMicropitaTest.c_strTestingInput+"TestFeatureAverages.txt"])
-        delimiter = ConstantsMicropita.TAB
+        delimiter = ConstantsMicropita.c_cTab
         sNameRow = "TID"
         sLastMetadata = "STSite"
         cFeatureDelimiter = "|"
@@ -1065,7 +1066,7 @@ class MicroPITATest(unittest.TestCase):
 
         #Inputs
         inputFile = "".join([ConstantsMicropitaTest.c_strTestingInput+"TestFeatureAverages.txt"])
-        delimiter = ConstantsMicropita.TAB
+        delimiter = ConstantsMicropita.c_cTab
         sNameRow = "TID"
         sLastMetadata = "STSite"
         cFeatureDelimiter = "|"
@@ -1094,7 +1095,7 @@ class MicroPITATest(unittest.TestCase):
 
         #Inputs
         inputFile = "".join([ConstantsMicropitaTest.c_strTestingInput+"TestFeatureAverages.txt"])
-        delimiter = ConstantsMicropita.TAB
+        delimiter = ConstantsMicropita.c_cTab
         sNameRow = "TID"
         sLastMetadata = "STSite"
         cFeatureDelimiter = "|"
@@ -1123,7 +1124,7 @@ class MicroPITATest(unittest.TestCase):
 
         #Inputs
         inputFile = "".join([ConstantsMicropitaTest.c_strTestingInput+"TestFeatureAverages.txt"])
-        delimiter = ConstantsMicropita.TAB
+        delimiter = ConstantsMicropita.c_cTab
         sNameRow = "TID"
         sLastMetadata = "STSite"
         cFeatureDelimiter = "|"
@@ -1153,7 +1154,7 @@ class MicroPITATest(unittest.TestCase):
 
         #Inputs
         inputFile = "".join([ConstantsMicropitaTest.c_strTestingInput+"TestFeatureAverages.txt"])
-        delimiter = ConstantsMicropita.TAB
+        delimiter = ConstantsMicropita.c_cTab
         sNameRow = "TID"
         sLastMetadata = "STSite"
         cFeatureDelimiter = "|"
@@ -1183,7 +1184,7 @@ class MicroPITATest(unittest.TestCase):
 
         #Inputs
         inputFile = "".join([ConstantsMicropitaTest.c_strTestingInput+"TestFeatureAverages.txt"])
-        delimiter = ConstantsMicropita.TAB
+        delimiter = ConstantsMicropita.c_cTab
         sNameRow = "TID"
         sLastMetadata = "STSite"
         cFeatureDelimiter = "|"
@@ -1211,14 +1212,14 @@ class MicroPITATest(unittest.TestCase):
 
         #Inputs
         inputFile = "".join([ConstantsMicropitaTest.c_strTestingInput+"TestFeatureAverages.txt"])
-        delimiter = ConstantsMicropita.TAB
+        delimiter = ConstantsMicropita.c_cTab
         sNameRow = "TID"
         sLastMetadata = "STSite"
         cFeatureDelimiter = "|"
         fIsSummed = False
         fIsNormalized = False
         iSampleCount = 1
-        sMethod = MicroPITA.c_strTargetedAbundance
+        sMethod = ConstantsMicropita.c_strTargetedAbundance
         liFeatures = ["Bacteria|Firmicutes|Clostridia|Clostridiales|Clostridiaceae|Clostridium|72"]
 
         answer= ["700098980"]
@@ -1239,14 +1240,14 @@ class MicroPITATest(unittest.TestCase):
 
         #Inputs
         inputFile = "".join([ConstantsMicropitaTest.c_strTestingInput+"TestFeatureAverages.txt"])
-        delimiter = ConstantsMicropita.TAB
+        delimiter = ConstantsMicropita.c_cTab
         sNameRow = "TID"
         sLastMetadata = "STSite"
         cFeatureDelimiter = "|"
         fIsSummed = False
         fIsNormalized = False
         iSampleCount = 2
-        sMethod = MicroPITA.c_strTargetedAbundance
+        sMethod = ConstantsMicropita.c_strTargetedAbundance
         liFeatures = ["Bacteria|Firmicutes|Clostridia|Clostridiales|Clostridiaceae|Clostridium|72"]
 
         answer= ["700098980","700037470"]
@@ -1267,14 +1268,14 @@ class MicroPITATest(unittest.TestCase):
 
         #Inputs
         inputFile = "".join([ConstantsMicropitaTest.c_strTestingInput+"TestFeatureAverages.txt"])
-        delimiter = ConstantsMicropita.TAB
+        delimiter = ConstantsMicropita.c_cTab
         sNameRow = "TID"
         sLastMetadata = "STSite"
         cFeatureDelimiter = "|"
         fIsSummed = False
         fIsNormalized = False
         iSampleCount = 3
-        sMethod = MicroPITA.c_strTargetedAbundance
+        sMethod = ConstantsMicropita.c_strTargetedAbundance
         liFeatures = ["Bacteria|Firmicutes|Clostridia|Clostridiales|Clostridiaceae|Clostridium|72"]
 
         answer= ["700098980","700037470","700098986"]
@@ -1295,14 +1296,14 @@ class MicroPITATest(unittest.TestCase):
 
         #Inputs
         inputFile = "".join([ConstantsMicropitaTest.c_strTestingInput+"TestFeatureAverages.txt"])
-        delimiter = ConstantsMicropita.TAB
+        delimiter = ConstantsMicropita.c_cTab
         sNameRow = "TID"
         sLastMetadata = "STSite"
         cFeatureDelimiter = "|"
         fIsSummed = False
         fIsNormalized = False
         iSampleCount = 4
-        sMethod = MicroPITA.c_strTargetedAbundance
+        sMethod = ConstantsMicropita.c_strTargetedAbundance
         liFeatures = ["Bacteria|Firmicutes|Clostridia|Clostridiales|Clostridiaceae|Clostridium|72"]
 
         answer= ["700098980","700037470","700098986","700098988"]
@@ -1323,14 +1324,14 @@ class MicroPITATest(unittest.TestCase):
 
         #Inputs
         inputFile = "".join([ConstantsMicropitaTest.c_strTestingInput+"TestFeatureAverages.txt"])
-        delimiter = ConstantsMicropita.TAB
+        delimiter = ConstantsMicropita.c_cTab
         sNameRow = "TID"
         sLastMetadata = "STSite"
         cFeatureDelimiter = "|"
         fIsSummed = False
         fIsNormalized = False
         iSampleCount = 5
-        sMethod = MicroPITA.c_strTargetedAbundance
+        sMethod = ConstantsMicropita.c_strTargetedAbundance
         liFeatures = ["Bacteria|Firmicutes|Clostridia|Clostridiales|Clostridiaceae|Clostridium|72"]
 
         answer= ["700098980","700037470","700098986","700098988","700098982"]
@@ -1351,14 +1352,14 @@ class MicroPITATest(unittest.TestCase):
 
         #Inputs
         inputFile = "".join([ConstantsMicropitaTest.c_strTestingInput+"TestFeatureAverages.txt"])
-        delimiter = ConstantsMicropita.TAB
+        delimiter = ConstantsMicropita.c_cTab
         sNameRow = "TID"
         sLastMetadata = "STSite"
         cFeatureDelimiter = "|"
         fIsSummed = False
         fIsNormalized = False
         iSampleCount = 1
-        sMethod = MicroPITA.c_strTargetedRanked
+        sMethod = ConstantsMicropita.c_strTargetedRanked
         liFeatures = ["Bacteria|Firmicutes|Clostridia|Clostridiales|Clostridiaceae|Clostridium|72"]
 
         answer= ["700037470"]
@@ -1379,14 +1380,14 @@ class MicroPITATest(unittest.TestCase):
 
         #Inputs
         inputFile = "".join([ConstantsMicropitaTest.c_strTestingInput+"TestFeatureAverages.txt"])
-        delimiter = ConstantsMicropita.TAB
+        delimiter = ConstantsMicropita.c_cTab
         sNameRow = "TID"
         sLastMetadata = "STSite"
         cFeatureDelimiter = "|"
         fIsSummed = False
         fIsNormalized = False
         iSampleCount = 2
-        sMethod = MicroPITA.c_strTargetedRanked
+        sMethod = ConstantsMicropita.c_strTargetedRanked
         liFeatures = ["Bacteria|Firmicutes|Clostridia|Clostridiales|Clostridiaceae|Clostridium|72"]
 
         answer= ["700037470","700098986"]
@@ -1407,14 +1408,14 @@ class MicroPITATest(unittest.TestCase):
 
         #Inputs
         inputFile = "".join([ConstantsMicropitaTest.c_strTestingInput+"TestFeatureAverages.txt"])
-        delimiter = ConstantsMicropita.TAB
+        delimiter = ConstantsMicropita.c_cTab
         sNameRow = "TID"
         sLastMetadata = "STSite"
         cFeatureDelimiter = "|"
         fIsSummed = False
         fIsNormalized = False
         iSampleCount = 3
-        sMethod = MicroPITA.c_strTargetedRanked
+        sMethod = ConstantsMicropita.c_strTargetedRanked
         liFeatures = ["Bacteria|Firmicutes|Clostridia|Clostridiales|Clostridiaceae|Clostridium|72"]
 
         answer= ["700037470","700098986","700098980"]
@@ -1435,14 +1436,14 @@ class MicroPITATest(unittest.TestCase):
 
         #Inputs
         inputFile = "".join([ConstantsMicropitaTest.c_strTestingInput+"TestFeatureAverages.txt"])
-        delimiter = ConstantsMicropita.TAB
+        delimiter = ConstantsMicropita.c_cTab
         sNameRow = "TID"
         sLastMetadata = "STSite"
         cFeatureDelimiter = "|"
         fIsSummed = False
         fIsNormalized = False
         iSampleCount = 4
-        sMethod = MicroPITA.c_strTargetedRanked
+        sMethod = ConstantsMicropita.c_strTargetedRanked
         liFeatures = ["Bacteria|Firmicutes|Clostridia|Clostridiales|Clostridiaceae|Clostridium|72"]
 
         answer= ["700037470","700098986","700098980","700098988"]
@@ -1463,14 +1464,14 @@ class MicroPITATest(unittest.TestCase):
 
         #Inputs
         inputFile = "".join([ConstantsMicropitaTest.c_strTestingInput+"TestFeatureAverages.txt"])
-        delimiter = ConstantsMicropita.TAB
+        delimiter = ConstantsMicropita.c_cTab
         sNameRow = "TID"
         sLastMetadata = "STSite"
         cFeatureDelimiter = "|"
         fIsSummed = False
         fIsNormalized = False
         iSampleCount = 5
-        sMethod = MicroPITA.c_strTargetedRanked
+        sMethod = ConstantsMicropita.c_strTargetedRanked
         liFeatures = ["Bacteria|Firmicutes|Clostridia|Clostridiales|Clostridiaceae|Clostridium|72"]
 
         answer= ["700037470","700098986","700098980","700098988","700098982"]
@@ -1591,7 +1592,7 @@ class MicroPITATest(unittest.TestCase):
         #Reading file
         inputFile="./input/micropita/src/Testing/Data/AbridgedDocuments/hq.otu_04-nul-nul-mtd-trn-flt-abridged.txt"
         outputFile="./input/micropita/src/Testing/Data/AbridgedDocuments/hq.otu_04-nul-nul-mtd-trn-flt-abridged.SVM.txt"
-        delimiter=ConstantsMicropita.TAB
+        delimiter=ConstantsMicropita.c_cTab
         nameRow=0
         sLastMetadataName="STSite"
         skipColumn1=True
@@ -1606,7 +1607,7 @@ class MicroPITATest(unittest.TestCase):
         labels = [0,0,0,0,0,1,1,1,1,1]
 
         #Generate data
-        microPITA.funcRunSVM(tempInputFile=inputFile, tempDelimiter=ConstantsMicropita.TAB, tempOutputSVMFile=outputFile, tempMatrixLabels=labels, sLastMetadataName=sLastMetadataName, tempSkipFirstColumn=skipColumn1, tempNormalize=normalize, tempSVMScaleLowestBound=lowestScaleBound, tempSVMLogG=gRange, tempSVMLogC=cRange, tempSVMProbabilistic=probabilistic)
+        microPITA.funcRunSVM(tempInputFile=inputFile, tempDelimiter=ConstantsMicropita.c_cTab, tempOutputSVMFile=outputFile, tempMatrixLabels=labels, sLastMetadataName=sLastMetadataName, tempSkipFirstColumn=skipColumn1, tempNormalize=normalize, tempSVMScaleLowestBound=lowestScaleBound, tempSVMLogG=gRange, tempSVMLogC=cRange, tempSVMProbabilistic=probabilistic)
 
         #Get results
         result = ""
@@ -1724,10 +1725,10 @@ class MicroPITATest(unittest.TestCase):
         lsSampleNames = ["One","Two","Three","Four","Five","Six","Seven","Eight","Nine","Ten"]
 
         #Answer
-        answer = {microPITA.c_strSVMClose:["Eight","One"],microPITA.c_strSVMFar:["Three","Seven"]}
+        answer = {ConstantsMicropita.c_strSVMClose:["Eight","One"],ConstantsMicropita.c_strSVMFar:["Three","Seven"]}
 
         #Set up. Write rpedict and input files
-        strPredFileContents = ConstantsMicropita.ENDLINE.join(["labels 1 0",
+        strPredFileContents = ConstantsMicropita.c_strEndline.join(["labels 1 0",
                                                       "0 0.482089 0.517911",
                                                       "0 0.464303 0.535697",
                                                       "1 0.510597 0.489403",
@@ -1738,7 +1739,7 @@ class MicroPITATest(unittest.TestCase):
                                                       "1 0.5 0.5",
                                                       "1 0.510373 0.489627",
                                                       "0 0.410257 0.589743"])
-        strInputFileContents = ConstantsMicropita.ENDLINE.join(["0 1:0.482089 2:0.517911",
+        strInputFileContents = ConstantsMicropita.c_strEndline.join(["0 1:0.482089 2:0.517911",
                                                       "0 1:0.464303 2:0.535697",
                                                       "1 1:0.510597",
                                                       "0 1:0.409344 2:0.590656",
@@ -1784,10 +1785,10 @@ class MicroPITATest(unittest.TestCase):
         lsSampleNames = ["One","Two","Three","Four","Five","Six","Seven","Eight","Nine","Ten"]
 
         #Answer
-        answer = {microPITA.c_strSVMFar:["Three","Seven"]}
+        answer = {ConstantsMicropita.c_strSVMFar:["Three","Seven"]}
 
         #Set up. Write rpedict and input files
-        strPredFileContents = ConstantsMicropita.ENDLINE.join(["labels 1 0",
+        strPredFileContents = ConstantsMicropita.c_strEndline.join(["labels 1 0",
                                                       "0 0.482089 0.517911",
                                                       "0 0.464303 0.535697",
                                                       "1 0.510597 0.489403",
@@ -1798,7 +1799,7 @@ class MicroPITATest(unittest.TestCase):
                                                       "1 0.5 0.5",
                                                       "1 0.510373 0.489627",
                                                       "0 0.410257 0.589743"])
-        strInputFileContents = ConstantsMicropita.ENDLINE.join(["0 1:0.482089 2:0.517911",
+        strInputFileContents = ConstantsMicropita.c_strEndline.join(["0 1:0.482089 2:0.517911",
                                                       "0 1:0.464303 2:0.535697",
                                                       "1 1:0.510597",
                                                       "0 1:0.409344 2:0.590656",
@@ -1844,10 +1845,10 @@ class MicroPITATest(unittest.TestCase):
         lsSampleNames = ["One","Two","Three","Four","Five","Six","Seven","Eight","Nine","Ten"]
 
         #Answer
-        answer = {microPITA.c_strSVMClose:["Eight","One"]}
+        answer = {ConstantsMicropita.c_strSVMClose:["Eight","One"]}
 
         #Set up. Write rpedict and input files
-        strPredFileContents = ConstantsMicropita.ENDLINE.join(["labels 1 0",
+        strPredFileContents = ConstantsMicropita.c_strEndline.join(["labels 1 0",
                                                       "0 0.482089 0.517911",
                                                       "0 0.464303 0.535697",
                                                       "1 0.510597 0.489403",
@@ -1858,7 +1859,7 @@ class MicroPITATest(unittest.TestCase):
                                                       "1 0.5 0.5",
                                                       "1 0.510373 0.489627",
                                                       "0 0.410257 0.589743"])
-        strInputFileContents = ConstantsMicropita.ENDLINE.join(["0 1:0.482089 2:0.517911",
+        strInputFileContents = ConstantsMicropita.c_strEndline.join(["0 1:0.482089 2:0.517911",
                                                       "0 1:0.464303 2:0.535697",
                                                       "1 1:0.510597",
                                                       "0 1:0.409344 2:0.590656",
@@ -1904,10 +1905,10 @@ class MicroPITATest(unittest.TestCase):
         lsSampleNames = ["One","Two","Three","Four","Five","Six","Seven","Eight","Nine","Ten"]
 
         #Answer
-        answer = {microPITA.c_strSVMClose:["Eight","One","Six","Nine"],microPITA.c_strSVMFar:["Four","Five","Seven","Ten"]}
+        answer = {ConstantsMicropita.c_strSVMClose:["Eight","One","Six","Nine"],ConstantsMicropita.c_strSVMFar:["Four","Five","Seven","Ten"]}
 
         #Set up. Write rpedict and input files
-        strPredFileContents = ConstantsMicropita.ENDLINE.join(["labels 1 0",
+        strPredFileContents = ConstantsMicropita.c_strEndline.join(["labels 1 0",
                                                       "0 0.482089 0.517911",
                                                       "0 0.464303 0.535697",
                                                       "1 0.510597 0.489403",
@@ -1918,7 +1919,7 @@ class MicroPITATest(unittest.TestCase):
                                                       "1 0.5 0.5",
                                                       "1 0.510373 0.489627",
                                                       "0 0.410257 0.589743"])
-        strInputFileContents = ConstantsMicropita.ENDLINE.join(["0 1:0.482089 2:0.517911",
+        strInputFileContents = ConstantsMicropita.c_strEndline.join(["0 1:0.482089 2:0.517911",
                                                       "0 1:0.464303 2:0.535697",
                                                       "1 1:0.510597",
                                                       "0 1:0.409344 2:0.590656",
@@ -1964,10 +1965,10 @@ class MicroPITATest(unittest.TestCase):
         lsSampleNames = ["One","Two","Three","Four","Five","Six","Seven","Eight"]
 
         #Answer
-        answer = {microPITA.c_strSVMClose:["One","Four","Six","Seven"],microPITA.c_strSVMFar:["Two","Three","Five","Eight"]}
+        answer = {ConstantsMicropita.c_strSVMClose:["One","Four","Six","Seven"],ConstantsMicropita.c_strSVMFar:["Two","Three","Five","Eight"]}
 
         #Set up. Write rpedict and input files
-        strPredFileContents = ConstantsMicropita.ENDLINE.join(["labels 1 0",
+        strPredFileContents = ConstantsMicropita.c_strEndline.join(["labels 1 0",
                                                       "0 0.482089 0.517911",
                                                       "0 0.409344 0.590656",
                                                       "1 0.99 0.01",
@@ -1976,7 +1977,7 @@ class MicroPITATest(unittest.TestCase):
                                                       "1 0.5 0.5",
                                                       "1 0.510373 0.489627",
                                                       "0 0.410257 0.589743"])
-        strInputFileContents = ConstantsMicropita.ENDLINE.join(["0 1:0.482089 2:0.517911",
+        strInputFileContents = ConstantsMicropita.c_strEndline.join(["0 1:0.482089 2:0.517911",
                                                       "0 1:0.464303 2:0.535697",
                                                       "1 1:0.510597",
                                                       "0 1:0.409344 2:0.590656",
@@ -2020,10 +2021,10 @@ class MicroPITATest(unittest.TestCase):
         lsSampleNames = ["One","Two","Three","Four","Five","Six","Seven","Eight"]
 
         #Answer
-        answer = {microPITA.c_strSVMClose:["One","Four","Six","Seven","Two","Three","Five","Eight"],microPITA.c_strSVMFar:["One","Four","Six","Seven","Two","Three","Five","Eight"]}
+        answer = {ConstantsMicropita.c_strSVMClose:["One","Four","Six","Seven","Two","Three","Five","Eight"],ConstantsMicropita.c_strSVMFar:["One","Four","Six","Seven","Two","Three","Five","Eight"]}
 
         #Set up. Write rpedict and input files
-        strPredFileContents = ConstantsMicropita.ENDLINE.join(["labels 1 0",
+        strPredFileContents = ConstantsMicropita.c_strEndline.join(["labels 1 0",
                                                       "0 0.482089 0.517911",
                                                       "0 0.409344 0.590656",
                                                       "1 0.99 0.01",
@@ -2032,7 +2033,7 @@ class MicroPITATest(unittest.TestCase):
                                                       "1 0.5 0.5",
                                                       "1 0.510373 0.489627",
                                                       "0 0.410257 0.589743"])
-        strInputFileContents = ConstantsMicropita.ENDLINE.join(["0 1:0.482089 2:0.517911",
+        strInputFileContents = ConstantsMicropita.c_strEndline.join(["0 1:0.482089 2:0.517911",
                                                       "0 1:0.464303 2:0.535697",
                                                       "1 1:0.510597",
                                                       "0 1:0.409344 2:0.590656",
@@ -2076,10 +2077,10 @@ class MicroPITATest(unittest.TestCase):
         lsSampleNames = ["One","Two","Three","Four","Five","Six","Seven","Eight"]
 
         #Answer
-        answer = {microPITA.c_strSVMClose:["One","Four","Six","Seven","Five","Eight"],microPITA.c_strSVMFar:["One","Four","Six","Seven","Five","Eight"]}
+        answer = {ConstantsMicropita.c_strSVMClose:["One","Four","Six","Seven","Five","Eight"],ConstantsMicropita.c_strSVMFar:["One","Four","Six","Seven","Five","Eight"]}
 
         #Set up. Write rpedict and input files
-        strPredFileContents = ConstantsMicropita.ENDLINE.join(["labels 1 0",
+        strPredFileContents = ConstantsMicropita.c_strEndline.join(["labels 1 0",
                                                       "0 0.482089 0.517911",
                                                       "0 0.409344 0.590656",
                                                       "1 0.99 0.01",
@@ -2088,7 +2089,7 @@ class MicroPITATest(unittest.TestCase):
                                                       "1 0.5 0.5",
                                                       "1 0.510373 0.489627",
                                                       "0 0.410257 0.589743"])
-        strInputFileContents = ConstantsMicropita.ENDLINE.join(["0 1:0.482089 2:0.517911",
+        strInputFileContents = ConstantsMicropita.c_strEndline.join(["0 1:0.482089 2:0.517911",
                                                       "1 1:0.464303 2:0.535697",
                                                       "0 1:0.510597",
                                                       "0 1:0.409344 2:0.590656",
@@ -2132,10 +2133,10 @@ class MicroPITATest(unittest.TestCase):
         lsSampleNames = ["One","Two","Three","Four","Five","Six","Seven","Eight"]
 
         #Answer
-        answer = {microPITA.c_strSVMClose:["Three","Five","Six","Seven"],microPITA.c_strSVMFar:["Three","Five","Six","Seven"]}
+        answer = {ConstantsMicropita.c_strSVMClose:["Three","Five","Six","Seven"],ConstantsMicropita.c_strSVMFar:["Three","Five","Six","Seven"]}
 
         #Set up. Write rpedict and input files
-        strPredFileContents = ConstantsMicropita.ENDLINE.join(["labels 1 0",
+        strPredFileContents = ConstantsMicropita.c_strEndline.join(["labels 1 0",
                                                       "0 0.482089 0.517911",
                                                       "0 0.409344 0.590656",
                                                       "1 0.99 0.01",
@@ -2144,7 +2145,7 @@ class MicroPITATest(unittest.TestCase):
                                                       "1 0.5 0.5",
                                                       "1 0.510373 0.489627",
                                                       "0 0.410257 0.589743"])
-        strInputFileContents = ConstantsMicropita.ENDLINE.join(["1 1:0.482089 2:0.517911",
+        strInputFileContents = ConstantsMicropita.c_strEndline.join(["1 1:0.482089 2:0.517911",
                                                       "1 1:0.464303 2:0.535697",
                                                       "1 1:0.510597",
                                                       "1 1:0.409344 2:0.590656",
@@ -2188,10 +2189,10 @@ class MicroPITATest(unittest.TestCase):
         lsSampleNames = ["One","Two","Three","Four","Five","Six","Seven","Eight"]
 
         #Answer
-        answer = {microPITA.c_strSVMClose:["One","Two","Four","Eight"],microPITA.c_strSVMFar:["One","Two","Four","Eight"]}
+        answer = {ConstantsMicropita.c_strSVMClose:["One","Two","Four","Eight"],ConstantsMicropita.c_strSVMFar:["One","Two","Four","Eight"]}
 
         #Set up. Write rpedict and input files
-        strPredFileContents = ConstantsMicropita.ENDLINE.join(["labels 1 0",
+        strPredFileContents = ConstantsMicropita.c_strEndline.join(["labels 1 0",
                                                       "0 0.482089 0.517911",
                                                       "0 0.409344 0.590656",
                                                       "1 0.99 0.01",
@@ -2200,7 +2201,7 @@ class MicroPITATest(unittest.TestCase):
                                                       "1 0.5 0.5",
                                                       "1 0.510373 0.489627",
                                                       "0 0.410257 0.589743"])
-        strInputFileContents = ConstantsMicropita.ENDLINE.join(["0 1:0.482089 2:0.517911",
+        strInputFileContents = ConstantsMicropita.c_strEndline.join(["0 1:0.482089 2:0.517911",
                                                       "0 1:0.464303 2:0.535697",
                                                       "0 1:0.510597",
                                                       "0 1:0.409344 2:0.590656",
@@ -2244,10 +2245,10 @@ class MicroPITATest(unittest.TestCase):
         lsSampleNames = ["One","Two","Three","Four","Five","Six","Seven","Eight"]
 
         #Answer
-        answer = {microPITA.c_strSVMClose:["Two","Six","Seven"],microPITA.c_strSVMFar:["Two","Three","Five"]}
+        answer = {ConstantsMicropita.c_strSVMClose:["Two","Six","Seven"],ConstantsMicropita.c_strSVMFar:["Two","Three","Five"]}
 
         #Set up. Write rpedict and input files
-        strPredFileContents = ConstantsMicropita.ENDLINE.join(["labels 1 0",
+        strPredFileContents = ConstantsMicropita.c_strEndline.join(["labels 1 0",
                                                       "0 0.482089 0.517911",
                                                       "0 0.409344 0.590656",
                                                       "1 0.99 0.01",
@@ -2256,7 +2257,7 @@ class MicroPITATest(unittest.TestCase):
                                                       "1 0.5 0.5",
                                                       "1 0.510373 0.489627",
                                                       "0 0.410257 0.589743"])
-        strInputFileContents = ConstantsMicropita.ENDLINE.join(["1 1:0.482089 2:0.517911",
+        strInputFileContents = ConstantsMicropita.c_strEndline.join(["1 1:0.482089 2:0.517911",
                                                       "0 1:0.464303 2:0.535697",
                                                       "1 1:0.510597",
                                                       "1 1:0.409344 2:0.590656",
@@ -2300,10 +2301,10 @@ class MicroPITATest(unittest.TestCase):
         lsSampleNames = ["One","Two","Three","Four","Five","Six","Seven","Eight","Nine","Ten"]
 
         #Answer
-        answer = {microPITA.c_strSVMClose:["Four","Seven","Six"],microPITA.c_strSVMFar:["One","Five","Three"]}
+        answer = {ConstantsMicropita.c_strSVMClose:["Four","Seven","Six"],ConstantsMicropita.c_strSVMFar:["One","Five","Three"]}
 
         #Set up. Write rpedict and input files
-        strPredFileContents = ConstantsMicropita.ENDLINE.join(["labels 1 0 2",
+        strPredFileContents = ConstantsMicropita.c_strEndline.join(["labels 1 0 2",
                                                       "0 0.1 0.5",
                                                       "1 0.2 0.8",
                                                       "2 0.99 0.01",
@@ -2312,7 +2313,7 @@ class MicroPITATest(unittest.TestCase):
                                                       "2 0.3 0.3",
                                                       "1 0.5 0.4",
                                                       "0 0.4 0.5"])
-        strInputFileContents = ConstantsMicropita.ENDLINE.join(["0 1:0.482089 2:0.517911",
+        strInputFileContents = ConstantsMicropita.c_strEndline.join(["0 1:0.482089 2:0.517911",
                                                       "1 1:0.464303 2:0.535697",
                                                       "2 1:0.510597",
                                                       "0 1:0.409344 2:0.590656",
@@ -2356,10 +2357,10 @@ class MicroPITATest(unittest.TestCase):
         lsSampleNames = ["One","Two","Three","Four","Five","Six","Seven","Eight","Nine","Ten"]
 
         #Answer
-        answer = {microPITA.c_strSVMClose:["Four","Eight","Seven","Two","Six","Three"],microPITA.c_strSVMFar:["One","Eight","Five","Two","Three","Six"]}
+        answer = {ConstantsMicropita.c_strSVMClose:["Four","Eight","Seven","Two","Six","Three"],ConstantsMicropita.c_strSVMFar:["One","Eight","Five","Two","Three","Six"]}
 
         #Set up. Write rpedict and input files
-        strPredFileContents = ConstantsMicropita.ENDLINE.join(["labels 1 0 2",
+        strPredFileContents = ConstantsMicropita.c_strEndline.join(["labels 1 0 2",
                                                       "0 0.1 0.5",
                                                       "1 0.2 0.8",
                                                       "2 0.99 0.01",
@@ -2368,7 +2369,7 @@ class MicroPITATest(unittest.TestCase):
                                                       "2 0.3 0.3",
                                                       "1 0.5 0.4",
                                                       "0 0.4 0.5"])
-        strInputFileContents = ConstantsMicropita.ENDLINE.join(["0 1:0.482089 2:0.517911",
+        strInputFileContents = ConstantsMicropita.c_strEndline.join(["0 1:0.482089 2:0.517911",
                                                       "1 1:0.464303 2:0.535697",
                                                       "2 1:0.510597",
                                                       "0 1:0.409344 2:0.590656",
@@ -2412,10 +2413,10 @@ class MicroPITATest(unittest.TestCase):
         lsSampleNames = ["One","Two","Three","Four","Five","Six","Seven","Eight"]
 
         #Answer
-        answer = {microPITA.c_strSVMClose:["One","Two","Three","Four","Five","Six","Seven","Eight"],microPITA.c_strSVMFar:["One","Two","Three","Four","Five","Six","Seven","Eight"]}
+        answer = {ConstantsMicropita.c_strSVMClose:["One","Two","Three","Four","Five","Six","Seven","Eight"],ConstantsMicropita.c_strSVMFar:["One","Two","Three","Four","Five","Six","Seven","Eight"]}
 
         #Set up. Write rpedict and input files
-        strPredFileContents = ConstantsMicropita.ENDLINE.join(["labels 1 0 2",
+        strPredFileContents = ConstantsMicropita.c_strEndline.join(["labels 1 0 2",
                                                       "0 0.1 0.5",
                                                       "1 0.2 0.8",
                                                       "2 0.99 0.01",
@@ -2424,7 +2425,7 @@ class MicroPITATest(unittest.TestCase):
                                                       "2 0.3 0.3",
                                                       "1 0.5 0.4",
                                                       "0 0.4 0.5"])
-        strInputFileContents = ConstantsMicropita.ENDLINE.join(["0 1:0.482089 2:0.517911",
+        strInputFileContents = ConstantsMicropita.c_strEndline.join(["0 1:0.482089 2:0.517911",
                                                       "1 1:0.464303 2:0.535697",
                                                       "2 1:0.510597",
                                                       "0 1:0.409344 2:0.590656",
@@ -2489,8 +2490,8 @@ class MicroPITATest(unittest.TestCase):
             os.remove(sTestFile)
 
         #Put answer in correct order
-        dictresult = dict([(sLine.split(ConstantsMicropita.TAB)[0],sLine.split(ConstantsMicropita.TAB)[1:]) for sLine in filter(None,result.split(ConstantsMicropita.ENDLINE))])
-        result = ConstantsMicropita.ENDLINE.join([ConstantsMicropita.TAB.join([sKey]+dictresult[sKey]) for sKey in lsKeys])+ConstantsMicropita.ENDLINE
+        dictresult = dict([(sLine.split(ConstantsMicropita.c_cTab)[0],sLine.split(ConstantsMicropita.c_cTab)[1:]) for sLine in filter(None,result.split(ConstantsMicropita.c_strEndline))])
+        result = ConstantsMicropita.c_strEndline.join([ConstantsMicropita.c_cTab.join([sKey]+dictresult[sKey]) for sKey in lsKeys])+ConstantsMicropita.c_strEndline
 
         #Check result against answer
         self.assertEqual(str(result),str(answer),"".join([str(self),"::Expected=",str(answer),". Received=",str(result),"."]))
@@ -2547,6 +2548,458 @@ class MicroPITATest(unittest.TestCase):
         #Check result against answer
         self.assertEqual(str(result),str(answer),"".join([str(self),"::Expected=",str(answer),". Received=",str(result),"."]))
 
+### Test funcGetAveragePopulation(abndTable, lfCompress)
+    def testFuncGetAveragePopulationForGoodCase(self):
+
+        #Inputs
+        strSelectionFile = "".join([ConstantsMicropitaTest.c_strTestingInput,"abridgedabundance.pcl"])
+        fSelectionIsNormalized = False
+        fSelectionIsSummed = False
+        sSampleIDSelection = "TID"
+        sLastMetadataSelection = "STSite"
+
+        abndTable = AbundanceTable.funcMakeFromFile(strInputFile=strSelectionFile, fIsNormalized=fSelectionIsNormalized, fIsSummed=fSelectionIsSummed,
+                    cDelimiter = "\t", sMetadataID = sSampleIDSelection, sLastMetadata = sLastMetadataSelection, cFeatureNameDelimiter="|")
+        lfCompress = [True]*10
+
+        #Correct Answer
+        answer = [22,83,79,83,15]
+
+        #Call method
+        result = MicroPITA().funcGetAveragePopulation(abndTable=abndTable, lfCompress=lfCompress)
+        #Make consistant the decimal places
+        result = [int(dValue*10) for dValue in result]
+
+        #Check result against answer
+        self.assertEqual(str(result),str(answer),"".join([str(self),"::Expected=",str(answer),". Received=",str(result),"."]))
+
+    def testFuncGetAveragePopulationForGoodCaseCollapsing4(self):
+
+        #Inputs
+        strSelectionFile = "".join([ConstantsMicropitaTest.c_strTestingInput,"abridgedabundance.pcl"])
+        fSelectionIsNormalized = False
+        fSelectionIsSummed = False
+        sSampleIDSelection = "TID"
+        sLastMetadataSelection = "STSite"
+
+        abndTable = AbundanceTable.funcMakeFromFile(strInputFile=strSelectionFile, fIsNormalized=fSelectionIsNormalized, fIsSummed=fSelectionIsSummed,
+                    cDelimiter = "\t", sMetadataID = sSampleIDSelection, sLastMetadata = sLastMetadataSelection, cFeatureNameDelimiter="|")
+        lfCompress = [True,False,True,False,False,True,True,True,True,False]
+
+        #Correct Answer
+        answer = [16,40,83,1,21]
+
+        #Call method
+        result = MicroPITA().funcGetAveragePopulation(abndTable=abndTable, lfCompress=lfCompress)
+        #Make consistant the decimal places
+        result = [int(dValue*10) for dValue in result]
+
+        #Check result against answer
+        self.assertEqual(str(result),str(answer),"".join([str(self),"::Expected=",str(answer),". Received=",str(result),"."]))
+
+    def testFuncGetAveragePopulationForGoodCaseCollapsing6(self):
+
+        #Inputs
+        strSelectionFile = "".join([ConstantsMicropitaTest.c_strTestingInput,"abridgedabundance.pcl"])
+        fSelectionIsNormalized = False
+        fSelectionIsSummed = False
+        sSampleIDSelection = "TID"
+        sLastMetadataSelection = "STSite"
+
+        abndTable = AbundanceTable.funcMakeFromFile(strInputFile=strSelectionFile, fIsNormalized=fSelectionIsNormalized, fIsSummed=fSelectionIsSummed,
+                    cDelimiter = "\t", sMetadataID = sSampleIDSelection, sLastMetadata = sLastMetadataSelection, cFeatureNameDelimiter="|")
+        lfCompress = [False,True,False,True,True,False,False,False,False,True]
+
+        #Correct Answer
+        answer = [30,147,72,205,5]
+
+        #Call method
+        result = MicroPITA().funcGetAveragePopulation(abndTable=abndTable, lfCompress=lfCompress)
+        #Make consistant the decimal places
+        result = [int(dValue*10) for dValue in result]
+
+        #Check result against answer
+        self.assertEqual(str(result),str(answer),"".join([str(self),"::Expected=",str(answer),". Received=",str(result),"."]))
+
+
+### Test funcGetDistanceFromAverage(abndTable,ldAverage,lsSamples,lfSelected,lfNotSelected)
+    def testFuncGetDistanceFromAverageForGoodCaseAverage4distance6(self):
+
+        #Inputs
+        strSelectionFile = "".join([ConstantsMicropitaTest.c_strTestingInput,"abridgedabundance.pcl"])
+        fSelectionIsNormalized = False
+        fSelectionIsSummed = False
+        sSampleIDSelection = "TID"
+        sLastMetadataSelection = "STSite"
+        lfSelected = [False,True,False,True,True,False,False,False,False,True]
+
+        abndTable = AbundanceTable.funcMakeFromFile(strInputFile=strSelectionFile, fIsNormalized=fSelectionIsNormalized, fIsSummed=fSelectionIsSummed,
+                    cDelimiter = "\t", sMetadataID = sSampleIDSelection, sLastMetadata = sLastMetadataSelection, cFeatureNameDelimiter="|")
+        ldAverage = MicroPITA().funcGetAveragePopulation(abndTable=abndTable, lfCompress=lfSelected)
+        lsSamples = abndTable.funcGetSampleNames()
+
+        #Correct Answer
+        #Correct answer from R (vegan 2.0-2)
+        #> library(vegan)
+        #Average
+        #> x = c(3.0,14.75,7.25,20.5,0.5)
+        #> y1 = c(1,0,3,0,5)
+        #> y2 = c(0.0,0.0,0.0,0.0,0.0)
+        #> y3 = c(6.0,0.0,45.0,0.0,6.0)
+        #> y4 = c(0.0,23.0,0.0,0.0,0)
+        #> y5 = c(2.0,0.0,1.0,0.0,1.0)
+        #> y6 = c(1.0,1.0,1.0,1.0,1.0)
+        #> vegdist(rbind(x,y1),method='bray')
+        #          x
+        #y 0.8363636
+        #> vegdist(rbind(x,y2),method='bray')
+        #   x
+        #y2 1
+        #> vegdist(rbind(x,y3),method='bray')
+        #           x
+        #y3 0.7912621
+        #> vegdist(rbind(x,y4),method='bray')
+        #           x
+        #y4 0.5724638
+        #> vegdist(rbind(x,y5),method='bray')
+        #      x
+        #y5 0.86
+        #> vegdist(rbind(x,y6),method='bray')
+        #           x
+        #y6 0.8235294
+
+        answer = [83,100,79,57,86,82]
+
+        #Call method
+        result = MicroPITA().funcGetDistanceFromAverage(abndTable=abndTable, ldAverage=ldAverage, lsSamples=lsSamples, lfSelected=[not fValue for fValue in lfSelected])
+        result = [int(dValue*100) for dValue in result]
+
+        #Check result against answer
+        self.assertEqual(str(result),str(answer),"".join([str(self),"::Expected=",str(answer),". Received=",str(result),"."]))
+
+    def testFuncGetDistanceFromAverageForGoodCaseAverage6distance4(self):
+
+        #Inputs
+        strSelectionFile = "".join([ConstantsMicropitaTest.c_strTestingInput,"abridgedabundance.pcl"])
+        fSelectionIsNormalized = False
+        fSelectionIsSummed = False
+        sSampleIDSelection = "TID"
+        sLastMetadataSelection = "STSite"
+        lfSelected = [True,False,True,False,False,True,True,True,True,False]
+
+        abndTable = AbundanceTable.funcMakeFromFile(strInputFile=strSelectionFile, fIsNormalized=fSelectionIsNormalized, fIsSummed=fSelectionIsSummed,
+                    cDelimiter = "\t", sMetadataID = sSampleIDSelection, sLastMetadata = sLastMetadataSelection, cFeatureNameDelimiter="|")
+        ldAverage = MicroPITA().funcGetAveragePopulation(abndTable=abndTable, lfCompress=lfSelected)
+        lsSamples = abndTable.funcGetSampleNames()
+
+        #Correct Answer
+        #Correct answer from R (vegan 2.0-2)
+        #> library(vegan)
+        #Average
+        #> x = c(1.6666666666666667, 4.0, 8.3333333333333339, 0.16666666666666666, 2.1666666666666665)
+        #> y1 = c(0.0,10.0,0.0,45.0,0.0)
+        #>            x
+        #> y1 0.8831776
+        #> y2 = c(12.0,43.0,29.0,34.0,2.0)
+        #>            x
+        #> y2 0.7628362
+        #> y3 = c(0.0,6.0,0.0,3.0,0.0)
+        #>            x
+        #> y3 0.6710526
+        #> y4 = c(0.0,0.0,0.0,0.0,0.0)
+        #>    x
+        #> y4 1
+        #> vegdist(rbind(x,y1),method='bray')
+        #> vegdist(rbind(x,y2),method='bray')
+        #> vegdist(rbind(x,y3),method='bray')
+        #> vegdist(rbind(x,y4),method='bray')
+
+        answer = [88,76,67,100]
+
+        #Call method
+        result = MicroPITA().funcGetDistanceFromAverage(abndTable=abndTable, ldAverage=ldAverage, lsSamples=lsSamples, lfSelected=[not fValue for fValue in lfSelected])
+        result = [int(dValue*100) for dValue in result]
+
+        #Check result against answer
+        self.assertEqual(str(result),str(answer),"".join([str(self),"::Expected=",str(answer),". Received=",str(result),"."]))
+
+#funcMeasureDistanceFromLabelToAverageOtherLabel
+    def testFuncMeasureDistanceFromLabelToAverageOtherLabelForGoodCase(self):
+
+        #Inputs
+        strSelectionFile = "".join([ConstantsMicropitaTest.c_strTestingInput,"abridgedabundance.pcl"])
+        fSelectionIsNormalized = False
+        fSelectionIsSummed = False
+        sSampleIDSelection = "TID"
+        sLastMetadataSelection = "STSite"
+        lfSelected = [True,True,True,True,True,False,False,False,False,False]
+
+        abndTable = AbundanceTable.funcMakeFromFile(strInputFile=strSelectionFile, fIsNormalized=fSelectionIsNormalized, fIsSummed=fSelectionIsSummed,
+                    cDelimiter = "\t", sMetadataID = sSampleIDSelection, sLastMetadata = sLastMetadataSelection, cFeatureNameDelimiter="|")
+        ldAverage = MicroPITA().funcGetAveragePopulation(abndTable=abndTable, lfCompress=lfSelected)
+
+        #Get results
+        ltpleSelected, ltpleNotSelected  = MicroPITA().funcMeasureDistanceFromLabelToAverageOtherLabel(abndTable=abndTable,
+                                                                                     lfGroup=lfSelected,
+                                                                                     lfGroupOther= [not fflage for fflage in lfSelected])
+
+        #Answer
+        #Evaluate results
+        #Correct answer from R (vegan 2.0-2)
+        #> library(vegan)
+        #Average
+        #> x1 = c(1,0,3,0,5)
+        #> x2 = c(0,10,0,45,0)
+        #> x3 = c(0,0,0,0,0)
+        #> x4 = c(12,43,29,34,2)
+        #> x5 = c(0,6,0,3,0)
+        #> x6 = c(6,0,45,0,6)
+        #> x7 = c(0,23,0,0,0)
+        #> x8 = c(2,0,1,0,1)
+        #> x9 = c(1,1,1,1,1)
+        #> x10 = c(0,0,0,0,0)
+        #> average1 = c(2.6,11.8,6.4,16.4,1.4)
+        #> average2 = c(1.8,4.8,9.4,0.2,1.6)
+        #> vegdist(rbind(average2,x1),method='bray')
+        #>     average2
+        #> x1 0.5820896
+        #> vegdist(rbind(average2,x2),method='bray')
+        #>     average2
+        #> x2 0.8626374
+        #> vegdist(rbind(average2,x3),method='bray')
+        #>    average2
+        #> x3        1
+        #> vegdist(rbind(average2,x4),method='bray')
+        #>     average2
+        #> x4 0.7416546
+        #> vegdist(rbind(average2,x5),method='bray')
+        #>     average2
+        #> x5 0.6268657
+        #> vegdist(rbind(average1,x6),method='bray')
+        #>     average1
+        #> x6 0.7824268
+        #> vegdist(rbind(average1,x7),method='bray')
+        #>     average1
+        #> x7 0.6168831
+        #> vegdist(rbind(average1,x8),method='bray')
+        #>     average1
+        #> x8 0.8122066
+        #> vegdist(rbind(average1,x9),method='bray')
+        #>     average1
+        #> x9 0.7706422
+        #> vegdist(rbind(average1,x10),method='bray')
+        #>     average1
+        #> x10        1
+        ltpleSelectedAnswer = [("700098986",0.5820896),("700098984",0.8626374),("700098982",1),("700098980",0.7416546),("700098988",0.6268657)]
+        ltpleNotSelectedAnswer = [("700037470",0.7824268),("700037472",0.6168831),("700037474",0.8122066),("700037476",0.7706422),("700037478",1)]
+
+        #Sort all results and answers
+        ltpleSelected.sort(key=operator.itemgetter(0))
+        ltpleNotSelected.sort(key=operator.itemgetter(0))
+        ltpleSelectedAnswer.sort(key=operator.itemgetter(0))
+        ltpleNotSelectedAnswer.sort(key=operator.itemgetter(0))
+
+        #Change doubles to ints so that precision issue will not throw off the tests (perserving to the 4th decimal place)
+        ltpleSelected = [(tplTuple[0],int(tplTuple[1]*10000)) for tplTuple in ltpleSelected]
+        ltpleNotSelected = [(tplTuple[0],int(tplTuple[1]*10000)) for tplTuple in ltpleNotSelected]
+        ltpleSelectedAnswer = [(tplTuple[0],int(tplTuple[1]*10000)) for tplTuple in ltpleSelectedAnswer]
+        ltpleNotSelectedAnswer = [(tplTuple[0],int(tplTuple[1]*10000)) for tplTuple in ltpleNotSelectedAnswer]
+
+        fError = False
+        strError = ""
+        for iindex, tple in enumerate(ltpleSelected):
+            if not (str(ltpleSelectedAnswer[iindex]) == str(ltpleSelected[iindex])):
+                fError = True
+                strError +=  "".join([str(ltpleSelectedAnswer[iindex])," Did not match ",str(ltpleSelected[iindex])])
+
+        for iindex, tple in enumerate(ltpleNotSelected):
+            if not (str(ltpleNotSelectedAnswer[iindex]) == str(ltpleNotSelected[iindex])):
+                fError = True
+                strError +=  "".join([str(ltpleNotSelectedAnswer[iindex])," Did not match ",str(ltpleNotSelected[iindex])])
+
+        self.assertEqual(False, fError, "".join([str(self),"::",strError,"."]))
+
+#funcPerformDistanceSelection
+    #See testFuncMeasureDistanceFromLabelToAverageOtherLabelForGoodCase for calculations in R
+    def testFuncPerformDistanceSelectionForGoodCase(self):
+
+        #Inputs
+        strSelectionFile = "".join([ConstantsMicropitaTest.c_strTestingInput,"abridgedabundance.pcl"])
+        fSelectionIsNormalized = False
+        fSelectionIsSummed = False
+        sSampleIDSelection = "TID"
+        sLastMetadataSelection = "STSite"
+        sLabel = "sLabel"
+        iSelect = 2
+
+        abndTable = AbundanceTable.funcMakeFromFile(strInputFile=strSelectionFile, fIsNormalized=fSelectionIsNormalized, fIsSummed=fSelectionIsSummed,
+                    cDelimiter = "\t", sMetadataID = sSampleIDSelection, sLastMetadata = sLastMetadataSelection, cFeatureNameDelimiter="|")
+
+        lsDisc0, lsDtnt0, lsOther0, lsDisc1, lsDtnt1, lsOther1 = MicroPITA().funcPerformDistanceSelection(abndTable=abndTable, iSelectionCount=iSelect, sLabel=sLabel)
+
+        #Answers
+        lsDisc0Answer = [("700098986",0.5820896),("700098988",0.6268657)]
+        lsDtnt0Answer = [("700098982",1),("700098984",0.8626374)]
+        lsOther0Answer = [("700098980",0.7416546)]
+        lsDisc1Answer = [("700037476",0.7706422),("700037472",0.6168831)]
+        lsDtnt1Answer = [("700037478",1),("700037474",0.8122066)]
+        lsOther1Answer = [("700037470",0.7824268)]
+
+        #Sort answers and results
+        lsDisc0Answer.sort(key=operator.itemgetter(0))
+        lsDtnt0Answer.sort(key=operator.itemgetter(0))
+        lsOther0Answer.sort(key=operator.itemgetter(0))
+        lsDisc1Answer.sort(key=operator.itemgetter(0))
+        lsDtnt1Answer.sort(key=operator.itemgetter(0))
+        lsOther1.sort(key=operator.itemgetter(0))
+        lsDisc0.sort(key=operator.itemgetter(0))
+        lsDtnt0.sort(key=operator.itemgetter(0))
+        lsOther0.sort(key=operator.itemgetter(0))
+        lsDisc1.sort(key=operator.itemgetter(0))
+        lsDtnt1.sort(key=operator.itemgetter(0))
+        lsOther1.sort(key=operator.itemgetter(0))
+
+        #Change doubles to ints so that precision issue will not throw off the tests (perserving to the 4th decimal place)
+        lsDisc0Answer = [(tplTuple[0],int(tplTuple[1]*10000)) for tplTuple in lsDisc0Answer]
+        lsDtnt0Answer = [(tplTuple[0],int(tplTuple[1]*10000)) for tplTuple in lsDtnt0Answer]
+        lsOther0Answer = [(tplTuple[0],int(tplTuple[1]*10000)) for tplTuple in lsOther0Answer]
+        lsDisc1Answer = [(tplTuple[0],int(tplTuple[1]*10000)) for tplTuple in lsDisc1Answer]
+        lsDtnt1Answer = [(tplTuple[0],int(tplTuple[1]*10000)) for tplTuple in lsDtnt1Answer]
+        lsOther1Answer = [(tplTuple[0],int(tplTuple[1]*10000)) for tplTuple in lsOther1Answer]
+        lsDisc0 = [(tplTuple[0],int(tplTuple[1]*10000)) for tplTuple in lsDisc0]
+        lsDtnt0 = [(tplTuple[0],int(tplTuple[1]*10000)) for tplTuple in lsDtnt0]
+        lsOther0 = [(tplTuple[0],int(tplTuple[1]*10000)) for tplTuple in lsOther0]
+        lsDisc1 = [(tplTuple[0],int(tplTuple[1]*10000)) for tplTuple in lsDisc1]
+        lsDtnt1 = [(tplTuple[0],int(tplTuple[1]*10000)) for tplTuple in lsDtnt1]
+        lsOther1 = [(tplTuple[0],int(tplTuple[1]*10000)) for tplTuple in lsOther1]
+
+        #Result answer pairs
+        fError = False
+        strError = ""
+        llResultAnswers = [[lsDisc1,lsDisc0Answer], [lsDtnt1,lsDtnt0Answer],
+                           [lsOther1,lsOther0Answer], [lsDisc0,lsDisc1Answer],
+                           [lsDtnt0,lsDtnt1Answer], [lsOther0,lsOther1Answer]]
+
+        for llPairs in llResultAnswers:
+            if not (len(llPairs[0]) == len(llPairs[1])):
+                fError = True
+                strError +=  "".join(["Lengths of answer and result lists did not match:",str(llPairs)])
+            else:
+                for iindex, tple in enumerate(llPairs[0]):
+                    if not (str(llPairs[0][iindex]) == str(llPairs[1][iindex])):
+                        fError = True
+                        strError +=  "".join([", ",str(llPairs[0][iindex])," Did not match ",str(llPairs[1][iindex])])
+
+        self.assertEqual(False, fError, "".join([str(self),"::",strError,"."]))
+
+#funcRunSupervisedDistancesFromCentroids
+#Test for return
+    #See testFuncMeasureDistanceFromLabelToAverageOtherLabelForGoodCase for calculations in R
+    def testFuncRunSupervisedDistancesFromCentroidsForGoodCaseCheckingReturn(self):
+
+        #Inputs
+        strSelectionFile = "".join([ConstantsMicropitaTest.c_strTestingInput,"abridgedabundance.pcl"])
+        fSelectionIsNormalized = False
+        fSelectionIsSummed = False
+        sSampleIDSelection = "TID"
+        sLastMetadataSelection = "STSite"
+        strSupervisedMetadata = "sLabel"
+        fRunDistinct = True
+        fRunDiscriminant = True
+        iSelect = 2
+        strOuputSVMFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,"testFuncRunSupervisedDistancesFromCentroidsForGoodCaseCheckingReturn-input.txt"])
+        strPredictSVMFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,"testFuncRunSupervisedDistancesFromCentroidsForGoodCaseCheckingReturn-predict.txt"])
+
+        abndTable = AbundanceTable.funcMakeFromFile(strInputFile=strSelectionFile, fIsNormalized=fSelectionIsNormalized, fIsSummed=fSelectionIsSummed,
+                    cDelimiter="\t", sMetadataID=sSampleIDSelection, sLastMetadata=sLastMetadataSelection, cFeatureNameDelimiter="|")
+
+        dictResults = MicroPITA().funcRunSupervisedDistancesFromCentroids(abundanceTable=abndTable, fRunDistinct=fRunDistinct, fRunDiscriminant=fRunDiscriminant,
+                                       strOuputSVMFile=strOuputSVMFile, strPredictSVMFile=strPredictSVMFile, strSupervisedMetadata=strSupervisedMetadata,
+                                       iSampleSVMSelectionCount=iSelect)
+
+        dictAnswer = {ConstantsMicropita.c_strDiscriminant:["700098986","700098988","700037476","700037472"],
+                      ConstantsMicropita.c_strDistinct:["700098982","700098984","700037478","700037474"]}
+
+        #Check results and answer
+        fError = False
+        strError = ""
+        for sKey in dictAnswer:
+            if not sKey in dictResults:
+                fError = True
+                strError += "".join([" Did not find key in results. Key=",sKey])
+            else:
+                if not (len(set(dictResults[sKey])&set(dictAnswer[sKey])) == (iSelect * 2)):
+                    fError = True
+                    strError += "".join([" The results for key=",sKey," were not expected.",str(dictResults[sKey])," Expected:",str(dictAnswer[sKey])])
+
+        self.assertEqual(False, fError, "".join([str(self),"::",strError,"."]))
+
+#Test for created input file
+    def testFuncRunSupervisedDistancesFromCentroidsForInputFile(self):
+
+        #Inputs
+        strSelectionFile = "".join([ConstantsMicropitaTest.c_strTestingInput,"abridgedabundance.pcl"])
+        fSelectionIsNormalized = False
+        fSelectionIsSummed = False
+        sSampleIDSelection = "TID"
+        sLastMetadataSelection = "STSite"
+        strSupervisedMetadata = "sLabel"
+        fRunDistinct = True
+        fRunDiscriminant = True
+        iSelect = 2
+        strOuputSVMFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,"testFuncRunSupervisedDistancesFromCentroidsForGoodCaseCheckingReturn-input.txt"])
+        strPredictSVMFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,"testFuncRunSupervisedDistancesFromCentroidsForGoodCaseCheckingReturn-predict.txt"])
+        strCorrectAnswerFile = "".join([ConstantsMicropitaTest.c_strTestingTruth,"testFuncRunSupervisedDistancesFromCentroidsForGoodCaseCheckingReturn-input.txt"])
+
+        abndTable = AbundanceTable.funcMakeFromFile(strInputFile=strSelectionFile, fIsNormalized=fSelectionIsNormalized, fIsSummed=fSelectionIsSummed,
+                    cDelimiter="\t", sMetadataID=sSampleIDSelection, sLastMetadata=sLastMetadataSelection, cFeatureNameDelimiter="|")
+
+        MicroPITA().funcRunSupervisedDistancesFromCentroids(abundanceTable=abndTable, fRunDistinct=fRunDistinct, fRunDiscriminant=fRunDiscriminant,
+                                       strOuputSVMFile=strOuputSVMFile, strPredictSVMFile=strPredictSVMFile, strSupervisedMetadata=strSupervisedMetadata,
+                                       iSampleSVMSelectionCount=iSelect)
+
+        #Get answer and result
+        strAnswer = ""
+        strResult = ""
+        with open( strCorrectAnswerFile, 'r') as a, open( strOuputSVMFile, 'r') as r:
+            strAnswer = a.read()
+            strResult = r.read()
+
+        self.assertEqual(str(strResult),str(strAnswer),"".join([str(self),"::Expected=",str(strAnswer),". Received=",str(strResult),"."]))
+
+#Test for created predict file
+    def testFuncRunSupervisedDistancesFromCentroidsForPredictFile(self):
+
+        #Inputs
+        strSelectionFile = "".join([ConstantsMicropitaTest.c_strTestingInput,"abridgedabundance.pcl"])
+        fSelectionIsNormalized = False
+        fSelectionIsSummed = False
+        sSampleIDSelection = "TID"
+        sLastMetadataSelection = "STSite"
+        strSupervisedMetadata = "sLabel"
+        fRunDistinct = True
+        fRunDiscriminant = True
+        iSelect = 2
+        strOuputSVMFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,"testFuncRunSupervisedDistancesFromCentroidsForGoodCaseCheckingReturn-input.txt"])
+        strPredictSVMFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,"testFuncRunSupervisedDistancesFromCentroidsForGoodCaseCheckingReturn-predict.txt"])
+        strCorrectAnswerFile = "".join([ConstantsMicropitaTest.c_strTestingTruth,"testFuncRunSupervisedDistancesFromCentroidsForGoodCaseCheckingReturn-predict.txt"])
+
+        abndTable = AbundanceTable.funcMakeFromFile(strInputFile=strSelectionFile, fIsNormalized=fSelectionIsNormalized, fIsSummed=fSelectionIsSummed,
+                    cDelimiter="\t", sMetadataID=sSampleIDSelection, sLastMetadata=sLastMetadataSelection, cFeatureNameDelimiter="|")
+
+        MicroPITA().funcRunSupervisedDistancesFromCentroids(abundanceTable=abndTable, fRunDistinct=fRunDistinct, fRunDiscriminant=fRunDiscriminant,
+                                       strOuputSVMFile=strOuputSVMFile, strPredictSVMFile=strPredictSVMFile, strSupervisedMetadata=strSupervisedMetadata,
+                                       iSampleSVMSelectionCount=iSelect)
+
+        #Get answer and result
+        strAnswer = ""
+        strResult = ""
+        with open( strCorrectAnswerFile, 'r') as a, open( strPredictSVMFile, 'r') as r:
+            strAnswer = a.read()
+            strResult = r.read()
+
+        self.assertEqual(str(strResult),str(strAnswer),"".join([str(self),"::Expected=",str(strAnswer),". Received=",str(strResult),"."]))
+
 ### Test run
     ### Run all Methods
     def nntestFuncRunForGoodCase(self):
@@ -2560,12 +3013,12 @@ class MicroPITATest(unittest.TestCase):
         fIsSummed = False
         sIDName = "ID"
         sLastMetadataName = "Label"
-        strSelection = [MicroPITA.c_strDiversity,MicroPITA.c_strExtremeDissimilarity,MicroPITA.c_strRepresentativeDissimilarity,
-                        MicroPITA.c_strTaxa,MicroPITA.c_strDiscriminant,MicroPITA.c_strDistinct]
+        strSelection = [ConstantsMicropita.c_strDiversity,ConstantsMicropita.c_strExtremeDissimilarity,ConstantsMicropita.c_strRepresentativeDissimilarity,
+                        ConstantsMicropita.c_strTaxa,ConstantsMicropita.c_strDiscriminant,ConstantsMicropita.c_strDistinct]
 
         #Other inputs
         strOutFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,sMethodName,".txt"])
-        cFileDelimiter = ConstantsMicropita.TAB
+        cFileDelimiter = ConstantsMicropita.c_cTab
         cFeatureNameDelimiter = "|"
         strFileTaxa = "".join([ConstantsMicropitaTest.c_strTestingInput+"Unbalanced48-GenNoise-0-SignalNoise-5.taxa"])
         strInputPredictFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,sMethodName,"-predictInput.txt"])
@@ -2578,7 +3031,7 @@ class MicroPITATest(unittest.TestCase):
         sLabel = "Label"
         sUnsupervisedStratify = None
         fSumData = False
-        sFeatureSelection = microPITA.c_strTargetedRanked
+        sFeatureSelection = ConstantsMicropita.c_strTargetedRanked
 
         #Answer file
         strAnswerFile = "".join([ConstantsMicropitaTest.c_strTestingTruth,sMethodName,"-Correct.txt"])
@@ -2637,9 +3090,9 @@ class MicroPITATest(unittest.TestCase):
         sSelectionCount = [ConstantsMicropita.c_strSupervisedLabelCountArgument,"3"]
         sTaxaFile = [ConstantsMicropita.c_strTargetedSelectionFileArgument,
                      "".join([ConstantsMicropitaTest.c_strTestingInput+"Unbalanced48-GenNoise-0-SignalNoise-5.taxa"])]
-        strSelection = [MicroPITA.c_strDiversity,MicroPITA.c_strExtremeDissimilarity,
-                        MicroPITA.c_strRepresentativeDissimilarity,MicroPITA.c_strTaxa,
-                        MicroPITA.c_strDiscriminant,MicroPITA.c_strDistinct]
+        strSelection = [ConstantsMicropita.c_strDiversity,ConstantsMicropita.c_strExtremeDissimilarity,
+                        ConstantsMicropita.c_strRepresentativeDissimilarity,ConstantsMicropita.c_strTaxa,
+                        ConstantsMicropita.c_strDiscriminant,ConstantsMicropita.c_strDistinct]
         sSupervisedLabel = [ConstantsMicropita.c_strSupervisedLabelArgument,"Label"]
 
         #Optional test
@@ -2689,12 +3142,12 @@ class MicroPITATest(unittest.TestCase):
         fIsSummed = False
         sIDName = "ID"
         sLastMetadataName = "Label"
-        strSelection = [MicroPITA.c_strDiversity,MicroPITA.c_strExtremeDissimilarity,MicroPITA.c_strRepresentativeDissimilarity,
-                        MicroPITA.c_strTaxa,MicroPITA.c_strDiscriminant,MicroPITA.c_strDistinct]
+        strSelection = [ConstantsMicropita.c_strDiversity,ConstantsMicropita.c_strExtremeDissimilarity,ConstantsMicropita.c_strRepresentativeDissimilarity,
+                        ConstantsMicropita.c_strTaxa,ConstantsMicropita.c_strDiscriminant,ConstantsMicropita.c_strDistinct]
 
         #Other inputs
         strOutFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,sMethodName,".txt"])
-        cFileDelimiter = ConstantsMicropita.TAB
+        cFileDelimiter = ConstantsMicropita.c_cTab
         cFeatureNameDelimiter = "|"
         strFileTaxa = "".join([ConstantsMicropitaTest.c_strTestingInput+"Unbalanced48-GenNoise-0-SignalNoise-5.taxa"])
         strInputPredictFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,sMethodName,"-predictInput.txt"])
@@ -2706,7 +3159,7 @@ class MicroPITATest(unittest.TestCase):
         sLabel = "Label"
         sUnsupervisedStratify = "Label"
         fSumData = False
-        sFeatureSelection = microPITA.c_strTargetedRanked
+        sFeatureSelection = ConstantsMicropita.c_strTargetedRanked
 
         #Answer file
         strAnswerFile = "".join([ConstantsMicropitaTest.c_strTestingTruth,sMethodName,"-Correct.txt"])
@@ -2756,12 +3209,12 @@ class MicroPITATest(unittest.TestCase):
         fIsSummed = False
         sIDName = "ID"
         sLastMetadataName = "Label"
-        strSelection = [MicroPITA.c_strDiversity,MicroPITA.c_strExtremeDissimilarity,MicroPITA.c_strRepresentativeDissimilarity,
-                        MicroPITA.c_strTaxa,MicroPITA.c_strDiscriminant,MicroPITA.c_strDistinct]
+        strSelection = [ConstantsMicropita.c_strDiversity,ConstantsMicropita.c_strExtremeDissimilarity,ConstantsMicropita.c_strRepresentativeDissimilarity,
+                        ConstantsMicropita.c_strTaxa,ConstantsMicropita.c_strDiscriminant,ConstantsMicropita.c_strDistinct]
 
         #Other inputs
         strOutFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,sMethodName,".txt"])
-        cFileDelimiter = ConstantsMicropita.TAB
+        cFileDelimiter = ConstantsMicropita.c_cTab
         cFeatureNameDelimiter = "|"
         strFileTaxa = "".join([ConstantsMicropitaTest.c_strTestingInput+"Unbalanced48-GenNoise-0-SignalNoise-5.taxa"])
         strInputPredictFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,sMethodName,"-predictInput.txt"])
@@ -2773,7 +3226,7 @@ class MicroPITATest(unittest.TestCase):
         sLabel = "Label"
         sUnsupervisedStratify = None
         fSumData = False
-        sFeatureSelection = microPITA.c_strTargetedRanked
+        sFeatureSelection = ConstantsMicropita.c_strTargetedRanked
 
         #Get result
         result = microPITA.funcRun(fIsAlreadyNormalized=fIsNormalized,
@@ -2819,12 +3272,12 @@ class MicroPITATest(unittest.TestCase):
         fIsSummed = False
         sIDName = "ID"
         sLastMetadataName = "Label"
-        strSelection = [MicroPITA.c_strDiversity,MicroPITA.c_strExtremeDissimilarity,MicroPITA.c_strRepresentativeDissimilarity,
-                        MicroPITA.c_strTaxa,MicroPITA.c_strDiscriminant,MicroPITA.c_strDistinct]
+        strSelection = [ConstantsMicropita.c_strDiversity,ConstantsMicropita.c_strExtremeDissimilarity,ConstantsMicropita.c_strRepresentativeDissimilarity,
+                        ConstantsMicropita.c_strTaxa,ConstantsMicropita.c_strDiscriminant,ConstantsMicropita.c_strDistinct]
 
         #Other inputs
         strOutFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,sMethodName,".txt"])
-        cFileDelimiter = ConstantsMicropita.TAB
+        cFileDelimiter = ConstantsMicropita.c_cTab
         cFeatureNameDelimiter = "|"
         strFileTaxa = "".join([ConstantsMicropitaTest.c_strTestingInput+"Unbalanced48-GenNoise-0-SignalNoise-5.taxa"])
         strInputPredictFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,sMethodName,"-predictInput.txt"])
@@ -2836,7 +3289,7 @@ class MicroPITATest(unittest.TestCase):
         sLabel = "Label"
         sUnsupervisedStratify = None
         fSumData = False
-        sFeatureSelection = microPITA.c_strTargetedRanked
+        sFeatureSelection = ConstantsMicropita.c_strTargetedRanked
 
         #Get result
         result = microPITA.funcRun(fIsAlreadyNormalized=fIsNormalized,
@@ -2879,12 +3332,12 @@ class MicroPITATest(unittest.TestCase):
         fIsSummed = False
         sIDName = "BADID"
         sLastMetadataName = "Label"
-        strSelection = [MicroPITA.c_strDiversity,MicroPITA.c_strExtremeDissimilarity,MicroPITA.c_strRepresentativeDissimilarity,
-                        MicroPITA.c_strTaxa,MicroPITA.c_strDiscriminant,MicroPITA.c_strDistinct]
+        strSelection = [ConstantsMicropita.c_strDiversity,ConstantsMicropita.c_strExtremeDissimilarity,ConstantsMicropita.c_strRepresentativeDissimilarity,
+                        ConstantsMicropita.c_strTaxa,ConstantsMicropita.c_strDiscriminant,ConstantsMicropita.c_strDistinct]
 
         #Other inputs
         strOutFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,sMethodName,".txt"])
-        cFileDelimiter = ConstantsMicropita.TAB
+        cFileDelimiter = ConstantsMicropita.c_cTab
         cFeatureNameDelimiter = "|"
         strFileTaxa = "".join([ConstantsMicropitaTest.c_strTestingInput+"Unbalanced48-GenNoise-0-SignalNoise-5.taxa"])
         strInputPredictFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,sMethodName,"-predictInput.txt"])
@@ -2896,7 +3349,7 @@ class MicroPITATest(unittest.TestCase):
         sLabel = "Label"
         sUnsupervisedStratify = None
         fSumData = False
-        sFeatureSelection = microPITA.c_strTargetedRanked
+        sFeatureSelection = ConstantsMicropita.c_strTargetedRanked
 
         #Get result
         result = microPITA.funcRun(fIsAlreadyNormalized=fIsNormalized,
@@ -2939,12 +3392,12 @@ class MicroPITATest(unittest.TestCase):
         fIsSummed = False
         sIDName = "ID"
         sLastMetadataName = "BADLabel"
-        lsSelection = [MicroPITA.c_strDiversity,MicroPITA.c_strExtremeDissimilarity,MicroPITA.c_strRepresentativeDissimilarity,
-                        MicroPITA.c_strTaxa,MicroPITA.c_strDiscriminant,MicroPITA.c_strDistinct]
+        lsSelection = [ConstantsMicropita.c_strDiversity,ConstantsMicropita.c_strExtremeDissimilarity,ConstantsMicropita.c_strRepresentativeDissimilarity,
+                        ConstantsMicropita.c_strTaxa,ConstantsMicropita.c_strDiscriminant,ConstantsMicropita.c_strDistinct]
 
         #Other inputs
         strOutFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,sMethodName,".txt"])
-        cFileDelimiter = ConstantsMicropita.TAB
+        cFileDelimiter = ConstantsMicropita.c_cTab
         cFeatureNameDelimiter = "|"
         strFileTaxa = "".join([ConstantsMicropitaTest.c_strTestingInput+"Unbalanced48-GenNoise-0-SignalNoise-5.taxa"])
         strInputPredictFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,sMethodName,"-predictInput.txt"])
@@ -2956,7 +3409,7 @@ class MicroPITATest(unittest.TestCase):
         sLabel = "Label"
         sUnsupervisedStratify = None
         fSumData = False
-        sFeatureSelection = microPITA.c_strTargetedRanked
+        sFeatureSelection = ConstantsMicropita.c_strTargetedRanked
 
         #Check for exception
         self.assertRaises(ValueError,
@@ -2984,7 +3437,7 @@ class MicroPITATest(unittest.TestCase):
 
         #Other inputs
         strOutFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,sMethodName,".txt"])
-        cFileDelimiter = ConstantsMicropita.TAB
+        cFileDelimiter = ConstantsMicropita.c_cTab
         cFeatureNameDelimiter = "|"
         strFileTaxa = "".join([ConstantsMicropitaTest.c_strTestingInput+sMethodName+".txt"])
         strInputPredictFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,sMethodName,"-predictInput.txt"])
@@ -2996,7 +3449,7 @@ class MicroPITATest(unittest.TestCase):
         sLabel = "Label"
         sUnsupervisedStratify = None
         fSumData = False
-        sFeatureSelection = microPITA.c_strTargetedRanked
+        sFeatureSelection = ConstantsMicropita.c_strTargetedRanked
 
         #Get result
         result = microPITA.funcRun(fIsAlreadyNormalized=fIsNormalized,
@@ -3038,12 +3491,12 @@ class MicroPITATest(unittest.TestCase):
         fIsSummed = False
         sIDName = "ID"
         sLastMetadataName = "Label"
-        strSelection = [MicroPITA.c_strDiversity,MicroPITA.c_strExtremeDissimilarity,MicroPITA.c_strRepresentativeDissimilarity,
-                        MicroPITA.c_strTaxa,MicroPITA.c_strDiscriminant,MicroPITA.c_strDistinct]
+        strSelection = [ConstantsMicropita.c_strDiversity,ConstantsMicropita.c_strExtremeDissimilarity,ConstantsMicropita.c_strRepresentativeDissimilarity,
+                        ConstantsMicropita.c_strTaxa,ConstantsMicropita.c_strDiscriminant,ConstantsMicropita.c_strDistinct]
 
         #Other inputs
         strOutFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,sMethodName,".txt"])
-        cFileDelimiter = ConstantsMicropita.TAB
+        cFileDelimiter = ConstantsMicropita.c_cTab
         cFeatureNameDelimiter = "|"
         strFileTaxa = "".join([ConstantsMicropitaTest.c_strTestingInput+"Unbalanced48-GenNoise-0-SignalNoise-5.badtaxa"])
         strInputPredictFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,sMethodName,"-predictInput.txt"])
@@ -3055,7 +3508,7 @@ class MicroPITATest(unittest.TestCase):
         sLabel = "Label"
         sUnsupervisedStratify = None
         fSumData = False
-        sFeatureSelection = microPITA.c_strTargetedRanked
+        sFeatureSelection = ConstantsMicropita.c_strTargetedRanked
 
         #Get result
         result = microPITA.funcRun(fIsAlreadyNormalized=fIsNormalized,
@@ -3097,12 +3550,12 @@ class MicroPITATest(unittest.TestCase):
         fIsSummed = False
         sIDName = "ID"
         sLastMetadataName = "Label"
-        strSelection = [MicroPITA.c_strDiversity,MicroPITA.c_strExtremeDissimilarity,MicroPITA.c_strRepresentativeDissimilarity,
-                        MicroPITA.c_strTaxa,MicroPITA.c_strDiscriminant,MicroPITA.c_strDistinct]
+        strSelection = [ConstantsMicropita.c_strDiversity,ConstantsMicropita.c_strExtremeDissimilarity,ConstantsMicropita.c_strRepresentativeDissimilarity,
+                        ConstantsMicropita.c_strTaxa,ConstantsMicropita.c_strDiscriminant,ConstantsMicropita.c_strDistinct]
 
         #Other inputs
         strOutFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,sMethodName,".txt"])
-        cFileDelimiter = ConstantsMicropita.TAB
+        cFileDelimiter = ConstantsMicropita.c_cTab
         cFeatureNameDelimiter = "|"
         strFileTaxa = None
         strInputPredictFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,sMethodName,"-predictInput.txt"])
@@ -3114,7 +3567,7 @@ class MicroPITATest(unittest.TestCase):
         sLabel = "Label"
         sUnsupervisedStratify = None
         fSumData = False
-        sFeatureSelection = microPITA.c_strTargetedRanked
+        sFeatureSelection = ConstantsMicropita.c_strTargetedRanked
 
         #Get result
         result = microPITA.funcRun(fIsAlreadyNormalized=fIsNormalized,
@@ -3156,12 +3609,12 @@ class MicroPITATest(unittest.TestCase):
         fIsSummed = False
         sIDName = "ID"
         sLastMetadataName = "Label"
-        strSelection = [MicroPITA.c_strDiversity,MicroPITA.c_strExtremeDissimilarity,MicroPITA.c_strRepresentativeDissimilarity,
-                        MicroPITA.c_strTaxa,MicroPITA.c_strDiscriminant,MicroPITA.c_strDistinct]
+        strSelection = [ConstantsMicropita.c_strDiversity,ConstantsMicropita.c_strExtremeDissimilarity,ConstantsMicropita.c_strRepresentativeDissimilarity,
+                        ConstantsMicropita.c_strTaxa,ConstantsMicropita.c_strDiscriminant,ConstantsMicropita.c_strDistinct]
 
         #Other inputs
         strOutFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,sMethodName,".txt"])
-        cFileDelimiter = ConstantsMicropita.TAB
+        cFileDelimiter = ConstantsMicropita.c_cTab
         cFeatureNameDelimiter = "|"
         strFileTaxa = "".join([ConstantsMicropitaTest.c_strTestingInput+"Unbalanced48-GenNoise-0-SignalNoise-5.taxa"])
         strInputPredictFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,sMethodName,"-predictInput.txt"])
@@ -3173,7 +3626,7 @@ class MicroPITATest(unittest.TestCase):
         sLabel = "BadLabel"
         sUnsupervisedStratify = None
         fSumData = False
-        sFeatureSelection = microPITA.c_strTargetedRanked
+        sFeatureSelection = ConstantsMicropita.c_strTargetedRanked
 
         #Answer
         answer = False
@@ -3217,12 +3670,12 @@ class MicroPITATest(unittest.TestCase):
         fIsSummed = False
         sIDName = "ID"
         sLastMetadataName = "Label"
-        strSelection = [MicroPITA.c_strDiversity,MicroPITA.c_strExtremeDissimilarity,MicroPITA.c_strRepresentativeDissimilarity,
-                        MicroPITA.c_strTaxa,MicroPITA.c_strDiscriminant,MicroPITA.c_strDistinct]
+        strSelection = [ConstantsMicropita.c_strDiversity,ConstantsMicropita.c_strExtremeDissimilarity,ConstantsMicropita.c_strRepresentativeDissimilarity,
+                        ConstantsMicropita.c_strTaxa,ConstantsMicropita.c_strDiscriminant,ConstantsMicropita.c_strDistinct]
 
         #Other inputs
         strOutFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,sMethodName,".txt"])
-        cFileDelimiter = ConstantsMicropita.TAB
+        cFileDelimiter = ConstantsMicropita.c_cTab
         cFeatureNameDelimiter = "|"
         strFileTaxa = "".join([ConstantsMicropitaTest.c_strTestingInput+"Unbalanced48-GenNoise-0-SignalNoise-5.taxa"])
         strInputPredictFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,sMethodName,"-predictInput.txt"])
@@ -3234,7 +3687,7 @@ class MicroPITATest(unittest.TestCase):
         sLabel = None
         sUnsupervisedStratify = None
         fSumData = False
-        sFeatureSelection = microPITA.c_strTargetedRanked
+        sFeatureSelection = ConstantsMicropita.c_strTargetedRanked
 
         #Get result
         result = microPITA.funcRun(fIsAlreadyNormalized=fIsNormalized,
@@ -3277,12 +3730,12 @@ class MicroPITATest(unittest.TestCase):
         fIsSummed = False
         sIDName = "ID"
         sLastMetadataName = "Label"
-        strSelection = [MicroPITA.c_strDiversity,MicroPITA.c_strExtremeDissimilarity,MicroPITA.c_strRepresentativeDissimilarity,
-                        MicroPITA.c_strTaxa,MicroPITA.c_strDiscriminant,MicroPITA.c_strDistinct]
+        strSelection = [ConstantsMicropita.c_strDiversity,ConstantsMicropita.c_strExtremeDissimilarity,ConstantsMicropita.c_strRepresentativeDissimilarity,
+                        ConstantsMicropita.c_strTaxa,ConstantsMicropita.c_strDiscriminant,ConstantsMicropita.c_strDistinct]
 
         #Other inputs
         strOutFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,sMethodName,".txt"])
-        cFileDelimiter = ConstantsMicropita.TAB
+        cFileDelimiter = ConstantsMicropita.c_cTab
         cFeatureNameDelimiter = "|"
         strFileTaxa = "".join([ConstantsMicropitaTest.c_strTestingInput+"Unbalanced48-GenNoise-0-SignalNoise-5.taxa"])
         strInputPredictFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,sMethodName,"-predictInput.txt"])
@@ -3336,9 +3789,9 @@ class MicroPITATest(unittest.TestCase):
         fIsSummed = False
         sIDName = "ID"
         sLastMetadataName = "Label"
-        cFileDelimiter = ConstantsMicropita.TAB
+        cFileDelimiter = ConstantsMicropita.c_cTab
         cFeatureNameDelimiter = "|"
-        strSelection = [MicroPITA.c_strDiversity]
+        strSelection = [ConstantsMicropita.c_strDiversity]
 
         #Other inputs
         strOutFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,sMethodName,".txt"])
@@ -3399,7 +3852,7 @@ class MicroPITATest(unittest.TestCase):
         sSumData = [ConstantsMicropita.c_strSumDataArgument]
         sLastMetadata = [ConstantsMicropita.c_strLastMetadataNameArgument,"Label"]
         sUnSelectionCount = [ConstantsMicropita.c_strUnsupervisedCountArgument,"6"]
-        strSelection = [MicroPITA.c_strDiversity]
+        strSelection = [ConstantsMicropita.c_strDiversity]
 
         #Optional test
         lsOptionalArguments = []+sLastMetadata+sUnSelectionCount+sSumData
@@ -3453,9 +3906,9 @@ class MicroPITATest(unittest.TestCase):
         fIsSummed = False
         sIDName = "ID"
         sLastMetadataName = "Label"
-        cFileDelimiter = ConstantsMicropita.TAB
+        cFileDelimiter = ConstantsMicropita.c_cTab
         cFeatureNameDelimiter = "|"
-        strSelection = [MicroPITA.c_strDiversity]
+        strSelection = [ConstantsMicropita.c_strDiversity]
 
         #Other inputs
         strOutFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,sMethodName,".txt"])
@@ -3511,9 +3964,9 @@ class MicroPITATest(unittest.TestCase):
         fIsSummed = False
         sIDName = "ID"
         sLastMetadataName = "Label"
-        cFileDelimiter = ConstantsMicropita.TAB
+        cFileDelimiter = ConstantsMicropita.c_cTab
         cFeatureNameDelimiter = "|"
-        strSelection = [MicroPITA.c_strRepresentativeDissimilarity]
+        strSelection = [ConstantsMicropita.c_strRepresentativeDissimilarity]
 
         #Other inputs
         strOutFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,sMethodName,".txt"])
@@ -3574,7 +4027,7 @@ class MicroPITATest(unittest.TestCase):
         sSumData = [ConstantsMicropita.c_strSumDataArgument]
         sLastMetadata = [ConstantsMicropita.c_strLastMetadataNameArgument,"Label"]
         sUnSelectionCount = [ConstantsMicropita.c_strUnsupervisedCountArgument,"6"]
-        strSelection = [MicroPITA.c_strRepresentativeDissimilarity]
+        strSelection = [ConstantsMicropita.c_strRepresentativeDissimilarity]
 
         #Optional test
         lsOptionalArguments = []+sLastMetadata+sUnSelectionCount+sSumData
@@ -3627,9 +4080,9 @@ class MicroPITATest(unittest.TestCase):
         fIsSummed = False
         sIDName = "ID"
         sLastMetadataName = "Label"
-        cFileDelimiter = ConstantsMicropita.TAB
+        cFileDelimiter = ConstantsMicropita.c_cTab
         cFeatureNameDelimiter = "|"
-        strSelection = [MicroPITA.c_strRepresentativeDissimilarity]
+        strSelection = [ConstantsMicropita.c_strRepresentativeDissimilarity]
 
         #Other inputs
         strOutFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,sMethodName,".txt"])
@@ -3685,9 +4138,9 @@ class MicroPITATest(unittest.TestCase):
         fIsSummed = False
         sIDName = "ID"
         sLastMetadataName = "Label"
-        cFileDelimiter = ConstantsMicropita.TAB
+        cFileDelimiter = ConstantsMicropita.c_cTab
         cFeatureNameDelimiter = "|"
-        strSelection = [MicroPITA.c_strExtremeDissimilarity]
+        strSelection = [ConstantsMicropita.c_strExtremeDissimilarity]
 
         #Other inputs
         strOutFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,sMethodName,".txt"])
@@ -3748,7 +4201,7 @@ class MicroPITATest(unittest.TestCase):
         sSumData = [ConstantsMicropita.c_strSumDataArgument]
         sLastMetadata = [ConstantsMicropita.c_strLastMetadataNameArgument,"Label"]
         sUnSelectionCount = [ConstantsMicropita.c_strUnsupervisedCountArgument,"6"]
-        strSelection = [MicroPITA.c_strExtremeDissimilarity]
+        strSelection = [ConstantsMicropita.c_strExtremeDissimilarity]
 
         #Optional test
         lsOptionalArguments = []+sLastMetadata+sUnSelectionCount+sSumData
@@ -3801,9 +4254,9 @@ class MicroPITATest(unittest.TestCase):
         fIsSummed = False
         sIDName = "ID"
         sLastMetadataName = "Label"
-        cFileDelimiter = ConstantsMicropita.TAB
+        cFileDelimiter = ConstantsMicropita.c_cTab
         cFeatureNameDelimiter = "|"
-        strSelection = [MicroPITA.c_strExtremeDissimilarity]
+        strSelection = [ConstantsMicropita.c_strExtremeDissimilarity]
 
         #Other inputs
         strOutFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,sMethodName,".txt"])
@@ -3858,13 +4311,13 @@ class MicroPITATest(unittest.TestCase):
         fIsSummed = False
         sIDName = "ID"
         sLastMetadataName = "Label"
-        cFileDelimiter = ConstantsMicropita.TAB
+        cFileDelimiter = ConstantsMicropita.c_cTab
         cFeatureNameDelimiter = "|"
-        strSelection = [MicroPITA.c_strTaxa]
+        strSelection = [ConstantsMicropita.c_strTaxa]
 
         #Other inputs
         strFileTaxa = "".join([ConstantsMicropitaTest.c_strTestingInput+"Unbalanced48-GenNoise-0-SignalNoise-5.taxa"])
-        sFeatureSelection = microPITA.c_strTargetedRanked
+        sFeatureSelection = ConstantsMicropita.c_strTargetedRanked
         strOutFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,sMethodName,".txt"])
         strInputPredictFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,sMethodName,"-predictInput.txt"])
         strPredictPredictFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,sMethodName,"-predictPredict.txt"])
@@ -3926,7 +4379,7 @@ class MicroPITATest(unittest.TestCase):
         sUnSelectionCount = [ConstantsMicropita.c_strUnsupervisedCountArgument,"6"]
         strFileTaxa = [ConstantsMicropita.c_strTargetedSelectionFileArgument,
                        "".join([ConstantsMicropitaTest.c_strTestingInput+"Unbalanced48-GenNoise-0-SignalNoise-5.taxa"])]
-        strSelection = [MicroPITA.c_strTaxa]
+        strSelection = [ConstantsMicropita.c_strTaxa]
 
         #Optional test
         lsOptionalArguments = []+sLastMetadata+sUnSelectionCount+sSumData+strFileTaxa
@@ -3980,13 +4433,13 @@ class MicroPITATest(unittest.TestCase):
         fIsSummed = False
         sIDName = "ID"
         sLastMetadataName = "Label"
-        cFileDelimiter = ConstantsMicropita.TAB
+        cFileDelimiter = ConstantsMicropita.c_cTab
         cFeatureNameDelimiter = "|"
-        strSelection = [MicroPITA.c_strTaxa]
+        strSelection = [ConstantsMicropita.c_strTaxa]
 
         #Other inputs
         strFileTaxa = "".join([ConstantsMicropitaTest.c_strTestingInput+"Unbalanced48-GenNoise-0-SignalNoise-5.taxa"])
-        sFeatureSelection = microPITA.c_strTargetedRanked
+        sFeatureSelection = ConstantsMicropita.c_strTargetedRanked
         strOutFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,sMethodName,".txt"])
         strInputPredictFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,sMethodName,"-predictInput.txt"])
         strPredictPredictFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,sMethodName,"-predictPredict.txt"])
@@ -4041,13 +4494,13 @@ class MicroPITATest(unittest.TestCase):
         fIsSummed = False
         sIDName = "ID"
         sLastMetadataName = "Label"
-        cFileDelimiter = ConstantsMicropita.TAB
+        cFileDelimiter = ConstantsMicropita.c_cTab
         cFeatureNameDelimiter = "|"
         strSelection = []
 
         #Other inputs
         strFileTaxa = "".join([ConstantsMicropitaTest.c_strTestingInput+"Unbalanced48-GenNoise-0-SignalNoise-5.taxa"])
-        sFeatureSelection = microPITA.c_strTargetedRanked
+        sFeatureSelection = ConstantsMicropita.c_strTargetedRanked
         strOutFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,sMethodName,".txt"])
         strInputPredictFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,sMethodName,"-predictInput.txt"])
         strPredictPredictFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,sMethodName,"-predictPredict.txt"])
@@ -4097,10 +4550,10 @@ class MicroPITATest(unittest.TestCase):
         fIsSummed = False
         sIDName = "ID"
         sLastMetadataName = "Label"
-        cFileDelimiter = ConstantsMicropita.TAB
+        cFileDelimiter = ConstantsMicropita.c_cTab
         cFeatureNameDelimiter = "|"
-        strSelection = [MicroPITA.c_strDiversity,MicroPITA.c_strExtremeDissimilarity,
-                        MicroPITA.c_strRepresentativeDissimilarity,MicroPITA.c_strTaxa]
+        strSelection = [ConstantsMicropita.c_strDiversity,ConstantsMicropita.c_strExtremeDissimilarity,
+                        ConstantsMicropita.c_strRepresentativeDissimilarity,ConstantsMicropita.c_strTaxa]
 
         #Other inputs
         strOutFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,sMethodName,".txt"])
@@ -4111,7 +4564,7 @@ class MicroPITATest(unittest.TestCase):
 
         iUnsupervisedSelectionCount = 6
         fSumData = False
-        sFeatureSelection = microPITA.c_strTargetedRanked
+        sFeatureSelection = ConstantsMicropita.c_strTargetedRanked
 
         #Answer file
         strAnswerFile = "".join([ConstantsMicropitaTest.c_strTestingTruth,sMethodName,"-Correct.txt"])
@@ -4167,8 +4620,8 @@ class MicroPITATest(unittest.TestCase):
         sUnSelectionCount = [ConstantsMicropita.c_strUnsupervisedCountArgument,"6"]
         sTaxaFile = [ConstantsMicropita.c_strTargetedSelectionFileArgument,
                      "".join([ConstantsMicropitaTest.c_strTestingInput+"Unbalanced48-GenNoise-0-SignalNoise-5.taxa"])]
-        strSelection = [MicroPITA.c_strDiversity,MicroPITA.c_strExtremeDissimilarity,
-                        MicroPITA.c_strRepresentativeDissimilarity,MicroPITA.c_strTaxa]
+        strSelection = [ConstantsMicropita.c_strDiversity,ConstantsMicropita.c_strExtremeDissimilarity,
+                        ConstantsMicropita.c_strRepresentativeDissimilarity,ConstantsMicropita.c_strTaxa]
 
         #Optional test
         lsOptionalArguments = []+sLastMetadata+sUnSelectionCount+sTaxaFile+sSumData
@@ -4217,10 +4670,10 @@ class MicroPITATest(unittest.TestCase):
         fIsSummed = False
         sIDName = "ID"
         sLastMetadataName = "Label"
-        cFileDelimiter = ConstantsMicropita.TAB
+        cFileDelimiter = ConstantsMicropita.c_cTab
         cFeatureNameDelimiter = "|"
-        strSelection = [MicroPITA.c_strDiversity,MicroPITA.c_strExtremeDissimilarity,
-                        MicroPITA.c_strRepresentativeDissimilarity,MicroPITA.c_strTaxa]
+        strSelection = [ConstantsMicropita.c_strDiversity,ConstantsMicropita.c_strExtremeDissimilarity,
+                        ConstantsMicropita.c_strRepresentativeDissimilarity,ConstantsMicropita.c_strTaxa]
 
         #Other inputs
         strOutFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,sMethodName,".txt"])
@@ -4231,7 +4684,7 @@ class MicroPITATest(unittest.TestCase):
 
         iUnsupervisedSelectionCount = 6
         fSumData = False
-        sFeatureSelection = microPITA.c_strTargetedRanked
+        sFeatureSelection = ConstantsMicropita.c_strTargetedRanked
 
         #Answer file
         strAnswerFile = "".join([ConstantsMicropitaTest.c_strTestingTruth,sMethodName,"-Correct.txt"])
@@ -4275,13 +4728,13 @@ class MicroPITATest(unittest.TestCase):
         fIsSummed = False
         sIDName = "ID"
         sLastMetadataName = "Label"
-        cFileDelimiter = ConstantsMicropita.TAB
+        cFileDelimiter = ConstantsMicropita.c_cTab
         cFeatureNameDelimiter = "|"
-        strSelection = [MicroPITA.c_strDiscriminant,MicroPITA.c_strDistinct]
+        strSelection = [ConstantsMicropita.c_strDiscriminant,ConstantsMicropita.c_strDistinct]
 
         #Other inputs
         strOutFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,sMethodName,".txt"])
-        cFileDelimiter = ConstantsMicropita.TAB
+        cFileDelimiter = ConstantsMicropita.c_cTab
         cFeatureNameDelimiter = "|"
         strInputPredictFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,sMethodName,"-predictInput.txt"])
         strPredictPredictFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,sMethodName,"-predictPredict.txt"])
@@ -4292,7 +4745,7 @@ class MicroPITATest(unittest.TestCase):
         sLabel = "Label"
         sUnsupervisedStratify = None
         fSumData = False
-        sFeatureSelection = microPITA.c_strTargetedRanked
+        sFeatureSelection = ConstantsMicropita.c_strTargetedRanked
 
         #Answer file
         strAnswerFile = "".join([ConstantsMicropitaTest.c_strTestingTruth,sMethodName,"-Correct.txt"])
@@ -4350,7 +4803,7 @@ class MicroPITATest(unittest.TestCase):
         sSumData = [ConstantsMicropita.c_strSumDataArgument]
         sLastMetadata = [ConstantsMicropita.c_strLastMetadataNameArgument,"Label"]
         sSelectionCount = [ConstantsMicropita.c_strSupervisedLabelCountArgument,"3"]
-        strSelection = [MicroPITA.c_strDiscriminant,MicroPITA.c_strDistinct]
+        strSelection = [ConstantsMicropita.c_strDiscriminant,ConstantsMicropita.c_strDistinct]
         sSupervisedLabel = [ConstantsMicropita.c_strSupervisedLabelArgument,"Label"]
 
         #Optional test
@@ -4402,13 +4855,13 @@ class MicroPITATest(unittest.TestCase):
         fIsSummed = False
         sIDName = "ID"
         sLastMetadataName = "Label"
-        cFileDelimiter = ConstantsMicropita.TAB
+        cFileDelimiter = ConstantsMicropita.c_cTab
         cFeatureNameDelimiter = "|"
-        strSelection = [MicroPITA.c_strDiscriminant]
+        strSelection = [ConstantsMicropita.c_strDiscriminant]
 
         #Other inputs
         strOutFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,sMethodName,".txt"])
-        cFileDelimiter = ConstantsMicropita.TAB
+        cFileDelimiter = ConstantsMicropita.c_cTab
         cFeatureNameDelimiter = "|"
         strInputPredictFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,sMethodName,"-predictInput.txt"])
         strPredictPredictFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,sMethodName,"-predictPredict.txt"])
@@ -4419,7 +4872,7 @@ class MicroPITATest(unittest.TestCase):
         sLabel = "Label"
         sUnsupervisedStratify = None
         fSumData = False
-        sFeatureSelection = microPITA.c_strTargetedRanked
+        sFeatureSelection = ConstantsMicropita.c_strTargetedRanked
 
         #Answer file
         strAnswerFile = "".join([ConstantsMicropitaTest.c_strTestingTruth,sMethodName,"-Correct.txt"])
@@ -4477,7 +4930,7 @@ class MicroPITATest(unittest.TestCase):
         sSumData = [ConstantsMicropita.c_strSumDataArgument]
         sLastMetadata = [ConstantsMicropita.c_strLastMetadataNameArgument,"Label"]
         sSelectionCount = [ConstantsMicropita.c_strSupervisedLabelCountArgument,"3"]
-        strSelection = [MicroPITA.c_strDiscriminant]
+        strSelection = [ConstantsMicropita.c_strDiscriminant]
         sSupervisedLabel = [ConstantsMicropita.c_strSupervisedLabelArgument,"Label"]
 
         #Optional test
@@ -4528,13 +4981,13 @@ class MicroPITATest(unittest.TestCase):
         fIsSummed = False
         sIDName = "ID"
         sLastMetadataName = "Label"
-        cFileDelimiter = ConstantsMicropita.TAB
+        cFileDelimiter = ConstantsMicropita.c_cTab
         cFeatureNameDelimiter = "|"
-        strSelection = [MicroPITA.c_strDistinct]
+        strSelection = [ConstantsMicropita.c_strDistinct]
 
         #Other inputs
         strOutFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,sMethodName,".txt"])
-        cFileDelimiter = ConstantsMicropita.TAB
+        cFileDelimiter = ConstantsMicropita.c_cTab
         cFeatureNameDelimiter = "|"
         strInputPredictFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,sMethodName,"-predictInput.txt"])
         strPredictPredictFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,sMethodName,"-predictPredict.txt"])
@@ -4545,7 +4998,7 @@ class MicroPITATest(unittest.TestCase):
         sLabel = "Label"
         sUnsupervisedStratify = None
         fSumData = False
-        sFeatureSelection = microPITA.c_strTargetedRanked
+        sFeatureSelection = ConstantsMicropita.c_strTargetedRanked
 
         #Get result
         result = microPITA.funcRun(fIsAlreadyNormalized=fIsNormalized,
@@ -4601,7 +5054,7 @@ class MicroPITATest(unittest.TestCase):
         sLastMetadata = [ConstantsMicropita.c_strLastMetadataNameArgument,"Label"]
         sSelectionCount = [ConstantsMicropita.c_strSupervisedLabelCountArgument,"3"]
         sSupervisedLabel = [ConstantsMicropita.c_strSupervisedLabelArgument,"Label"]
-        strSelection = [MicroPITA.c_strDistinct]
+        strSelection = [ConstantsMicropita.c_strDistinct]
 
         #Optional test
         lsOptionalArguments = []+sLastMetadata+sSelectionCount+sSumData+sSupervisedLabel
