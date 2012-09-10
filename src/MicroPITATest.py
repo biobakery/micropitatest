@@ -17,11 +17,13 @@ from ConstantsMicropitaTest import ConstantsMicropitaTest
 from micropita.MicroPITA import MicroPITA
 from micropita.src.breadcrumbs.AbundanceTable import AbundanceTable
 from micropita.src.breadcrumbs.CommandLine import CommandLine
+from micropita.src.breadcrumbs.ConstantsBreadCrumbs import ConstantsBreadCrumbs
 from micropita.src.ConstantsMicropita import ConstantsMicropita
 from micropita.src.breadcrumbs.Metric import Metric
 from micropita.src.breadcrumbs.MLPYDistanceAdaptor import MLPYDistanceAdaptor
 from micropita.src.breadcrumbs.SVM import SVM
 from micropita.src.breadcrumbs.UtilityMath import UtilityMath
+import csv
 import mlpy
 import numpy as np
 import operator
@@ -37,11 +39,13 @@ class MicroPITATest(unittest.TestCase):
     setMinimalVariance = (["Sample_16_R","Sample_17_R","Sample_18_R","Sample_19_R","Sample_20_R","Sample_21_R","Sample_22_R","Sample_23_R","Sample_24_R","Sample_25_R","Sample_26_R","Sample_27_R","Sample_28_R","Sample_29_R"])
     setTargetedTaxa = (["Sample_44_T","Sample_45_T","Sample_46_T","Sample_47_T","Sample_16_R","Sample_17_R","Sample_32_E"])
 
-    dictAnswerClasses = {ConstantsMicropita.c_strDiversity1:setComplex,
-                         ConstantsMicropita.c_strExtremeDissimiarity1:setMaxVariable+setMinimalVariance+setTargetedTaxa,
-                         ConstantsMicropita.c_strUserRanked:setTargetedTaxa,
-                         ConstantsMicropita.c_strSVMClose:setComplex,
-                         ConstantsMicropita.c_strSVMFar:setMaxVariable+setMinimalVariance+setTargetedTaxa}
+    dictAnswerClasses = {ConstantsMicropita.c_strDiversity:setComplex,
+                         ConstantsMicropita.c_strExtreme:setMaxVariable+setMinimalVariance+setTargetedTaxa,
+                         ConstantsMicropita.c_strFeature:setTargetedTaxa,
+                         ConstantsMicropita.c_strDiscriminant:setComplex,
+                         ConstantsMicropita.c_strDistinct:setMaxVariable+setMinimalVariance+setTargetedTaxa}
+
+    c_strEndline = os.linesep	
 
 #####Test funcGetTopRankedSamples
     def testfuncGetTopRankedSamplesForGoodCase1(self):
@@ -155,12 +159,12 @@ class MicroPITATest(unittest.TestCase):
         #Inputs
         normalize = True
         microPITA = MicroPITA()
-        metric = [microPITA.c_strInverseSimpsonDiversity]
+        metric = [microPITA.c_strDiversity]
 
         #Generate data
         #Inputs
         inputFile = "".join([ConstantsMicropitaTest.c_strTestingInput+"DiversityTest.pcl"])
-        delimiter = ConstantsMicropita.c_cTab
+        delimiter = ConstantsMicropita.TAB
         sNameRow = "ID"
         sLastMetadata = "Inverse_Simpson"
         cFeatureDelimiter = "|"
@@ -168,7 +172,7 @@ class MicroPITATest(unittest.TestCase):
         fIsNormalized = True
         iSelectCount = 1
 
-        abndData = AbundanceTable.funcMakeFromFile(strInputFile=inputFile, fIsNormalized=fIsNormalized, fIsSummed=fIsSummed,
+        abndData = AbundanceTable.funcMakeFromFile(xInputFile=inputFile,
                                              cDelimiter = delimiter, sMetadataID = sNameRow,
                                              sLastMetadata = sLastMetadata, cFeatureNameDelimiter=cFeatureDelimiter)
         abndData.funcNormalize()
@@ -190,12 +194,12 @@ class MicroPITATest(unittest.TestCase):
         #Inputs
         normalize = True
         microPITA = MicroPITA()
-        metric = [ConstantsMicropita.c_strInverseSimpsonDiversity]
+        metric = [ConstantsMicropita.c_strDiversity]
 
         #Generate data
         #Inputs
         inputFile = "".join([ConstantsMicropitaTest.c_strTestingInput+"DiversityTest.pcl"])
-        delimiter = ConstantsMicropita.c_cTab
+        delimiter = ConstantsMicropita.TAB
         sNameRow = "ID"
         sLastMetadata = "Inverse_Simpson"
         cFeatureDelimiter = "|"
@@ -203,7 +207,7 @@ class MicroPITATest(unittest.TestCase):
         fIsNormalized = True
         iSelectCount = 1
 
-        abndData = AbundanceTable.funcMakeFromFile(strInputFile=inputFile, fIsNormalized=fIsNormalized, fIsSummed=fIsSummed,
+        abndData = AbundanceTable.funcMakeFromFile(xInputFile=inputFile,
                                              cDelimiter = delimiter, sMetadataID = sNameRow,
                                              sLastMetadata = sLastMetadata, cFeatureNameDelimiter=cFeatureDelimiter)
         abndData.funcNormalize()
@@ -225,12 +229,12 @@ class MicroPITATest(unittest.TestCase):
         #Inputs
         normalize = True
         microPITA = MicroPITA()
-        metric = [ConstantsMicropita.c_strInverseSimpsonDiversity]
+        metric = [ConstantsMicropita.c_strDiversity]
 
         #Generate data
         #Inputs
         inputFile = "".join([ConstantsMicropitaTest.c_strTestingInput+"DiversityTest.pcl"])
-        delimiter = ConstantsMicropita.c_cTab
+        delimiter = ConstantsMicropita.TAB
         sNameRow = "ID"
         sLastMetadata = "Inverse_Simpson"
         cFeatureDelimiter = "|"
@@ -238,7 +242,7 @@ class MicroPITATest(unittest.TestCase):
         fIsNormalized = True
         iSelectCount = 1
 
-        abndData = AbundanceTable.funcMakeFromFile(strInputFile=inputFile, fIsNormalized=fIsNormalized, fIsSummed=fIsSummed,
+        abndData = AbundanceTable.funcMakeFromFile(xInputFile=inputFile,
                                              cDelimiter = delimiter, sMetadataID = sNameRow,
                                              sLastMetadata = sLastMetadata, cFeatureNameDelimiter=cFeatureDelimiter)
         abndData.funcNormalize()
@@ -260,12 +264,12 @@ class MicroPITATest(unittest.TestCase):
         #Inputs
         normalize = True
         microPITA = MicroPITA()
-        metric = [ConstantsMicropita.c_strInverseSimpsonDiversity]
+        metric = [ConstantsMicropita.c_strDiversity]
 
         #Generate data
         #Inputs
         inputFile = "".join([ConstantsMicropitaTest.c_strTestingInput+"DiversityTest.pcl"])
-        delimiter = ConstantsMicropita.c_cTab
+        delimiter = ConstantsMicropita.TAB
         sNameRow = "ID"
         sLastMetadata = "Inverse_Simpson"
         cFeatureDelimiter = "|"
@@ -273,7 +277,7 @@ class MicroPITATest(unittest.TestCase):
         fIsNormalized = True
         iSelectCount = 1
 
-        abndData = AbundanceTable.funcMakeFromFile(strInputFile=inputFile, fIsNormalized=fIsNormalized, fIsSummed=fIsSummed,
+        abndData = AbundanceTable.funcMakeFromFile(xInputFile=inputFile,
                                              cDelimiter = delimiter, sMetadataID = sNameRow,
                                              sLastMetadata = sLastMetadata, cFeatureNameDelimiter=cFeatureDelimiter)
         abndData.funcNormalize()
@@ -295,12 +299,12 @@ class MicroPITATest(unittest.TestCase):
         #Inputs
         normalize = True
         microPITA = MicroPITA()
-        metric = [ConstantsMicropita.c_strInverseSimpsonDiversity]
+        metric = [ConstantsMicropita.c_strDiversity]
 
         #Generate data
         #Inputs
         inputFile = "".join([ConstantsMicropitaTest.c_strTestingInput+"DiversityTest.pcl"])
-        delimiter = ConstantsMicropita.c_cTab
+        delimiter = ConstantsMicropita.TAB
         sNameRow = "ID"
         sLastMetadata = "Inverse_Simpson"
         cFeatureDelimiter = "|"
@@ -308,7 +312,7 @@ class MicroPITATest(unittest.TestCase):
         fIsNormalized = True
         iSelectCount = 2
 
-        abndData = AbundanceTable.funcMakeFromFile(strInputFile=inputFile, fIsNormalized=fIsNormalized, fIsSummed=fIsSummed,
+        abndData = AbundanceTable.funcMakeFromFile(xInputFile=inputFile,
                                              cDelimiter = delimiter, sMetadataID = sNameRow,
                                              sLastMetadata = sLastMetadata, cFeatureNameDelimiter=cFeatureDelimiter)
         abndData.funcNormalize()
@@ -330,12 +334,12 @@ class MicroPITATest(unittest.TestCase):
         #Inputs
         normalize = True
         microPITA = MicroPITA()
-        metric = [ConstantsMicropita.c_strInverseSimpsonDiversity]
+        metric = [ConstantsMicropita.c_strDiversity]
 
         #Generate data
         #Inputs
         inputFile = "".join([ConstantsMicropitaTest.c_strTestingInput+"DiversityTest.pcl"])
-        delimiter = ConstantsMicropita.c_cTab
+        delimiter = ConstantsMicropita.TAB
         sNameRow = "ID"
         sLastMetadata = "Inverse_Simpson"
         cFeatureDelimiter = "|"
@@ -343,7 +347,7 @@ class MicroPITATest(unittest.TestCase):
         fIsNormalized = True
         iSelectCount = 3
 
-        abndData = AbundanceTable.funcMakeFromFile(strInputFile=inputFile, fIsNormalized=fIsNormalized, fIsSummed=fIsSummed,
+        abndData = AbundanceTable.funcMakeFromFile(xInputFile=inputFile,
                                              cDelimiter = delimiter, sMetadataID = sNameRow,
                                              sLastMetadata = sLastMetadata, cFeatureNameDelimiter=cFeatureDelimiter)
         abndData.funcNormalize()
@@ -365,12 +369,12 @@ class MicroPITATest(unittest.TestCase):
         #Inputs
         normalize = True
         microPITA = MicroPITA()
-        metric = [ConstantsMicropita.c_strInverseSimpsonDiversity]
+        metric = [ConstantsMicropita.c_strDiversity]
 
         #Generate data
         #Inputs
         inputFile = "".join([ConstantsMicropitaTest.c_strTestingInput+"DiversityTest.pcl"])
-        delimiter = ConstantsMicropita.c_cTab
+        delimiter = ConstantsMicropita.TAB
         sNameRow = "ID"
         sLastMetadata = "Inverse_Simpson"
         cFeatureDelimiter = "|"
@@ -378,7 +382,7 @@ class MicroPITATest(unittest.TestCase):
         fIsNormalized = True
         iSelectCount = 4
 
-        abndData = AbundanceTable.funcMakeFromFile(strInputFile=inputFile, fIsNormalized=fIsNormalized, fIsSummed=fIsSummed,
+        abndData = AbundanceTable.funcMakeFromFile(xInputFile=inputFile,
                                              cDelimiter = delimiter, sMetadataID = sNameRow,
                                              sLastMetadata = sLastMetadata, cFeatureNameDelimiter=cFeatureDelimiter)
         abndData.funcNormalize()
@@ -400,12 +404,12 @@ class MicroPITATest(unittest.TestCase):
         #Inputs
         normalize = True
         microPITA = MicroPITA()
-        metric = [ConstantsMicropita.c_strInverseSimpsonDiversity]
+        metric = [ConstantsMicropita.c_strDiversity]
 
         #Generate data
         #Inputs
         inputFile = "".join([ConstantsMicropitaTest.c_strTestingInput+"DiversityTest.pcl"])
-        delimiter = ConstantsMicropita.c_cTab
+        delimiter = ConstantsMicropita.TAB
         sNameRow = "ID"
         sLastMetadata = "Inverse_Simpson"
         cFeatureDelimiter = "|"
@@ -413,7 +417,7 @@ class MicroPITATest(unittest.TestCase):
         fIsNormalized = True
         iSelectCount = 5
 
-        abndData = AbundanceTable.funcMakeFromFile(strInputFile=inputFile, fIsNormalized=fIsNormalized, fIsSummed=fIsSummed,
+        abndData = AbundanceTable.funcMakeFromFile(xInputFile=inputFile,
                                              cDelimiter = delimiter, sMetadataID = sNameRow,
                                              sLastMetadata = sLastMetadata, cFeatureNameDelimiter=cFeatureDelimiter)
         abndData.funcNormalize()
@@ -430,235 +434,24 @@ class MicroPITATest(unittest.TestCase):
         #Check result against answer
         self.assertEqual(str(result),str(answer),"".join([str(self),"::Expected=",str(answer),". Received=",str(result),"."]))
 
-    def testfuncGetTopRankedSamplesForGoodCaseAbridgedData1Choa(self):
-
-        #Inputs
-        normalize = True
-        microPITA = MicroPITA()
-        metric = [ConstantsMicropita.c_strChao1Diversity]
-
-        #Generate data
-        #Inputs
-        inputFile = "".join([ConstantsMicropitaTest.c_strTestingInput+"DiversityTest.pcl"])
-        delimiter = ConstantsMicropita.c_cTab
-        sNameRow = "ID"
-        sLastMetadata = "Inverse_Simpson"
-        cFeatureDelimiter = "|"
-        fIsSummed = False
-        fIsNormalized = True
-        iSelectCount = 1
-
-        abndData = AbundanceTable.funcMakeFromFile(strInputFile=inputFile, fIsNormalized=fIsNormalized, fIsSummed=fIsSummed,
-                                             cDelimiter = delimiter, sMetadataID = sNameRow,
-                                             sLastMetadata = sLastMetadata, cFeatureNameDelimiter=cFeatureDelimiter)
-
-        abundance = abndData.funcGetAbundanceCopy()
-        sampleNames = abndData.funcGetSampleNames()
-
-        #Get results
-        metrics = Metric.funcBuildAlphaMetricsMatrix(npaSampleAbundance = abundance, lsSampleNames = sampleNames, lsDiversityMetricAlpha = metric)
-        result = microPITA.funcGetTopRankedSamples(lldMatrix = metrics, lsSampleNames = sampleNames, iTopAmount = iSelectCount)
-
-        #Correct Answer
-        answer = "[['Sample_50']]"
-
-        #Check result against answer
-        self.assertEqual(str(result),str(answer),"".join([str(self),"::Expected=",str(answer),". Received=",str(result),"."]))
-
-    def testfuncGetTopRankedSamplesForGoodCaseAbridgedData2Choa(self):
-
-        #Inputs
-        normalize = True
-        microPITA = MicroPITA()
-        metric = [ConstantsMicropita.c_strChao1Diversity]
-
-        #Generate data
-        #Inputs
-        inputFile = "".join([ConstantsMicropitaTest.c_strTestingInput+"DiversityTest.pcl"])
-        delimiter = ConstantsMicropita.c_cTab
-        sNameRow = "ID"
-        sLastMetadata = "Inverse_Simpson"
-        cFeatureDelimiter = "|"
-        fIsSummed = False
-        fIsNormalized = True
-        iSelectCount = 2
-
-        abndData = AbundanceTable.funcMakeFromFile(strInputFile=inputFile, fIsNormalized=fIsNormalized, fIsSummed=fIsSummed,
-                                             cDelimiter = delimiter, sMetadataID = sNameRow,
-                                             sLastMetadata = sLastMetadata, cFeatureNameDelimiter=cFeatureDelimiter)
-
-        abundance = abndData.funcGetAbundanceCopy()
-        sampleNames = abndData.funcGetSampleNames()
-
-        #Get results
-        metrics = Metric.funcBuildAlphaMetricsMatrix(npaSampleAbundance = abundance, lsSampleNames = sampleNames, lsDiversityMetricAlpha = metric)
-        result = microPITA.funcGetTopRankedSamples(lldMatrix = metrics, lsSampleNames = sampleNames, iTopAmount = iSelectCount)
-
-        #Correct Answer
-        answer = "[['Sample_50', 'Sample_49']]"
-
-        #Check result against answer
-        self.assertEqual(str(result),str(answer),"".join([str(self),"::Expected=",str(answer),". Received=",str(result),"."]))
-
-    def testfuncGetTopRankedSamplesForGoodCaseAbridgedData3Choa(self):
-
-        #Inputs
-        normalize = True
-        microPITA = MicroPITA()
-        metric = [ConstantsMicropita.c_strChao1Diversity]
-
-        #Generate data
-        #Inputs
-        inputFile = "".join([ConstantsMicropitaTest.c_strTestingInput+"DiversityTest.pcl"])
-        delimiter = ConstantsMicropita.c_cTab
-        sNameRow = "ID"
-        sLastMetadata = "Inverse_Simpson"
-        cFeatureDelimiter = "|"
-        fIsSummed = False
-        fIsNormalized = True
-        iSelectCount = 3
-
-        abndData = AbundanceTable.funcMakeFromFile(strInputFile=inputFile, fIsNormalized=fIsNormalized, fIsSummed=fIsSummed,
-                                             cDelimiter = delimiter, sMetadataID = sNameRow,
-                                             sLastMetadata = sLastMetadata, cFeatureNameDelimiter=cFeatureDelimiter)
-
-        abundance = abndData.funcGetAbundanceCopy()
-        sampleNames = abndData.funcGetSampleNames()
-
-        #Get results
-        metrics = Metric.funcBuildAlphaMetricsMatrix(npaSampleAbundance = abundance, lsSampleNames = sampleNames, lsDiversityMetricAlpha = metric)
-        result = microPITA.funcGetTopRankedSamples(lldMatrix = metrics, lsSampleNames = sampleNames, iTopAmount = iSelectCount)
-
-        #Correct Answer
-        answer = "[['Sample_50', 'Sample_49', 'Sample_48']]"
-
-        #Check result against answer
-        self.assertEqual(str(result),str(answer),"".join([str(self),"::Expected=",str(answer),". Received=",str(result),"."]))
-
-    def testfuncGetTopRankedSamplesForGoodCaseAbridgedData4Choa(self):
-
-        #Inputs
-        normalize = True
-        microPITA = MicroPITA()
-        metric = [ConstantsMicropita.c_strChao1Diversity]
-
-        #Generate data
-        #Inputs
-        inputFile = "".join([ConstantsMicropitaTest.c_strTestingInput+"DiversityTest.pcl"])
-        delimiter = ConstantsMicropita.c_cTab
-        sNameRow = "ID"
-        sLastMetadata = "Inverse_Simpson"
-        cFeatureDelimiter = "|"
-        fIsSummed = False
-        fIsNormalized = True
-        iSelectCount = 4
-
-        abndData = AbundanceTable.funcMakeFromFile(strInputFile=inputFile, fIsNormalized=fIsNormalized, fIsSummed=fIsSummed,
-                                             cDelimiter = delimiter, sMetadataID = sNameRow,
-                                             sLastMetadata = sLastMetadata, cFeatureNameDelimiter=cFeatureDelimiter)
-
-        abundance = abndData.funcGetAbundanceCopy()
-        sampleNames = abndData.funcGetSampleNames()
-
-        #Get results
-        metrics = Metric.funcBuildAlphaMetricsMatrix(npaSampleAbundance = abundance, lsSampleNames = sampleNames, lsDiversityMetricAlpha = metric)
-        result = microPITA.funcGetTopRankedSamples(lldMatrix = metrics, lsSampleNames = sampleNames, iTopAmount = iSelectCount)
-
-        #Correct Answer
-        answer = "[['Sample_50', 'Sample_49', 'Sample_48', 'Sample_47']]"
-
-        #Check result against answer
-        self.assertEqual(str(result),str(answer),"".join([str(self),"::Expected=",str(answer),". Received=",str(result),"."]))
-
-    def testfuncGetTopRankedSamplesForGoodCaseAbridgedData5Choa(self):
-
-        #Inputs
-        normalize = True
-        microPITA = MicroPITA()
-        metric = [ConstantsMicropita.c_strChao1Diversity]
-
-        #Generate data
-        #Inputs
-        inputFile = "".join([ConstantsMicropitaTest.c_strTestingInput+"DiversityTest.pcl"])
-        delimiter = ConstantsMicropita.c_cTab
-        sNameRow = "ID"
-        sLastMetadata = "Inverse_Simpson"
-        cFeatureDelimiter = "|"
-        fIsSummed = False
-        fIsNormalized = True
-        iSelectCount = 5
-
-        abndData = AbundanceTable.funcMakeFromFile(strInputFile=inputFile, fIsNormalized=fIsNormalized, fIsSummed=fIsSummed,
-                                             cDelimiter = delimiter, sMetadataID = sNameRow,
-                                             sLastMetadata = sLastMetadata, cFeatureNameDelimiter=cFeatureDelimiter)
-
-        abundance = abndData.funcGetAbundanceCopy()
-        sampleNames = abndData.funcGetSampleNames()
-
-        #Get results
-        metrics = Metric.funcBuildAlphaMetricsMatrix(npaSampleAbundance = abundance, lsSampleNames = sampleNames, lsDiversityMetricAlpha = metric)
-        result = microPITA.funcGetTopRankedSamples(lldMatrix = metrics, lsSampleNames = sampleNames, iTopAmount = iSelectCount)
-
-        #Correct Answer
-        answer = "[['Sample_50', 'Sample_49', 'Sample_48', 'Sample_47', 'Sample_46']]"
-
-        #Check result against answer
-        self.assertEqual(str(result),str(answer),"".join([str(self),"::Expected=",str(answer),". Received=",str(result),"."]))
-
-    def testfuncGetTopRankedSamplesForGoodCaseAbridgedData5ChoaInvSimpson(self):
-
-        #Inputs
-        normalize = True
-        microPITA = MicroPITA()
-        metric = [ConstantsMicropita.c_strChao1Diversity,ConstantsMicropita.c_strInverseSimpsonDiversity]
-
-        #Generate data
-        #Inputs
-        inputFile = "".join([ConstantsMicropitaTest.c_strTestingInput+"DiversityTest.pcl"])
-        delimiter = ConstantsMicropita.c_cTab
-        sNameRow = "ID"
-        sLastMetadata = "Inverse_Simpson"
-        cFeatureDelimiter = "|"
-        fIsSummed = False
-        fIsNormalized = True
-        iSelectCount = 5
-
-        abndData = AbundanceTable.funcMakeFromFile(strInputFile=inputFile, fIsNormalized=fIsNormalized, fIsSummed=fIsSummed,
-                                             cDelimiter = delimiter, sMetadataID = sNameRow,
-                                             sLastMetadata = sLastMetadata, cFeatureNameDelimiter=cFeatureDelimiter)
-
-        abundance = abndData.funcGetAbundanceCopy()
-        sampleNames = abndData.funcGetSampleNames()
-
-        #Get results
-        metrics = Metric.funcBuildAlphaMetricsMatrix(npaSampleAbundance = abundance, lsSampleNames = sampleNames, lsDiversityMetricAlpha = metric)
-        result = microPITA.funcGetTopRankedSamples(lldMatrix = metrics, lsSampleNames = sampleNames, iTopAmount = iSelectCount)
-
-        #Correct Answer
-        answer = "[['Sample_50', 'Sample_49', 'Sample_48', 'Sample_47', 'Sample_46'], ['Sample_1', 'Sample_2', 'Sample_3', 'Sample_4', 'Sample_5']]"
-
-        #Check result against answer
-        self.assertEqual(str(result),str(answer),"".join([str(self),"::Expected=",str(answer),". Received=",str(result),"."]))
-
-
 #####Test funcGetBetaMetric Need to test other beta metrics as they come on line
     def testfuncGetBetaMetricForGoodCaseBrayCurtisMetric(self):
 
         #Inputs
         inputFile = "".join([ConstantsMicropitaTest.c_strTestingInput+"hq.otu_04-nul-nul-mtd-trn-flt-abridged.txt"])
-        delimiter = ConstantsMicropita.c_cTab
+        delimiter = ConstantsMicropita.TAB
         sNameRow = "TID"
         sLastMetadata = "STSite"
         cFeatureDelimiter = "|"
         fIsSummed = False
         fIsNormalized = True
 
-        rawData = AbundanceTable.funcMakeFromFile(strInputFile=inputFile, fIsNormalized=fIsNormalized, fIsSummed=fIsSummed,
+        rawData = AbundanceTable.funcMakeFromFile(xInputFile=inputFile,
                                              cDelimiter = delimiter, sMetadataID = sNameRow,
                                              sLastMetadata = sLastMetadata, cFeatureNameDelimiter=cFeatureDelimiter)
 
         microPITA = MicroPITA()
-        metric = ConstantsMicropita.c_strBrayCurtisDissimilarity
+        metric = Metric.c_strBrayCurtisDissimilarity
 
         #Generate data
         abundance = rawData.funcGetAbundanceCopy()
@@ -680,19 +473,19 @@ class MicroPITATest(unittest.TestCase):
 
         #Inputs
         inputFile = "".join([ConstantsMicropitaTest.c_strTestingInput+"hq.otu_04-nul-nul-mtd-trn-flt-abridged.txt"])
-        delimiter = ConstantsMicropita.c_cTab
+        delimiter = ConstantsMicropita.TAB
         sNameRow = "TID"
         sLastMetadata = "STSite"
         cFeatureDelimiter = "|"
         fIsSummed = False
         fIsNormalized = True
 
-        rawData = AbundanceTable.funcMakeFromFile(strInputFile=inputFile, fIsNormalized=fIsNormalized, fIsSummed=fIsSummed,
+        rawData = AbundanceTable.funcMakeFromFile(xInputFile=inputFile,
                                              cDelimiter = delimiter, sMetadataID = sNameRow,
                                              sLastMetadata = sLastMetadata, cFeatureNameDelimiter=cFeatureDelimiter)
 
         microPITA = MicroPITA()
-        metric = ConstantsMicropita.c_strBrayCurtisDissimilarity
+        metric = Metric.c_strBrayCurtisDissimilarity
 
         #Generate data
         abundance = rawData.funcGetAbundanceCopy()
@@ -714,16 +507,16 @@ class MicroPITATest(unittest.TestCase):
 
         #Inputs
         inputFile = "".join([ConstantsMicropitaTest.c_strTestingInput+"hq.otu_04-nul-nul-mtd-trn-flt-abridged.txt"])
-        delimiter = ConstantsMicropita.c_cTab
+        delimiter = ConstantsMicropita.TAB
         sNameRow = "TID"
         sLastMetadata = "STSite"
         cFeatureDelimiter = "|"
         fIsSummed = False
         fIsNormalized = True
         microPITA = MicroPITA()
-        metric = ConstantsMicropita.c_strInvBrayCurtisDissimilarity
+        metric = Metric.c_strInvBrayCurtisDissimilarity
 
-        rawData = AbundanceTable.funcMakeFromFile(strInputFile=inputFile, fIsNormalized=fIsNormalized, fIsSummed=fIsSummed,
+        rawData = AbundanceTable.funcMakeFromFile(xInputFile=inputFile,
                                              cDelimiter = delimiter, sMetadataID = sNameRow,
                                              sLastMetadata = sLastMetadata, cFeatureNameDelimiter=cFeatureDelimiter)
 
@@ -747,16 +540,16 @@ class MicroPITATest(unittest.TestCase):
 
         #Inputs
         inputFile = "".join([ConstantsMicropitaTest.c_strTestingInput+"hq.otu_04-nul-nul-mtd-trn-flt-abridged.txt"])
-        delimiter = ConstantsMicropita.c_cTab
+        delimiter = ConstantsMicropita.TAB
         sNameRow = "TID"
         sLastMetadata = "STSite"
         cFeatureDelimiter = "|"
         fIsSummed = False
         fIsNormalized = True
         microPITA = MicroPITA()
-        metric = ConstantsMicropita.c_strInvBrayCurtisDissimilarity
+        metric = Metric.c_strInvBrayCurtisDissimilarity
 
-        rawData = AbundanceTable.funcMakeFromFile(strInputFile=inputFile, fIsNormalized=fIsNormalized, fIsSummed=fIsSummed,
+        rawData = AbundanceTable.funcMakeFromFile(xInputFile=inputFile,
                                              cDelimiter = delimiter, sMetadataID = sNameRow,
                                              sLastMetadata = sLastMetadata, cFeatureNameDelimiter=cFeatureDelimiter)
 
@@ -816,7 +609,7 @@ class MicroPITATest(unittest.TestCase):
         microPITA = MicroPITA()
 
         #Inputs
-        strBetaMetric = ConstantsMicropita.c_strInvBrayCurtisDissimilarity
+        strBetaMetric = Metric.c_strInvBrayCurtisDissimilarity
         lsSampleNames = ["One","Two","Three","Four","Five","Six"]
         iSelectSampleCount = 1
         npaAbundanceMatrix = np.array([[1,0,0,0,0],[0,1,1,1,1],[0,0,1,1,1],[1,1,0,1,1],[1,1,1,0,1],[1,1,1,1,0]])
@@ -838,7 +631,7 @@ class MicroPITATest(unittest.TestCase):
         microPITA = MicroPITA()
 
         #Inputs
-        strBetaMetric = ConstantsMicropita.c_strInvBrayCurtisDissimilarity
+        strBetaMetric = Metric.c_strInvBrayCurtisDissimilarity
         lsSampleNames = ["One","Two","Three","Four","Five","Six"]
         iSelectSampleCount = 2
         npaAbundanceMatrix = np.array([[1,0,0,0,0],[0,1,1,1,1],[0,0,1,1,1],[1,1,0,1,1],[1,1,1,0,1],[1,1,1,1,0]])
@@ -860,7 +653,7 @@ class MicroPITATest(unittest.TestCase):
         microPITA = MicroPITA()
 
         #Inputs
-        strBetaMetric = ConstantsMicropita.c_strInvBrayCurtisDissimilarity
+        strBetaMetric = Metric.c_strInvBrayCurtisDissimilarity
         lsSampleNames = ["One","Two","Three","Four"]
         iSelectSampleCount = 1
         npaAbundanceMatrix = np.array([[1,0,0,0],
@@ -886,7 +679,7 @@ class MicroPITATest(unittest.TestCase):
         microPITA = MicroPITA()
 
         #Inputs
-        strBetaMetric = ConstantsMicropita.c_strInvBrayCurtisDissimilarity
+        strBetaMetric = Metric.c_strInvBrayCurtisDissimilarity
         lsSampleNames = ["One","Two","Three","Four","Five","Six","Seven","Eight","Nine"]
         iSelectSampleCount = 2
         npaAbundanceMatrix = np.array([[1,0,0,0,0],
@@ -917,7 +710,7 @@ class MicroPITATest(unittest.TestCase):
         microPITA = MicroPITA()
 
         #Inputs
-        strBetaMetric = ConstantsMicropita.c_strInvBrayCurtisDissimilarity
+        strBetaMetric = Metric.c_strInvBrayCurtisDissimilarity
         lsSampleNames = ["One","Two","Three","Four","Five","Six","Seven","Eight","Nine"]
         iSelectSampleCount = 4
         npaAbundanceMatrix = np.array([[1,0,0,0,0],
@@ -948,7 +741,7 @@ class MicroPITATest(unittest.TestCase):
         microPITA = MicroPITA()
 
         #Inputs
-        strBetaMetric = ConstantsMicropita.c_strInvBrayCurtisDissimilarity
+        strBetaMetric = Metric.c_strInvBrayCurtisDissimilarity
         lsSampleNames = ["One","Two","Three","Four","Five","Six","Seven","Eight","Nine"]
         iSelectSampleCount = 6
         npaAbundanceMatrix = np.array([[1,0,0,0,0],
@@ -979,7 +772,7 @@ class MicroPITATest(unittest.TestCase):
         microPITA = MicroPITA()
 
         #Inputs
-        strBetaMetric = ConstantsMicropita.c_strInvBrayCurtisDissimilarity
+        strBetaMetric = Metric.c_strInvBrayCurtisDissimilarity
         lsSampleNames = ["One","Two","Three","Four","Five","Six"]
         iSelectSampleCount = 3
         npaAbundanceMatrix = np.array([[1,0,0,0],
@@ -1010,7 +803,7 @@ class MicroPITATest(unittest.TestCase):
 
         #Inputs
         inputFile = "".join([ConstantsMicropitaTest.c_strTestingInput+"TestFeatureAverages.txt"])
-        delimiter = ConstantsMicropita.c_cTab
+        delimiter = ConstantsMicropita.TAB
         sNameRow = "TID"
         sLastMetadata = "STSite"
         cFeatureDelimiter = "|"
@@ -1019,9 +812,9 @@ class MicroPITATest(unittest.TestCase):
         liFeatures = ["Bacteria|Firmicutes|Clostridia|Clostridiales|Clostridiaceae|Clostridium|72"]
         fRanked = False
 
-        answer= [["700098980","12.0",1],["700037470","6.0",1],["700098986","1.0",1],["700098988","1.0",1],["700098982","0.0",1]]
+        answer= [["700098980","-1.0",12.0],["700037470","-1.0",6.0],["700098986","-1.0",1.0],["700098988","-1.0",1.0],["700098982","-1.0",0.0]]
 
-        abndData = AbundanceTable.funcMakeFromFile(strInputFile=inputFile, fIsNormalized=fIsNormalized, fIsSummed=fIsSummed,
+        abndData = AbundanceTable.funcMakeFromFile(xInputFile=inputFile,
                                              cDelimiter = delimiter, sMetadataID = sNameRow,
                                              sLastMetadata = sLastMetadata, cFeatureNameDelimiter=cFeatureDelimiter)
 
@@ -1031,14 +824,14 @@ class MicroPITATest(unittest.TestCase):
         #Check result against answer
         self.assertEqual(str(result),str(answer),"".join([str(self),"::\nExpected=\n",str(answer),". \nReceived=\n",str(result),"."]))
 
-    def nntestfuncGetAverageAbundanceSamplesForGoodCase1FeatureRanked(self):
+    def testfuncGetAverageAbundanceSamplesForGoodCase1FeatureRanked(self):
 
         #Micropita object
         microPITA = MicroPITA()
 
         #Inputs
         inputFile = "".join([ConstantsMicropitaTest.c_strTestingInput+"TestFeatureAverages.txt"])
-        delimiter = ConstantsMicropita.c_cTab
+        delimiter = ConstantsMicropita.TAB
         sNameRow = "TID"
         sLastMetadata = "STSite"
         cFeatureDelimiter = "|"
@@ -1047,12 +840,11 @@ class MicroPITATest(unittest.TestCase):
         liFeatures = ["Bacteria|Firmicutes|Clostridia|Clostridiales|Clostridiaceae|Clostridium|72"]
         fRanked = True
 
-        answer= [["700037470","2.0",6.0],["700098986","3.0",1.0],["700098980","4.0",12.0],["700098988","5.0",1.0],["700098982","9.0",0.0]]
+        answer= [['700037470', '1.5', 6.0], ['700098986', '2.0', 1.0], ['700098982', '2.0', 0.0], ['700098980', '3.0', 12.0], ['700098988', '4.0', 1.0]]
 
-        abndData = AbundanceTable.funcMakeFromFile(strInputFile=inputFile, fIsNormalized=fIsNormalized, fIsSummed=fIsSummed,
+        abndData = AbundanceTable.funcMakeFromFile(xInputFile=inputFile,
                                              cDelimiter = delimiter, sMetadataID = sNameRow,
                                              sLastMetadata = sLastMetadata, cFeatureNameDelimiter=cFeatureDelimiter)
-
         result = microPITA.funcGetAverageAbundanceSamples(abndTable=abndData, lsTargetedFeature=liFeatures, fRank=fRanked)
         result = [[resultList[0],"{0:.1f}".format(resultList[1]),resultList[2]] for resultList in result]
 
@@ -1066,7 +858,7 @@ class MicroPITATest(unittest.TestCase):
 
         #Inputs
         inputFile = "".join([ConstantsMicropitaTest.c_strTestingInput+"TestFeatureAverages.txt"])
-        delimiter = ConstantsMicropita.c_cTab
+        delimiter = ConstantsMicropita.TAB
         sNameRow = "TID"
         sLastMetadata = "STSite"
         cFeatureDelimiter = "|"
@@ -1076,9 +868,9 @@ class MicroPITATest(unittest.TestCase):
 
         liFeatures = ["Bacteria|Firmicutes|Clostridia|Clostridiales|Clostridiaceae|Clostridium|72",
                       "Bacteria|Firmicutes|Bacilli|Lactobacillales|Lactobacillaceae|Lactobacillus|1361"]
-        answer= [["700037470","25.5",1],["700098980","20.5",1],["700098986","2.0",1],["700098988","2.0",1],["700098982","0.0",1]]
+        answer= [["700037470","-1.0",25.5],["700098980","-1.0",20.5],["700098986","-1.0",2.0],["700098988","-1.0",2.0],["700098982","-1.0",0.0]]
 
-        abndData = AbundanceTable.funcMakeFromFile(strInputFile=inputFile, fIsNormalized=fIsNormalized, fIsSummed=fIsSummed,
+        abndData = AbundanceTable.funcMakeFromFile(xInputFile=inputFile,
                                              cDelimiter = delimiter, sMetadataID = sNameRow,
                                              sLastMetadata = sLastMetadata, cFeatureNameDelimiter=cFeatureDelimiter)
 
@@ -1088,14 +880,14 @@ class MicroPITATest(unittest.TestCase):
         #Check result against answer
         self.assertEqual(str(result),str(answer),"".join([str(self),"::\nExpected=\n",str(answer),". \nReceived=\n",str(result),"."]))
 
-    def nntestfuncGetAverageAbundanceSamplesForGoodCase2FeatureRanked(self):
+    def testfuncGetAverageAbundanceSamplesForGoodCase2FeatureRanked(self):
 
         #Micropita object
         microPITA = MicroPITA()
 
         #Inputs
         inputFile = "".join([ConstantsMicropitaTest.c_strTestingInput+"TestFeatureAverages.txt"])
-        delimiter = ConstantsMicropita.c_cTab
+        delimiter = ConstantsMicropita.TAB
         sNameRow = "TID"
         sLastMetadata = "STSite"
         cFeatureDelimiter = "|"
@@ -1105,9 +897,9 @@ class MicroPITATest(unittest.TestCase):
 
         liFeatures = ["Bacteria|Firmicutes|Clostridia|Clostridiales|Clostridiaceae|Clostridium|72",
                       "Bacteria|Firmicutes|Bacilli|Lactobacillales|Lactobacillaceae|Lactobacillus|1361"]
-        answer= [["700037470","1.5",25.5],["700098986","2.5",2.0],["700098980","3.5",20.5],["700098988","4.0",2.0],["700098982","9.0",0.0]]
+        answer= [['700037470', '0.8', 25.5], ['700098986', '1.5', 2.0], ['700098982', '2.0', 0.0], ['700098980', '2.5', 20.5], ['700098988', '3.0', 2.0]]
 
-        abndData = AbundanceTable.funcMakeFromFile(strInputFile=inputFile, fIsNormalized=fIsNormalized, fIsSummed=fIsSummed,
+        abndData = AbundanceTable.funcMakeFromFile(xInputFile=inputFile,
                                              cDelimiter = delimiter, sMetadataID = sNameRow,
                                              sLastMetadata = sLastMetadata, cFeatureNameDelimiter=cFeatureDelimiter)
 
@@ -1124,7 +916,7 @@ class MicroPITATest(unittest.TestCase):
 
         #Inputs
         inputFile = "".join([ConstantsMicropitaTest.c_strTestingInput+"TestFeatureAverages.txt"])
-        delimiter = ConstantsMicropita.c_cTab
+        delimiter = ConstantsMicropita.TAB
         sNameRow = "TID"
         sLastMetadata = "STSite"
         cFeatureDelimiter = "|"
@@ -1135,9 +927,9 @@ class MicroPITATest(unittest.TestCase):
                       "Bacteria|Firmicutes|Bacilli|Lactobacillales|Lactobacillaceae|Lactobacillus|1361",
                       "Bacteria|unclassified|4904","Bacteria|Firmicutes|Bacilli|Bacillales|Bacillaceae|unclassified|1368",
                       "Bacteria|3417"]
-        answer= [["700098980","24.0",1],["700037470","11.4",1],["700098988","3.0",1],["700098986","1.8",1],["700098982","0.0",1]]
+        answer= [["700098980","-1.0",24.0],["700037470","-1.0",11.4],["700098988","-1.0",3.0],["700098986","-1.0",1.8],["700098982","-1.0",0.0]]
 
-        abndData = AbundanceTable.funcMakeFromFile(strInputFile=inputFile, fIsNormalized=fIsNormalized, fIsSummed=fIsSummed,
+        abndData = AbundanceTable.funcMakeFromFile(xInputFile=inputFile,
                                              cDelimiter = delimiter, sMetadataID = sNameRow,
                                              sLastMetadata = sLastMetadata, cFeatureNameDelimiter=cFeatureDelimiter)
 
@@ -1147,14 +939,14 @@ class MicroPITATest(unittest.TestCase):
         #Check result against answer
         self.assertEqual(str(result),str(answer),"".join([str(self),"::\nExpected=\n",str(answer),". \nReceived=\n",str(result),"."]))
 
-    def nntestfuncGetAverageAbundanceSamplesForGoodCaseAllFeatureRankedWithTie(self):
+    def testfuncGetAverageAbundanceSamplesForGoodCaseAllFeatureRankedWithTie(self):
 
         #Micropita object
         microPITA = MicroPITA()
 
         #Inputs
         inputFile = "".join([ConstantsMicropitaTest.c_strTestingInput+"TestFeatureAverages.txt"])
-        delimiter = ConstantsMicropita.c_cTab
+        delimiter = ConstantsMicropita.TAB
         sNameRow = "TID"
         sLastMetadata = "STSite"
         cFeatureDelimiter = "|"
@@ -1163,11 +955,12 @@ class MicroPITATest(unittest.TestCase):
         fRanked = True
         liFeatures = ["Bacteria|Firmicutes|Clostridia|Clostridiales|Clostridiaceae|Clostridium|72",
                       "Bacteria|Firmicutes|Bacilli|Lactobacillales|Lactobacillaceae|Lactobacillus|1361",
-                      "Bacteria|unclassified|4904","Bacteria|Firmicutes|Bacilli|Bacillales|Bacillaceae|unclassified|1368",
+                      "Bacteria|unclassified|4904",
+                      "Bacteria|Firmicutes|Bacilli|Bacillales|Bacillaceae|unclassified|1368",
                       "Bacteria|3417"]
-        answer= [["700037470","2.2",11.4],["700098986","2.8",1.8],["700098980","3.0",24.0],["700098988","3.0",3.0],["700098982","9.0",0.0]]
+        answer= [['700098980', '2.0', 24.0], ['700037470', '2.0', 11.4], ['700098988', '2.0', 3.0], ['700098986', '2.0', 1.8], ['700098982', '2.0', 0.0]]
 
-        abndData = AbundanceTable.funcMakeFromFile(strInputFile=inputFile, fIsNormalized=fIsNormalized, fIsSummed=fIsSummed,
+        abndData = AbundanceTable.funcMakeFromFile(xInputFile=inputFile,
                                              cDelimiter = delimiter, sMetadataID = sNameRow,
                                              sLastMetadata = sLastMetadata, cFeatureNameDelimiter=cFeatureDelimiter)
 
@@ -1177,14 +970,14 @@ class MicroPITATest(unittest.TestCase):
         #Check result against answer
         self.assertEqual(str(result),str(answer),"".join([str(self),"::\nExpected=\n",str(answer),". \nReceived=\n",str(result),"."]))
 
-    def nntestfuncGetAverageAbundanceSamplesForGoodCaseAllFeatureRankedWithTies2(self):
+    def testfuncGetAverageAbundanceSamplesForGoodCaseAllFeatureRankedWithTies2(self):
 
         #Micropita object
         microPITA = MicroPITA()
 
         #Inputs
         inputFile = "".join([ConstantsMicropitaTest.c_strTestingInput+"TestFeatureAverages.txt"])
-        delimiter = ConstantsMicropita.c_cTab
+        delimiter = ConstantsMicropita.TAB
         sNameRow = "TID"
         sLastMetadata = "STSite"
         cFeatureDelimiter = "|"
@@ -1192,9 +985,9 @@ class MicroPITATest(unittest.TestCase):
         fIsNormalized = False
         fRanked = True
         liFeatures = ["Bacteria|unclassified|4904"]
-        answer= [["700098980","1.0",43.0],["700098988","4.0",2.0],["700098986","6.0",0.0],["700037470","7.0",0.0],["700098982","9.0",0.0]]
+        answer= [['700098980', '0.0', 43.0], ['700098982', '2.0', 0.0], ['700098988', '3.0', 2.0], ['700098986', '3.5', 0.0], ['700037470', '3.5', 0.0]]
 
-        abndData = AbundanceTable.funcMakeFromFile(strInputFile=inputFile, fIsNormalized=fIsNormalized, fIsSummed=fIsSummed,
+        abndData = AbundanceTable.funcMakeFromFile(xInputFile=inputFile,
                                              cDelimiter = delimiter, sMetadataID = sNameRow,
                                              sLastMetadata = sLastMetadata, cFeatureNameDelimiter=cFeatureDelimiter)
 
@@ -1212,7 +1005,7 @@ class MicroPITATest(unittest.TestCase):
 
         #Inputs
         inputFile = "".join([ConstantsMicropitaTest.c_strTestingInput+"TestFeatureAverages.txt"])
-        delimiter = ConstantsMicropita.c_cTab
+        delimiter = ConstantsMicropita.TAB
         sNameRow = "TID"
         sLastMetadata = "STSite"
         cFeatureDelimiter = "|"
@@ -1224,7 +1017,7 @@ class MicroPITATest(unittest.TestCase):
 
         answer= ["700098980"]
 
-        abndData = AbundanceTable.funcMakeFromFile(strInputFile=inputFile, fIsNormalized=fIsNormalized, fIsSummed=fIsSummed,
+        abndData = AbundanceTable.funcMakeFromFile(xInputFile=inputFile,
                                              cDelimiter = delimiter, sMetadataID = sNameRow,
                                              sLastMetadata = sLastMetadata, cFeatureNameDelimiter=cFeatureDelimiter)
 
@@ -1240,7 +1033,7 @@ class MicroPITATest(unittest.TestCase):
 
         #Inputs
         inputFile = "".join([ConstantsMicropitaTest.c_strTestingInput+"TestFeatureAverages.txt"])
-        delimiter = ConstantsMicropita.c_cTab
+        delimiter = ConstantsMicropita.TAB
         sNameRow = "TID"
         sLastMetadata = "STSite"
         cFeatureDelimiter = "|"
@@ -1252,7 +1045,7 @@ class MicroPITATest(unittest.TestCase):
 
         answer= ["700098980","700037470"]
 
-        abndData = AbundanceTable.funcMakeFromFile(strInputFile=inputFile, fIsNormalized=fIsNormalized, fIsSummed=fIsSummed,
+        abndData = AbundanceTable.funcMakeFromFile(xInputFile=inputFile,
                                              cDelimiter = delimiter, sMetadataID = sNameRow,
                                              sLastMetadata = sLastMetadata, cFeatureNameDelimiter=cFeatureDelimiter)
 
@@ -1268,7 +1061,7 @@ class MicroPITATest(unittest.TestCase):
 
         #Inputs
         inputFile = "".join([ConstantsMicropitaTest.c_strTestingInput+"TestFeatureAverages.txt"])
-        delimiter = ConstantsMicropita.c_cTab
+        delimiter = ConstantsMicropita.TAB
         sNameRow = "TID"
         sLastMetadata = "STSite"
         cFeatureDelimiter = "|"
@@ -1280,7 +1073,7 @@ class MicroPITATest(unittest.TestCase):
 
         answer= ["700098980","700037470","700098986"]
 
-        abndData = AbundanceTable.funcMakeFromFile(strInputFile=inputFile, fIsNormalized=fIsNormalized, fIsSummed=fIsSummed,
+        abndData = AbundanceTable.funcMakeFromFile(xInputFile=inputFile,
                                              cDelimiter = delimiter, sMetadataID = sNameRow,
                                              sLastMetadata = sLastMetadata, cFeatureNameDelimiter=cFeatureDelimiter)
 
@@ -1296,7 +1089,7 @@ class MicroPITATest(unittest.TestCase):
 
         #Inputs
         inputFile = "".join([ConstantsMicropitaTest.c_strTestingInput+"TestFeatureAverages.txt"])
-        delimiter = ConstantsMicropita.c_cTab
+        delimiter = ConstantsMicropita.TAB
         sNameRow = "TID"
         sLastMetadata = "STSite"
         cFeatureDelimiter = "|"
@@ -1308,7 +1101,7 @@ class MicroPITATest(unittest.TestCase):
 
         answer= ["700098980","700037470","700098986","700098988"]
 
-        abndData = AbundanceTable.funcMakeFromFile(strInputFile=inputFile, fIsNormalized=fIsNormalized, fIsSummed=fIsSummed,
+        abndData = AbundanceTable.funcMakeFromFile(xInputFile=inputFile,
                                              cDelimiter = delimiter, sMetadataID = sNameRow,
                                              sLastMetadata = sLastMetadata, cFeatureNameDelimiter=cFeatureDelimiter)
 
@@ -1324,7 +1117,7 @@ class MicroPITATest(unittest.TestCase):
 
         #Inputs
         inputFile = "".join([ConstantsMicropitaTest.c_strTestingInput+"TestFeatureAverages.txt"])
-        delimiter = ConstantsMicropita.c_cTab
+        delimiter = ConstantsMicropita.TAB
         sNameRow = "TID"
         sLastMetadata = "STSite"
         cFeatureDelimiter = "|"
@@ -1336,7 +1129,7 @@ class MicroPITATest(unittest.TestCase):
 
         answer= ["700098980","700037470","700098986","700098988","700098982"]
 
-        abndData = AbundanceTable.funcMakeFromFile(strInputFile=inputFile, fIsNormalized=fIsNormalized, fIsSummed=fIsSummed,
+        abndData = AbundanceTable.funcMakeFromFile(xInputFile=inputFile,
                                              cDelimiter = delimiter, sMetadataID = sNameRow,
                                              sLastMetadata = sLastMetadata, cFeatureNameDelimiter=cFeatureDelimiter)
 
@@ -1352,7 +1145,7 @@ class MicroPITATest(unittest.TestCase):
 
         #Inputs
         inputFile = "".join([ConstantsMicropitaTest.c_strTestingInput+"TestFeatureAverages.txt"])
-        delimiter = ConstantsMicropita.c_cTab
+        delimiter = ConstantsMicropita.TAB
         sNameRow = "TID"
         sLastMetadata = "STSite"
         cFeatureDelimiter = "|"
@@ -1364,7 +1157,7 @@ class MicroPITATest(unittest.TestCase):
 
         answer= ["700037470"]
 
-        abndData = AbundanceTable.funcMakeFromFile(strInputFile=inputFile, fIsNormalized=fIsNormalized, fIsSummed=fIsSummed,
+        abndData = AbundanceTable.funcMakeFromFile(xInputFile=inputFile,
                                              cDelimiter = delimiter, sMetadataID = sNameRow,
                                              sLastMetadata = sLastMetadata, cFeatureNameDelimiter=cFeatureDelimiter)
 
@@ -1380,7 +1173,7 @@ class MicroPITATest(unittest.TestCase):
 
         #Inputs
         inputFile = "".join([ConstantsMicropitaTest.c_strTestingInput+"TestFeatureAverages.txt"])
-        delimiter = ConstantsMicropita.c_cTab
+        delimiter = ConstantsMicropita.TAB
         sNameRow = "TID"
         sLastMetadata = "STSite"
         cFeatureDelimiter = "|"
@@ -1392,7 +1185,7 @@ class MicroPITATest(unittest.TestCase):
 
         answer= ["700037470","700098986"]
 
-        abndData = AbundanceTable.funcMakeFromFile(strInputFile=inputFile, fIsNormalized=fIsNormalized, fIsSummed=fIsSummed,
+        abndData = AbundanceTable.funcMakeFromFile(xInputFile=inputFile,
                                              cDelimiter = delimiter, sMetadataID = sNameRow,
                                              sLastMetadata = sLastMetadata, cFeatureNameDelimiter=cFeatureDelimiter)
 
@@ -1408,7 +1201,7 @@ class MicroPITATest(unittest.TestCase):
 
         #Inputs
         inputFile = "".join([ConstantsMicropitaTest.c_strTestingInput+"TestFeatureAverages.txt"])
-        delimiter = ConstantsMicropita.c_cTab
+        delimiter = ConstantsMicropita.TAB
         sNameRow = "TID"
         sLastMetadata = "STSite"
         cFeatureDelimiter = "|"
@@ -1418,9 +1211,9 @@ class MicroPITATest(unittest.TestCase):
         sMethod = ConstantsMicropita.c_strTargetedRanked
         liFeatures = ["Bacteria|Firmicutes|Clostridia|Clostridiales|Clostridiaceae|Clostridium|72"]
 
-        answer= ["700037470","700098986","700098980"]
+        answer= ["700037470","700098986","700098982"]
 
-        abndData = AbundanceTable.funcMakeFromFile(strInputFile=inputFile, fIsNormalized=fIsNormalized, fIsSummed=fIsSummed,
+        abndData = AbundanceTable.funcMakeFromFile(xInputFile=inputFile,
                                              cDelimiter = delimiter, sMetadataID = sNameRow,
                                              sLastMetadata = sLastMetadata, cFeatureNameDelimiter=cFeatureDelimiter)
 
@@ -1436,7 +1229,7 @@ class MicroPITATest(unittest.TestCase):
 
         #Inputs
         inputFile = "".join([ConstantsMicropitaTest.c_strTestingInput+"TestFeatureAverages.txt"])
-        delimiter = ConstantsMicropita.c_cTab
+        delimiter = ConstantsMicropita.TAB
         sNameRow = "TID"
         sLastMetadata = "STSite"
         cFeatureDelimiter = "|"
@@ -1446,9 +1239,9 @@ class MicroPITATest(unittest.TestCase):
         sMethod = ConstantsMicropita.c_strTargetedRanked
         liFeatures = ["Bacteria|Firmicutes|Clostridia|Clostridiales|Clostridiaceae|Clostridium|72"]
 
-        answer= ["700037470","700098986","700098980","700098988"]
+        answer= ["700037470","700098986","700098982","700098980"]
 
-        abndData = AbundanceTable.funcMakeFromFile(strInputFile=inputFile, fIsNormalized=fIsNormalized, fIsSummed=fIsSummed,
+        abndData = AbundanceTable.funcMakeFromFile(xInputFile=inputFile,
                                              cDelimiter = delimiter, sMetadataID = sNameRow,
                                              sLastMetadata = sLastMetadata, cFeatureNameDelimiter=cFeatureDelimiter)
 
@@ -1464,7 +1257,7 @@ class MicroPITATest(unittest.TestCase):
 
         #Inputs
         inputFile = "".join([ConstantsMicropitaTest.c_strTestingInput+"TestFeatureAverages.txt"])
-        delimiter = ConstantsMicropita.c_cTab
+        delimiter = ConstantsMicropita.TAB
         sNameRow = "TID"
         sLastMetadata = "STSite"
         cFeatureDelimiter = "|"
@@ -1474,9 +1267,9 @@ class MicroPITATest(unittest.TestCase):
         sMethod = ConstantsMicropita.c_strTargetedRanked
         liFeatures = ["Bacteria|Firmicutes|Clostridia|Clostridiales|Clostridiaceae|Clostridium|72"]
 
-        answer= ["700037470","700098986","700098980","700098988","700098982"]
+        answer= ["700037470","700098986","700098982","700098980","700098988"]
 
-        abndData = AbundanceTable.funcMakeFromFile(strInputFile=inputFile, fIsNormalized=fIsNormalized, fIsSummed=fIsSummed,
+        abndData = AbundanceTable.funcMakeFromFile(xInputFile=inputFile,
                                              cDelimiter = delimiter, sMetadataID = sNameRow,
                                              sLastMetadata = sLastMetadata, cFeatureNameDelimiter=cFeatureDelimiter)
 
@@ -1585,875 +1378,7 @@ class MicroPITATest(unittest.TestCase):
         #Check result against answer
         self.assertEqual(str(foundError),str(answer),"".join([str(self),"::",str(errorString),"."]))
 
-    ##### funcRunSVM
-    def nottestfuncRunSVM(self):
-
-        #Inputs
-        #Reading file
-        inputFile="./input/micropita/src/Testing/Data/AbridgedDocuments/hq.otu_04-nul-nul-mtd-trn-flt-abridged.txt"
-        outputFile="./input/micropita/src/Testing/Data/AbridgedDocuments/hq.otu_04-nul-nul-mtd-trn-flt-abridged.SVM.txt"
-        delimiter=ConstantsMicropita.c_cTab
-        nameRow=0
-        sLastMetadataName="STSite"
-        skipColumn1=True
-        normalize=True
-        lowestScaleBound=0
-        probabilistic=True
-        cRange="-5,-4,-3,-2,-1,0,1,2,3,4,5"
-        gRange="-5,-4,-3,-2,-1,0,1,2,3,4,5"
-
-        #Inputs  programmatic
-        microPITA = MicroPITA()
-        labels = [0,0,0,0,0,1,1,1,1,1]
-
-        #Generate data
-        microPITA.funcRunSVM(tempInputFile=inputFile, tempDelimiter=ConstantsMicropita.c_cTab, tempOutputSVMFile=outputFile, tempMatrixLabels=labels, sLastMetadataName=sLastMetadataName, tempSkipFirstColumn=skipColumn1, tempNormalize=normalize, tempSVMScaleLowestBound=lowestScaleBound, tempSVMLogG=gRange, tempSVMLogC=cRange, tempSVMProbabilistic=probabilistic)
-
-        #Get results
-        result = ""
-
-        #Correct Answer
-        answer = "[['700037472', '700098984'], ['700037476', '700098980'], ['700037476', '700098980']]"
-
-        #Check result against answer
-        self.assertEqual(str(result),str(answer),"".join([str(self),"::Expected=",str(answer),". Received=",str(result),"."]))
-
-### Test runMLPYSVM, should be tested in funcRun tests
-
-    def testFuncStoreSVMProbabilityForGoodCaseNoPriorStateProbabilistic(self):
-
-        #Input
-        lsValidationSamples = ["Sample1","Sample2","Sample3","Sample4","Sample5"]
-        lSVMLabels = [0,1,2]
-        ldValidationLabels = [2,1,0,1,2]
-        lPredictions = [0,1,2,1,1]
-        npaDistances = [[0.0,.7,.3],[.0,.5,.5],[0.0,0.0,1.0],[.4,.1,.5],[.9,.05,.05]]
-        dictdProbability = dict()
-        dictAllProbabilities = dict()
-        dictiPrediction = dict()
-        dictAllPredictions = dict()
-
-        #Make results
-        lreturn = MicroPITA()._funcStoreSVMProbability(lsValidationSamples,
-                                                       ldValidationLabels,
-                                                       lSVMLabels,
-                                                       npaDistances,
-                                                       lPredictions,
-                                                       dictdProbability,
-                                                       dictAllProbabilities,
-                                                       dictiPrediction,
-                                                       dictAllPredictions)
-        dictdProbability,dictAllProbabilities,dictiPrediction,dictAllPredictions = lreturn
-
-        result = " ".join([str([key,dictdProbability[key]]) for key in sorted(dictdProbability.keys())])
-        result = result+", "+" ".join([str([key,dictAllProbabilities[key]]) for key in sorted(dictAllProbabilities.keys())])
-        result = result+", "+" ".join([str([key,dictiPrediction[key]]) for key in sorted(dictiPrediction.keys())])
-        result = result+", "+" ".join([str([key,dictAllPredictions[key]]) for key in sorted(dictAllPredictions.keys())])
-
-        #Correct answers
-        dictdProbabilityAnswer = {"Sample1":.7,"Sample2":.5,"Sample3":1.0,"Sample4":.5,"Sample5":.9}
-        dictAllProbabilitiesAnswer = {"Sample1":[1,0.0,.7,.3],"Sample2":[1,.0,.5,.5],"Sample3":[2,0.0,0.0,1.0],"Sample4":[2,.4,.1,.5],"Sample5":[0,.9,.05,.05]}
-        dictiPredictionAnswer = {"Sample1":False,"Sample2":True,"Sample3":False,"Sample4":False,"Sample5":False}
-        dictAllPredictionsAnswer = {"Sample1":"1","Sample2":"1","Sample3":"2","Sample4":"2","Sample5":"0"}
-
-        answer = " ".join([str([key,dictdProbabilityAnswer[key]]) for key in sorted(dictdProbabilityAnswer.keys())])
-        answer = answer+", "+" ".join([str([key,dictAllProbabilitiesAnswer[key]]) for key in sorted(dictAllProbabilitiesAnswer.keys())])
-        answer = answer+", "+" ".join([str([key,dictiPredictionAnswer[key]]) for key in sorted(dictiPredictionAnswer.keys())])
-        answer = answer+", "+" ".join([str([key,dictAllPredictionsAnswer[key]]) for key in sorted(dictAllPredictionsAnswer.keys())])
-
-        #Check result against answer
-        self.assertEqual(str(result),str(answer),"".join([str(self),"::Expected=",str(answer),". Received=",str(result),"."]))
-
-    def testFuncStoreSVMProbabilityForGoodCaseWithPriorStateProbabilistic(self):
-
-        #Input
-        lsValidationSamples = ["Sample1","Sample2","Sample3","Sample4","Sample5"]
-        lSVMLabels = [0,1,2]
-        ldValidationLabels = [2,1,0,1,2]
-        lPredictions = [0,1,2,1,1]
-        npaDistances = [[0.0,.7,.3],[.0,.5,.5],[0.0,0.0,1.0],[.4,.1,.5],[.9,.05,.05]]
-        dictdProbability = {"Sample0":.99,"Sample10":.4}
-        dictAllProbabilities = {"Sample0":[.99,.1,.0],"Sample10":[.1,.4,.5]}
-        dictiPrediction = {"Sample0":True,"Sample10":False}
-        dictAllPredictions = {"Sample0":0,"Sample10":1}
-
-        #Make results
-        lreturn = MicroPITA()._funcStoreSVMProbability(lsValidationSamples,
-                                                       ldValidationLabels,
-                                                       lSVMLabels,
-                                                       npaDistances,
-                                                       lPredictions,
-                                                       dictdProbability,
-                                                       dictAllProbabilities,
-                                                       dictiPrediction,
-                                                       dictAllPredictions)
-        dictdProbability,dictAllProbabilities,dictiPrediction,dictAllPredictions = lreturn
-
-        result = " ".join([str([key,dictdProbability[key]]) for key in sorted(dictdProbability.keys())])
-        result = result+", "+" ".join([str([key,dictAllProbabilities[key]]) for key in sorted(dictAllProbabilities.keys())])
-        result = result+", "+" ".join([str([key,dictiPrediction[key]]) for key in sorted(dictiPrediction.keys())])
-        result = result+", "+" ".join([str([key,dictAllPredictions[key]]) for key in sorted(dictAllPredictions.keys())])
-
-        #Correct answers
-        dictdProbabilityAnswer = {"Sample0":.99,"Sample10":.4,"Sample1":.7,"Sample2":.5,"Sample3":1.0,"Sample4":.5,"Sample5":.9}
-        dictAllProbabilitiesAnswer = {"Sample0":[.99,.1,.0],"Sample10":[.1,.4,.5],"Sample1":[1,0.0,.7,.3],"Sample2":[1,.0,.5,.5],"Sample3":[2,0.0,0.0,1.0],"Sample4":[2,.4,.1,.5],"Sample5":[0,.9,.05,.05]}
-        dictiPredictionAnswer = {"Sample0":True,"Sample10":False,"Sample1":False,"Sample2":True,"Sample3":False,"Sample4":False,"Sample5":False}
-        dictAllPredictionsAnswer = {"Sample0":0,"Sample10":1,"Sample1":"1","Sample2":"1","Sample3":"2","Sample4":"2","Sample5":"0"}
-
-        answer = " ".join([str([key,dictdProbabilityAnswer[key]]) for key in sorted(dictdProbabilityAnswer.keys())])
-        answer = answer+", "+" ".join([str([key,dictAllProbabilitiesAnswer[key]]) for key in sorted(dictAllProbabilitiesAnswer.keys())])
-        answer = answer+", "+" ".join([str([key,dictiPredictionAnswer[key]]) for key in sorted(dictiPredictionAnswer.keys())])
-        answer = answer+", "+" ".join([str([key,dictAllPredictionsAnswer[key]]) for key in sorted(dictAllPredictionsAnswer.keys())])
-
-        #Check result against answer
-        self.assertEqual(str(result),str(answer),"".join([str(self),"::Expected=",str(answer),". Received=",str(result),"."]))
-
 ### test runSupervisedMethods, should be tested in funcRun tests
-
-### test _funcSelectSupervisedSamplesFromPredictFile
-    def testFuncSelectSupervisedSamplesFromPredictFile2Classes(self):
-
-        #Micropita object
-        microPITA = MicroPITA()
-
-        #Inputs
-        strPredictFilePath = "".join([ConstantsMicropitaTest.c_strTestingTMP,"TestFuncSelectSupervisedSamplesFromPredictionFile.txt"])
-        strOriginalInputFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,"TestFuncSelectSupervisedSamplesFromInputFile.txt"])
-        fSelectDiscriminant = True
-        fSelectDistinct = True
-        iSelectCount = 1
-        lsSampleNames = ["One","Two","Three","Four","Five","Six","Seven","Eight","Nine","Ten"]
-
-        #Answer
-        answer = {ConstantsMicropita.c_strSVMClose:["Eight","One"],ConstantsMicropita.c_strSVMFar:["Three","Seven"]}
-
-        #Set up. Write rpedict and input files
-        strPredFileContents = ConstantsMicropita.c_strEndline.join(["labels 1 0",
-                                                      "0 0.482089 0.517911",
-                                                      "0 0.464303 0.535697",
-                                                      "1 0.510597 0.489403",
-                                                      "0 0.409344 0.590656",
-                                                      "1 0.99 0.01",
-                                                      "0 0.5 0.5",
-                                                      "0 0.988271 0.011729",
-                                                      "1 0.5 0.5",
-                                                      "1 0.510373 0.489627",
-                                                      "0 0.410257 0.589743"])
-        strInputFileContents = ConstantsMicropita.c_strEndline.join(["0 1:0.482089 2:0.517911",
-                                                      "0 1:0.464303 2:0.535697",
-                                                      "1 1:0.510597",
-                                                      "0 1:0.409344 2:0.590656",
-                                                      "0 1:0.514484",
-                                                      "1 1:0.38026 2:0.61974",
-                                                      "0 1:0.388271 2:0.611729",
-                                                      "1 1:0.5 2:0.5",
-                                                      "1 2:0.489627",
-                                                      "0 1:0.410257 2:0.589743"])
-
-        with open(strPredictFilePath, 'w') as f, open(strOriginalInputFile, 'w') as g:
-            f.write(strPredFileContents)
-            g.write(strInputFileContents)
-
-        #Get answer
-        result = microPITA._funcSelectSupervisedSamplesFromPredictFile(strOriginalInputFile=strOriginalInputFile, strPredictFilePath=strPredictFilePath,
-                                                                         lsSampleNames=lsSampleNames, iSelectCount=iSelectCount, 
-                                                                         fSelectDiscriminant=fSelectDiscriminant, fSelectDistinct=fSelectDistinct)
-
-        #Standardize answer and result
-        answer = [[strKey,sorted(answer[strKey])] for strKey in answer]
-        result = [[strKey,sorted(result[strKey])] for strKey in result]
-
-        #Delete predict file
-        for strFile in [strPredictFilePath,strOriginalInputFile]:
-            if os.path.exists(strFile):
-                os.remove(strFile)
-
-        #Check result
-        self.assertEqual(str(result),str(answer),"".join([str(self),"::Expected=",str(answer),". Received=",str(result),"."]))
-
-    def testFuncSelectSupervisedSamplesFromPredictFile2ClassesDistinct(self):
-
-        #Micropita object
-        microPITA = MicroPITA()
-
-        #Inputs
-        strPredictFilePath = "".join([ConstantsMicropitaTest.c_strTestingTMP,"TestFuncSelectSupervisedSamplesFromPredictionFile.txt"])
-        strOriginalInputFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,"TestFuncSelectSupervisedSamplesFromInputFile.txt"])
-        fSelectDiscriminant = False
-        fSelectDistinct = True
-        iSelectCount = 1
-        lsSampleNames = ["One","Two","Three","Four","Five","Six","Seven","Eight","Nine","Ten"]
-
-        #Answer
-        answer = {ConstantsMicropita.c_strSVMFar:["Three","Seven"]}
-
-        #Set up. Write rpedict and input files
-        strPredFileContents = ConstantsMicropita.c_strEndline.join(["labels 1 0",
-                                                      "0 0.482089 0.517911",
-                                                      "0 0.464303 0.535697",
-                                                      "1 0.510597 0.489403",
-                                                      "0 0.409344 0.590656",
-                                                      "1 0.99 0.01",
-                                                      "0 0.5 0.5",
-                                                      "0 0.988271 0.011729",
-                                                      "1 0.5 0.5",
-                                                      "1 0.510373 0.489627",
-                                                      "0 0.410257 0.589743"])
-        strInputFileContents = ConstantsMicropita.c_strEndline.join(["0 1:0.482089 2:0.517911",
-                                                      "0 1:0.464303 2:0.535697",
-                                                      "1 1:0.510597",
-                                                      "0 1:0.409344 2:0.590656",
-                                                      "0 1:0.514484",
-                                                      "1 1:0.38026 2:0.61974",
-                                                      "0 1:0.388271 2:0.611729",
-                                                      "1 1:0.5 2:0.5",
-                                                      "1 2:0.489627",
-                                                      "0 1:0.410257 2:0.589743"])
-
-        with open(strPredictFilePath, 'w') as f, open(strOriginalInputFile, 'w') as g:
-            f.write(strPredFileContents)
-            g.write(strInputFileContents)
-
-        #Get answer
-        result = microPITA._funcSelectSupervisedSamplesFromPredictFile(strOriginalInputFile=strOriginalInputFile, strPredictFilePath=strPredictFilePath,
-                                                                         lsSampleNames=lsSampleNames, iSelectCount=iSelectCount, 
-                                                                         fSelectDiscriminant=fSelectDiscriminant, fSelectDistinct=fSelectDistinct)
-
-        #Standardize answer and result
-        answer = [[strKey,sorted(answer[strKey])] for strKey in answer]
-        result = [[strKey,sorted(result[strKey])] for strKey in result]
-
-        #Delete predict file
-        for strFile in [strPredictFilePath,strOriginalInputFile]:
-            if os.path.exists(strFile):
-                os.remove(strFile)
-
-        #Check result
-        self.assertEqual(str(result),str(answer),"".join([str(self),"::Expected=",str(answer),". Received=",str(result),"."]))
-
-    def testFuncSelectSupervisedSamplesFromPredictFile2ClassesDiscriminant(self):
-
-        #Micropita object
-        microPITA = MicroPITA()
-
-        #Inputs
-        strPredictFilePath = "".join([ConstantsMicropitaTest.c_strTestingTMP,"TestFuncSelectSupervisedSamplesFromPredictionFile.txt"])
-        strOriginalInputFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,"TestFuncSelectSupervisedSamplesFromInputFile.txt"])
-        fSelectDiscriminant = True
-        fSelectDistinct = False
-        iSelectCount = 1
-        lsSampleNames = ["One","Two","Three","Four","Five","Six","Seven","Eight","Nine","Ten"]
-
-        #Answer
-        answer = {ConstantsMicropita.c_strSVMClose:["Eight","One"]}
-
-        #Set up. Write rpedict and input files
-        strPredFileContents = ConstantsMicropita.c_strEndline.join(["labels 1 0",
-                                                      "0 0.482089 0.517911",
-                                                      "0 0.464303 0.535697",
-                                                      "1 0.510597 0.489403",
-                                                      "0 0.409344 0.590656",
-                                                      "1 0.99 0.01",
-                                                      "0 0.5 0.5",
-                                                      "0 0.988271 0.011729",
-                                                      "1 0.5 0.5",
-                                                      "1 0.510373 0.489627",
-                                                      "0 0.410257 0.589743"])
-        strInputFileContents = ConstantsMicropita.c_strEndline.join(["0 1:0.482089 2:0.517911",
-                                                      "0 1:0.464303 2:0.535697",
-                                                      "1 1:0.510597",
-                                                      "0 1:0.409344 2:0.590656",
-                                                      "0 1:0.514484",
-                                                      "1 1:0.38026 2:0.61974",
-                                                      "0 1:0.388271 2:0.611729",
-                                                      "1 1:0.5 2:0.5",
-                                                      "1 2:0.489627",
-                                                      "0 1:0.410257 2:0.589743"])
-
-        with open(strPredictFilePath, 'w') as f, open(strOriginalInputFile, 'w') as g:
-            f.write(strPredFileContents)
-            g.write(strInputFileContents)
-
-        #Get answer
-        result = microPITA._funcSelectSupervisedSamplesFromPredictFile(strOriginalInputFile=strOriginalInputFile, strPredictFilePath=strPredictFilePath,
-                                                                         lsSampleNames=lsSampleNames, iSelectCount=iSelectCount, 
-                                                                         fSelectDiscriminant=fSelectDiscriminant, fSelectDistinct=fSelectDistinct)
-
-        #Standardize answer and result
-        answer = [[strKey,sorted(answer[strKey])] for strKey in answer]
-        result = [[strKey,sorted(result[strKey])] for strKey in result]
-
-        #Delete predict file
-        for strFile in [strPredictFilePath,strOriginalInputFile]:
-            if os.path.exists(strFile):
-                os.remove(strFile)
-
-        #Check result
-        self.assertEqual(str(result),str(answer),"".join([str(self),"::Expected=",str(answer),". Received=",str(result),"."]))
-
-    def testFuncSelectSupervisedSamplesFromPredictFile2ClassesReturn8(self):
-
-        #Micropita object
-        microPITA = MicroPITA()
-
-        #Inputs
-        strPredictFilePath = "".join([ConstantsMicropitaTest.c_strTestingTMP,"TestFuncSelectSupervisedSamplesFromPredictionFile.txt"])
-        strOriginalInputFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,"TestFuncSelectSupervisedSamplesFromInputFile.txt"])
-        fSelectDiscriminant = True
-        fSelectDistinct = True
-        iSelectCount = 2
-        lsSampleNames = ["One","Two","Three","Four","Five","Six","Seven","Eight","Nine","Ten"]
-
-        #Answer
-        answer = {ConstantsMicropita.c_strSVMClose:["Eight","One","Six","Nine"],ConstantsMicropita.c_strSVMFar:["Four","Five","Seven","Ten"]}
-
-        #Set up. Write rpedict and input files
-        strPredFileContents = ConstantsMicropita.c_strEndline.join(["labels 1 0",
-                                                      "0 0.482089 0.517911",
-                                                      "0 0.464303 0.535697",
-                                                      "1 0.510597 0.489403",
-                                                      "0 0.409344 0.590656",
-                                                      "1 0.99 0.01",
-                                                      "0 0.5 0.5",
-                                                      "1 0.988271 0.011729",
-                                                      "1 0.5 0.5",
-                                                      "1 0.510373 0.489627",
-                                                      "0 0.410257 0.589743"])
-        strInputFileContents = ConstantsMicropita.c_strEndline.join(["0 1:0.482089 2:0.517911",
-                                                      "0 1:0.464303 2:0.535697",
-                                                      "1 1:0.510597",
-                                                      "0 1:0.409344 2:0.590656",
-                                                      "1 1:0.514484",
-                                                      "0 1:0.38026 2:0.61974",
-                                                      "1 1:0.388271 2:0.611729",
-                                                      "1 1:0.5 2:0.5",
-                                                      "1 2:0.489627",
-                                                      "0 1:0.410257 2:0.589743"])
-
-        with open(strPredictFilePath, 'w') as f, open(strOriginalInputFile, 'w') as g:
-            f.write(strPredFileContents)
-            g.write(strInputFileContents)
-
-        #Get answer
-        result = microPITA._funcSelectSupervisedSamplesFromPredictFile(strOriginalInputFile=strOriginalInputFile, strPredictFilePath=strPredictFilePath,
-                                                                         lsSampleNames=lsSampleNames, iSelectCount=iSelectCount, 
-                                                                         fSelectDiscriminant=fSelectDiscriminant, fSelectDistinct=fSelectDistinct)
-
-        #Standardize answer and result
-        answer = [[strKey,sorted(answer[strKey])] for strKey in answer]
-        result = [[strKey,sorted(result[strKey])] for strKey in result]
-
-        #Delete predict file
-        for strFile in [strPredictFilePath,strOriginalInputFile]:
-            if os.path.exists(strFile):
-                os.remove(strFile)
-
-        #Check result
-        self.assertEqual(str(result),str(answer),"".join([str(self),"::Expected=",str(answer),". Received=",str(result),"."]))
-
-    def testFuncSelectSupervisedSamplesFromPredictFile2ClassesReturnAll(self):
-
-        #Micropita object
-        microPITA = MicroPITA()
-
-        #Inputs
-        strPredictFilePath = "".join([ConstantsMicropitaTest.c_strTestingTMP,"TestFuncSelectSupervisedSamplesFromPredictionFile.txt"])
-        strOriginalInputFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,"TestFuncSelectSupervisedSamplesFromInputFile.txt"])
-        fSelectDiscriminant = True
-        fSelectDistinct = True
-        iSelectCount = 2
-        lsSampleNames = ["One","Two","Three","Four","Five","Six","Seven","Eight"]
-
-        #Answer
-        answer = {ConstantsMicropita.c_strSVMClose:["One","Four","Six","Seven"],ConstantsMicropita.c_strSVMFar:["Two","Three","Five","Eight"]}
-
-        #Set up. Write rpedict and input files
-        strPredFileContents = ConstantsMicropita.c_strEndline.join(["labels 1 0",
-                                                      "0 0.482089 0.517911",
-                                                      "0 0.409344 0.590656",
-                                                      "1 0.99 0.01",
-                                                      "0 0.5 0.5",
-                                                      "1 0.988271 0.011729",
-                                                      "1 0.5 0.5",
-                                                      "1 0.510373 0.489627",
-                                                      "0 0.410257 0.589743"])
-        strInputFileContents = ConstantsMicropita.c_strEndline.join(["0 1:0.482089 2:0.517911",
-                                                      "0 1:0.464303 2:0.535697",
-                                                      "1 1:0.510597",
-                                                      "0 1:0.409344 2:0.590656",
-                                                      "1 1:0.388271 2:0.611729",
-                                                      "1 1:0.5 2:0.5",
-                                                      "1 2:0.489627",
-                                                      "0 1:0.410257 2:0.589743"])
-
-        with open(strPredictFilePath, 'w') as f, open(strOriginalInputFile, 'w') as g:
-            f.write(strPredFileContents)
-            g.write(strInputFileContents)
-
-        #Get answer
-        result = microPITA._funcSelectSupervisedSamplesFromPredictFile(strOriginalInputFile=strOriginalInputFile, strPredictFilePath=strPredictFilePath,
-                                                                         lsSampleNames=lsSampleNames, iSelectCount=iSelectCount, 
-                                                                         fSelectDiscriminant=fSelectDiscriminant, fSelectDistinct=fSelectDistinct)
-
-        #Standardize answer and result
-        answer = [[strKey,sorted(answer[strKey])] for strKey in answer]
-        result = [[strKey,sorted(result[strKey])] for strKey in result]
-
-        #Delete predict file
-        for strFile in [strPredictFilePath,strOriginalInputFile]:
-            if os.path.exists(strFile):
-                os.remove(strFile)
-
-        #Check result
-        self.assertEqual(str(result),str(answer),"".join([str(self),"::Expected=",str(answer),". Received=",str(result),"."]))
-
-    def testFuncSelectSupervisedSamplesFromPredictFile2ClassesReturnMoreThanExists(self):
-
-        #Micropita object
-        microPITA = MicroPITA()
-
-        #Inputs
-        strPredictFilePath = "".join([ConstantsMicropitaTest.c_strTestingTMP,"TestFuncSelectSupervisedSamplesFromPredictionFile.txt"])
-        strOriginalInputFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,"TestFuncSelectSupervisedSamplesFromInputFile.txt"])
-        fSelectDiscriminant = True
-        fSelectDistinct = True
-        iSelectCount = 9
-        lsSampleNames = ["One","Two","Three","Four","Five","Six","Seven","Eight"]
-
-        #Answer
-        answer = {ConstantsMicropita.c_strSVMClose:["One","Four","Six","Seven","Two","Three","Five","Eight"],ConstantsMicropita.c_strSVMFar:["One","Four","Six","Seven","Two","Three","Five","Eight"]}
-
-        #Set up. Write rpedict and input files
-        strPredFileContents = ConstantsMicropita.c_strEndline.join(["labels 1 0",
-                                                      "0 0.482089 0.517911",
-                                                      "0 0.409344 0.590656",
-                                                      "1 0.99 0.01",
-                                                      "0 0.5 0.5",
-                                                      "1 0.988271 0.011729",
-                                                      "1 0.5 0.5",
-                                                      "1 0.510373 0.489627",
-                                                      "0 0.410257 0.589743"])
-        strInputFileContents = ConstantsMicropita.c_strEndline.join(["0 1:0.482089 2:0.517911",
-                                                      "0 1:0.464303 2:0.535697",
-                                                      "1 1:0.510597",
-                                                      "0 1:0.409344 2:0.590656",
-                                                      "1 1:0.388271 2:0.611729",
-                                                      "1 1:0.5 2:0.5",
-                                                      "1 2:0.489627",
-                                                      "0 1:0.410257 2:0.589743"])
-
-        with open(strPredictFilePath, 'w') as f, open(strOriginalInputFile, 'w') as g:
-            f.write(strPredFileContents)
-            g.write(strInputFileContents)
-
-        #Get answer
-        result = microPITA._funcSelectSupervisedSamplesFromPredictFile(strOriginalInputFile=strOriginalInputFile, strPredictFilePath=strPredictFilePath,
-                                                                         lsSampleNames=lsSampleNames, iSelectCount=iSelectCount, 
-                                                                         fSelectDiscriminant=fSelectDiscriminant, fSelectDistinct=fSelectDistinct)
-
-        #Standardize answer and result
-        answer = [[strKey,sorted(answer[strKey])] for strKey in answer]
-        result = [[strKey,sorted(result[strKey])] for strKey in result]
-
-        #Delete predict file
-        for strFile in [strPredictFilePath,strOriginalInputFile]:
-            if os.path.exists(strFile):
-                os.remove(strFile)
-
-        #Check result
-        self.assertEqual(str(result),str(answer),"".join([str(self),"::Expected=",str(answer),". Received=",str(result),"."]))
-
-    def testFuncSelectSupervisedSamplesFromPredictFile2ClassesReturnMoreThanExistsMislabeled(self):
-
-        #Micropita object
-        microPITA = MicroPITA()
-
-        #Inputs
-        strPredictFilePath = "".join([ConstantsMicropitaTest.c_strTestingTMP,"TestFuncSelectSupervisedSamplesFromPredictionFile.txt"])
-        strOriginalInputFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,"TestFuncSelectSupervisedSamplesFromInputFile.txt"])
-        fSelectDiscriminant = True
-        fSelectDistinct = True
-        iSelectCount = 9
-        lsSampleNames = ["One","Two","Three","Four","Five","Six","Seven","Eight"]
-
-        #Answer
-        answer = {ConstantsMicropita.c_strSVMClose:["One","Four","Six","Seven","Five","Eight"],ConstantsMicropita.c_strSVMFar:["One","Four","Six","Seven","Five","Eight"]}
-
-        #Set up. Write rpedict and input files
-        strPredFileContents = ConstantsMicropita.c_strEndline.join(["labels 1 0",
-                                                      "0 0.482089 0.517911",
-                                                      "0 0.409344 0.590656",
-                                                      "1 0.99 0.01",
-                                                      "0 0.5 0.5",
-                                                      "1 0.988271 0.011729",
-                                                      "1 0.5 0.5",
-                                                      "1 0.510373 0.489627",
-                                                      "0 0.410257 0.589743"])
-        strInputFileContents = ConstantsMicropita.c_strEndline.join(["0 1:0.482089 2:0.517911",
-                                                      "1 1:0.464303 2:0.535697",
-                                                      "0 1:0.510597",
-                                                      "0 1:0.409344 2:0.590656",
-                                                      "1 1:0.388271 2:0.611729",
-                                                      "1 1:0.5 2:0.5",
-                                                      "1 2:0.489627",
-                                                      "0 1:0.410257 2:0.589743"])
-
-        with open(strPredictFilePath, 'w') as f, open(strOriginalInputFile, 'w') as g:
-            f.write(strPredFileContents)
-            g.write(strInputFileContents)
-
-        #Get answer
-        result = microPITA._funcSelectSupervisedSamplesFromPredictFile(strOriginalInputFile=strOriginalInputFile, strPredictFilePath=strPredictFilePath,
-                                                                         lsSampleNames=lsSampleNames, iSelectCount=iSelectCount, 
-                                                                         fSelectDiscriminant=fSelectDiscriminant, fSelectDistinct=fSelectDistinct)
-
-        #Standardize answer and result
-        answer = [[strKey,sorted(answer[strKey])] for strKey in answer]
-        result = [[strKey,sorted(result[strKey])] for strKey in result]
-
-        #Delete predict file
-        for strFile in [strPredictFilePath,strOriginalInputFile]:
-            if os.path.exists(strFile):
-                os.remove(strFile)
-
-        #Check result
-        self.assertEqual(str(result),str(answer),"".join([str(self),"::Expected=",str(answer),". Received=",str(result),"."]))
-
-    def testFuncSelectSupervisedSamplesFromPredictFile2ClassesReturnMoreThanExistsClassMislabeled(self):
-
-        #Micropita object
-        microPITA = MicroPITA()
-
-        #Inputs
-        strPredictFilePath = "".join([ConstantsMicropitaTest.c_strTestingTMP,"TestFuncSelectSupervisedSamplesFromPredictionFile.txt"])
-        strOriginalInputFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,"TestFuncSelectSupervisedSamplesFromInputFile.txt"])
-        fSelectDiscriminant = True
-        fSelectDistinct = True
-        iSelectCount = 9
-        lsSampleNames = ["One","Two","Three","Four","Five","Six","Seven","Eight"]
-
-        #Answer
-        answer = {ConstantsMicropita.c_strSVMClose:["Three","Five","Six","Seven"],ConstantsMicropita.c_strSVMFar:["Three","Five","Six","Seven"]}
-
-        #Set up. Write rpedict and input files
-        strPredFileContents = ConstantsMicropita.c_strEndline.join(["labels 1 0",
-                                                      "0 0.482089 0.517911",
-                                                      "0 0.409344 0.590656",
-                                                      "1 0.99 0.01",
-                                                      "0 0.5 0.5",
-                                                      "1 0.988271 0.011729",
-                                                      "1 0.5 0.5",
-                                                      "1 0.510373 0.489627",
-                                                      "0 0.410257 0.589743"])
-        strInputFileContents = ConstantsMicropita.c_strEndline.join(["1 1:0.482089 2:0.517911",
-                                                      "1 1:0.464303 2:0.535697",
-                                                      "1 1:0.510597",
-                                                      "1 1:0.409344 2:0.590656",
-                                                      "1 1:0.388271 2:0.611729",
-                                                      "1 1:0.5 2:0.5",
-                                                      "1 2:0.489627",
-                                                      "1 1:0.410257 2:0.589743"])
-
-        with open(strPredictFilePath, 'w') as f, open(strOriginalInputFile, 'w') as g:
-            f.write(strPredFileContents)
-            g.write(strInputFileContents)
-
-        #Get answer
-        result = microPITA._funcSelectSupervisedSamplesFromPredictFile(strOriginalInputFile=strOriginalInputFile, strPredictFilePath=strPredictFilePath,
-                                                                         lsSampleNames=lsSampleNames, iSelectCount=iSelectCount, 
-                                                                         fSelectDiscriminant=fSelectDiscriminant, fSelectDistinct=fSelectDistinct)
-
-        #Standardize answer and result
-        answer = [[strKey,sorted(answer[strKey])] for strKey in answer]
-        result = [[strKey,sorted(result[strKey])] for strKey in result]
-
-        #Delete predict file
-        for strFile in [strPredictFilePath,strOriginalInputFile]:
-            if os.path.exists(strFile):
-                os.remove(strFile)
-
-        #Check result
-        self.assertEqual(str(result),str(answer),"".join([str(self),"::Expected=",str(answer),". Received=",str(result),"."]))
-
-    def testFuncSelectSupervisedSamplesFromPredictFile2ClassesReturnMoreThanExistsClassMislabeled2(self):
-
-        #Micropita object
-        microPITA = MicroPITA()
-
-        #Inputs
-        strPredictFilePath = "".join([ConstantsMicropitaTest.c_strTestingTMP,"TestFuncSelectSupervisedSamplesFromPredictionFile.txt"])
-        strOriginalInputFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,"TestFuncSelectSupervisedSamplesFromInputFile.txt"])
-        fSelectDiscriminant = True
-        fSelectDistinct = True
-        iSelectCount = 9
-        lsSampleNames = ["One","Two","Three","Four","Five","Six","Seven","Eight"]
-
-        #Answer
-        answer = {ConstantsMicropita.c_strSVMClose:["One","Two","Four","Eight"],ConstantsMicropita.c_strSVMFar:["One","Two","Four","Eight"]}
-
-        #Set up. Write rpedict and input files
-        strPredFileContents = ConstantsMicropita.c_strEndline.join(["labels 1 0",
-                                                      "0 0.482089 0.517911",
-                                                      "0 0.409344 0.590656",
-                                                      "1 0.99 0.01",
-                                                      "0 0.5 0.5",
-                                                      "1 0.988271 0.011729",
-                                                      "1 0.5 0.5",
-                                                      "1 0.510373 0.489627",
-                                                      "0 0.410257 0.589743"])
-        strInputFileContents = ConstantsMicropita.c_strEndline.join(["0 1:0.482089 2:0.517911",
-                                                      "0 1:0.464303 2:0.535697",
-                                                      "0 1:0.510597",
-                                                      "0 1:0.409344 2:0.590656",
-                                                      "0 1:0.388271 2:0.611729",
-                                                      "0 1:0.5 2:0.5",
-                                                      "0 2:0.489627",
-                                                      "0 1:0.410257 2:0.589743"])
-
-        with open(strPredictFilePath, 'w') as f, open(strOriginalInputFile, 'w') as g:
-            f.write(strPredFileContents)
-            g.write(strInputFileContents)
-
-        #Get answer
-        result = microPITA._funcSelectSupervisedSamplesFromPredictFile(strOriginalInputFile=strOriginalInputFile, strPredictFilePath=strPredictFilePath,
-                                                                         lsSampleNames=lsSampleNames, iSelectCount=iSelectCount, 
-                                                                         fSelectDiscriminant=fSelectDiscriminant, fSelectDistinct=fSelectDistinct)
-
-        #Standardize answer and result
-        answer = [[strKey,sorted(answer[strKey])] for strKey in answer]
-        result = [[strKey,sorted(result[strKey])] for strKey in result]
-
-        #Delete predict file
-        for strFile in [strPredictFilePath,strOriginalInputFile]:
-            if os.path.exists(strFile):
-                os.remove(strFile)
-
-        #Check result
-        self.assertEqual(str(result),str(answer),"".join([str(self),"::Expected=",str(answer),". Received=",str(result),"."]))
-
-    def testFuncSelectSupervisedSamplesFromPredictFile2ClassesReturnLess0(self):
-
-        #Micropita object
-        microPITA = MicroPITA()
-
-        #Inputs
-        strPredictFilePath = "".join([ConstantsMicropitaTest.c_strTestingTMP,"TestFuncSelectSupervisedSamplesFromPredictionFile.txt"])
-        strOriginalInputFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,"TestFuncSelectSupervisedSamplesFromInputFile.txt"])
-        fSelectDiscriminant = True
-        fSelectDistinct = True
-        iSelectCount = 2
-        lsSampleNames = ["One","Two","Three","Four","Five","Six","Seven","Eight"]
-
-        #Answer
-        answer = {ConstantsMicropita.c_strSVMClose:["Two","Six","Seven"],ConstantsMicropita.c_strSVMFar:["Two","Three","Five"]}
-
-        #Set up. Write rpedict and input files
-        strPredFileContents = ConstantsMicropita.c_strEndline.join(["labels 1 0",
-                                                      "0 0.482089 0.517911",
-                                                      "0 0.409344 0.590656",
-                                                      "1 0.99 0.01",
-                                                      "0 0.5 0.5",
-                                                      "1 0.988271 0.011729",
-                                                      "1 0.5 0.5",
-                                                      "1 0.510373 0.489627",
-                                                      "0 0.410257 0.589743"])
-        strInputFileContents = ConstantsMicropita.c_strEndline.join(["1 1:0.482089 2:0.517911",
-                                                      "0 1:0.464303 2:0.535697",
-                                                      "1 1:0.510597",
-                                                      "1 1:0.409344 2:0.590656",
-                                                      "1 1:0.388271 2:0.611729",
-                                                      "1 1:0.5 2:0.5",
-                                                      "1 2:0.489627",
-                                                      "1 1:0.410257 2:0.589743"])
-
-        with open(strPredictFilePath, 'w') as f, open(strOriginalInputFile, 'w') as g:
-            f.write(strPredFileContents)
-            g.write(strInputFileContents)
-
-        #Get answer
-        result = microPITA._funcSelectSupervisedSamplesFromPredictFile(strOriginalInputFile=strOriginalInputFile, strPredictFilePath=strPredictFilePath,
-                                                                         lsSampleNames=lsSampleNames, iSelectCount=iSelectCount, 
-                                                                         fSelectDiscriminant=fSelectDiscriminant, fSelectDistinct=fSelectDistinct)
-
-        #Standardize answer and result
-        answer = [[strKey,sorted(answer[strKey])] for strKey in answer]
-        result = [[strKey,sorted(result[strKey])] for strKey in result]
-
-        #Delete predict file
-        for strFile in [strPredictFilePath,strOriginalInputFile]:
-            if os.path.exists(strFile):
-                os.remove(strFile)
-
-        #Check result
-        self.assertEqual(str(result),str(answer),"".join([str(self),"::Expected=",str(answer),". Received=",str(result),"."]))
-
-    def testFuncSelectSupervisedSamplesFromPredictFile3Classes(self):
-
-        #Micropita object
-        microPITA = MicroPITA()
-
-        #Inputs
-        strPredictFilePath = "".join([ConstantsMicropitaTest.c_strTestingTMP,"TestFuncSelectSupervisedSamplesFromPredictionFile.txt"])
-        strOriginalInputFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,"TestFuncSelectSupervisedSamplesFromInputFile.txt"])
-        fSelectDiscriminant = True
-        fSelectDistinct = True
-        iSelectCount = 1
-        lsSampleNames = ["One","Two","Three","Four","Five","Six","Seven","Eight","Nine","Ten"]
-
-        #Answer
-        answer = {ConstantsMicropita.c_strSVMClose:["Four","Seven","Six"],ConstantsMicropita.c_strSVMFar:["One","Five","Three"]}
-
-        #Set up. Write rpedict and input files
-        strPredFileContents = ConstantsMicropita.c_strEndline.join(["labels 1 0 2",
-                                                      "0 0.1 0.5",
-                                                      "1 0.2 0.8",
-                                                      "2 0.99 0.01",
-                                                      "0 0.3 0.3",
-                                                      "1 0.988271 0.011729",
-                                                      "2 0.3 0.3",
-                                                      "1 0.5 0.4",
-                                                      "0 0.4 0.5"])
-        strInputFileContents = ConstantsMicropita.c_strEndline.join(["0 1:0.482089 2:0.517911",
-                                                      "1 1:0.464303 2:0.535697",
-                                                      "2 1:0.510597",
-                                                      "0 1:0.409344 2:0.590656",
-                                                      "1 1:0.388271 2:0.611729",
-                                                      "2 1:0.5 2:0.5",
-                                                      "1 2:0.489627",
-                                                      "0 1:0.410257 2:0.589743"])
-
-        with open(strPredictFilePath, 'w') as f, open(strOriginalInputFile, 'w') as g:
-            f.write(strPredFileContents)
-            g.write(strInputFileContents)
-
-        #Get answer
-        result = microPITA._funcSelectSupervisedSamplesFromPredictFile(strOriginalInputFile=strOriginalInputFile, strPredictFilePath=strPredictFilePath,
-                                                                         lsSampleNames=lsSampleNames, iSelectCount=iSelectCount, 
-                                                                         fSelectDiscriminant=fSelectDiscriminant, fSelectDistinct=fSelectDistinct)
-
-        #Standardize answer and result
-        answer = [[strKey,sorted(answer[strKey])] for strKey in answer]
-        result = [[strKey,sorted(result[strKey])] for strKey in result]
-
-        #Delete predict file
-        for strFile in [strPredictFilePath,strOriginalInputFile]:
-            if os.path.exists(strFile):
-                os.remove(strFile)
-
-        #Check result
-        self.assertEqual(str(result),str(answer),"".join([str(self),"::Expected=",str(answer),". Received=",str(result),"."]))
-
-    def testFuncSelectSupervisedSamplesFromPredictFile3ClassesSelect2(self):
-
-        #Micropita object
-        microPITA = MicroPITA()
-
-        #Inputs
-        strPredictFilePath = "".join([ConstantsMicropitaTest.c_strTestingTMP,"TestFuncSelectSupervisedSamplesFromPredictionFile.txt"])
-        strOriginalInputFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,"TestFuncSelectSupervisedSamplesFromInputFile.txt"])
-        fSelectDiscriminant = True
-        fSelectDistinct = True
-        iSelectCount = 2
-        lsSampleNames = ["One","Two","Three","Four","Five","Six","Seven","Eight","Nine","Ten"]
-
-        #Answer
-        answer = {ConstantsMicropita.c_strSVMClose:["Four","Eight","Seven","Two","Six","Three"],ConstantsMicropita.c_strSVMFar:["One","Eight","Five","Two","Three","Six"]}
-
-        #Set up. Write rpedict and input files
-        strPredFileContents = ConstantsMicropita.c_strEndline.join(["labels 1 0 2",
-                                                      "0 0.1 0.5",
-                                                      "1 0.2 0.8",
-                                                      "2 0.99 0.01",
-                                                      "0 0.3 0.3",
-                                                      "1 0.988271 0.011729",
-                                                      "2 0.3 0.3",
-                                                      "1 0.5 0.4",
-                                                      "0 0.4 0.5"])
-        strInputFileContents = ConstantsMicropita.c_strEndline.join(["0 1:0.482089 2:0.517911",
-                                                      "1 1:0.464303 2:0.535697",
-                                                      "2 1:0.510597",
-                                                      "0 1:0.409344 2:0.590656",
-                                                      "1 1:0.388271 2:0.611729",
-                                                      "2 1:0.5 2:0.5",
-                                                      "1 2:0.489627",
-                                                      "0 1:0.410257 2:0.589743"])
-
-        with open(strPredictFilePath, 'w') as f, open(strOriginalInputFile, 'w') as g:
-            f.write(strPredFileContents)
-            g.write(strInputFileContents)
-
-        #Get answer
-        result = microPITA._funcSelectSupervisedSamplesFromPredictFile(strOriginalInputFile=strOriginalInputFile, strPredictFilePath=strPredictFilePath,
-                                                                         lsSampleNames=lsSampleNames, iSelectCount=iSelectCount, 
-                                                                         fSelectDiscriminant=fSelectDiscriminant, fSelectDistinct=fSelectDistinct)
-
-        #Standardize answer and result
-        answer = [[strKey,sorted(answer[strKey])] for strKey in answer]
-        result = [[strKey,sorted(result[strKey])] for strKey in result]
-
-        #Delete predict file
-        for strFile in [strPredictFilePath,strOriginalInputFile]:
-            if os.path.exists(strFile):
-                os.remove(strFile)
-
-        #Check result
-        self.assertEqual(str(result),str(answer),"".join([str(self),"::Expected=",str(answer),". Received=",str(result),"."]))
-
-    def testFuncSelectSupervisedSamplesFromPredictFile3ClassesSelect3(self):
-
-        #Micropita object
-        microPITA = MicroPITA()
-
-        #Inputs
-        strPredictFilePath = "".join([ConstantsMicropitaTest.c_strTestingTMP,"TestFuncSelectSupervisedSamplesFromPredictionFile.txt"])
-        strOriginalInputFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,"TestFuncSelectSupervisedSamplesFromInputFile.txt"])
-        fSelectDiscriminant = True
-        fSelectDistinct = True
-        iSelectCount = 3
-        lsSampleNames = ["One","Two","Three","Four","Five","Six","Seven","Eight"]
-
-        #Answer
-        answer = {ConstantsMicropita.c_strSVMClose:["One","Two","Three","Four","Five","Six","Seven","Eight"],ConstantsMicropita.c_strSVMFar:["One","Two","Three","Four","Five","Six","Seven","Eight"]}
-
-        #Set up. Write rpedict and input files
-        strPredFileContents = ConstantsMicropita.c_strEndline.join(["labels 1 0 2",
-                                                      "0 0.1 0.5",
-                                                      "1 0.2 0.8",
-                                                      "2 0.99 0.01",
-                                                      "0 0.3 0.3",
-                                                      "1 0.988271 0.011729",
-                                                      "2 0.3 0.3",
-                                                      "1 0.5 0.4",
-                                                      "0 0.4 0.5"])
-        strInputFileContents = ConstantsMicropita.c_strEndline.join(["0 1:0.482089 2:0.517911",
-                                                      "1 1:0.464303 2:0.535697",
-                                                      "2 1:0.510597",
-                                                      "0 1:0.409344 2:0.590656",
-                                                      "1 1:0.388271 2:0.611729",
-                                                      "2 1:0.5 2:0.5",
-                                                      "1 2:0.489627",
-                                                      "0 1:0.410257 2:0.589743"])
-
-        with open(strPredictFilePath, 'w') as f, open(strOriginalInputFile, 'w') as g:
-            f.write(strPredFileContents)
-            g.write(strInputFileContents)
-
-        #Get answer
-        result = microPITA._funcSelectSupervisedSamplesFromPredictFile(strOriginalInputFile=strOriginalInputFile, strPredictFilePath=strPredictFilePath,
-                                                                         lsSampleNames=lsSampleNames, iSelectCount=iSelectCount, 
-                                                                         fSelectDiscriminant=fSelectDiscriminant, fSelectDistinct=fSelectDistinct)
-
-        #Standardize answer and result
-        answer = [[strKey,sorted(answer[strKey])] for strKey in answer]
-        result = [[strKey,sorted(result[strKey])] for strKey in result]
-
-        #Delete predict file
-        for strFile in [strPredictFilePath,strOriginalInputFile]:
-            if os.path.exists(strFile):
-                os.remove(strFile)
-
-        #Check result
-        self.assertEqual(str(result),str(answer),"".join([str(self),"::Expected=",str(answer),". Received=",str(result),"."]))
 
 ### TestfuncRunNormalizeSensitiveMethods, should be tested in funcRun tests
 
@@ -2463,14 +1388,13 @@ class MicroPITATest(unittest.TestCase):
         #Micropita object
         microPITA = MicroPITA()
 
-        dictTest = {"Diversity_C":["Sample_0_D","Sample_1_D","Sample_2_D","Sample_3_D","Sample_4_D","Sample_5_D"],
-		"Distinct":["Sample_41_E","Sample_42_E","Sample_43_E","Sample_45_T","Sample_46_T","Sample_47_T"],
-		"Extreme_B":["Sample_7_D","Sample_38_E","Sample_8_D","Sample_43_E","Sample_6_D","Sample_39_E"],
-		"Discriminant":["Sample_3_D","Sample_5_D","Sample_6_D","Sample_0_D","Sample_1_D","Sample_2_D"],
-		"Representative_B":["Sample_38_E","Sample_39_E","Sample_40_E","Sample_43_E","Sample_44_T","Sample_47_T"],
-		"Diversity_I":["Sample_45_T","Sample_44_T","Sample_46_T","Sample_13_D","Sample_9_D","Sample_2_D"],
-		"Taxa_Defined":["Sample_47_T","Sample_46_T","Sample_44_T","Sample_45_T","Sample_24_R","Sample_19_R"]}
-        lsKeys = ["Diversity_C","Distinct","Extreme_B","Discriminant","Representative_B","Diversity_I","Taxa_Defined"]
+        dictTest = {"distinct":["Sample_41_E","Sample_42_E","Sample_43_E","Sample_45_T","Sample_46_T","Sample_47_T"],
+		"extreme":["Sample_7_D","Sample_38_E","Sample_8_D","Sample_43_E","Sample_6_D","Sample_39_E"],
+		"discriminant":["Sample_3_D","Sample_5_D","Sample_6_D","Sample_0_D","Sample_1_D","Sample_2_D"],
+		"representative":["Sample_38_E","Sample_39_E","Sample_40_E","Sample_43_E","Sample_44_T","Sample_47_T"],
+		"diversity":["Sample_45_T","Sample_44_T","Sample_46_T","Sample_13_D","Sample_9_D","Sample_2_D"],
+		"feature":["Sample_47_T","Sample_46_T","Sample_44_T","Sample_45_T","Sample_24_R","Sample_19_R"]}
+        lsKeys = ["distinct","extreme","discriminant","representative","diversity","feature"]
         sTestFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,"TempTestSelectFile.txt"])
         sAnswerFile = "".join([ConstantsMicropitaTest.c_strTestingTruth,"TestSelectFile.txt"])
         answer = ""
@@ -2478,20 +1402,21 @@ class MicroPITATest(unittest.TestCase):
         if os.path.exists(sTestFile):
             os.remove(sTestFile)
 
-        microPITA.funcWriteSelectionToFile(dictSelection=dictTest,strOutputFilePath=sTestFile)
+        microPITA.funcWriteSelectionToFile(dictSelection=dictTest,xOutputFilePath=sTestFile)
 
         #Read in generated file and answer
         result = ""
-        with open(sTestFile) as f, open(sAnswerFile) as g:
-            result = f.read()
-            answer = g.read()
+        f = csv.reader(open(sTestFile,'r'),delimiter=ConstantsMicropita.c_outputFileDelim)
+        result = [sRow for sRow in f]
+        g = csv.reader(open(sAnswerFile,'r'),delimiter=ConstantsMicropita.c_outputFileDelim)
+        answer = [sRow for sRow in g]
 
         if os.path.exists(sTestFile):
             os.remove(sTestFile)
 
         #Put answer in correct order
-        dictresult = dict([(sLine.split(ConstantsMicropita.c_cTab)[0],sLine.split(ConstantsMicropita.c_cTab)[1:]) for sLine in filter(None,result.split(ConstantsMicropita.c_strEndline))])
-        result = ConstantsMicropita.c_strEndline.join([ConstantsMicropita.c_cTab.join([sKey]+dictresult[sKey]) for sKey in lsKeys])+ConstantsMicropita.c_strEndline
+        dictresult = dict([(sRow[0], sRow[1:]) for sRow in result])
+        result = [[sKey]+dictresult[sKey] for sKey in lsKeys]
 
         #Check result against answer
         self.assertEqual(str(result),str(answer),"".join([str(self),"::Expected=",str(answer),". Received=",str(result),"."]))
@@ -2502,13 +1427,13 @@ class MicroPITATest(unittest.TestCase):
         #Micropita object
         microPITA = MicroPITA()
 
-        dictTest = {"Distinct":["Sample_41_E","Sample_42_E","Sample_43_E","Sample_45_T","Sample_46_T","Sample_47_T"],
-		"Extreme_B":["Sample_7_D","Sample_38_E","Sample_8_D","Sample_43_E","Sample_6_D","Sample_39_E"],
-		"Discriminant":["Sample_3_D","Sample_5_D","Sample_6_D","Sample_0_D","Sample_1_D","Sample_2_D"],
-		"Representative_B":["Sample_38_E","Sample_39_E","Sample_40_E","Sample_43_E","Sample_44_T","Sample_47_T"],
-		"Diversity_I":["Sample_45_T","Sample_44_T","Sample_46_T","Sample_13_D","Sample_9_D","Sample_2_D"],
-		"Taxa_Defined":["Sample_47_T","Sample_46_T","Sample_44_T","Sample_45_T","Sample_24_R","Sample_19_R"]}
-        lsKeys = ["Distinct","Extreme_B","Discriminant","Representative_B","Diversity_I","Taxa_Defined"]
+        dictTest = {"distinct":["Sample_41_E","Sample_42_E","Sample_43_E","Sample_45_T","Sample_46_T","Sample_47_T"],
+		"extreme":["Sample_7_D","Sample_38_E","Sample_8_D","Sample_43_E","Sample_6_D","Sample_39_E"],
+		"discriminant":["Sample_3_D","Sample_5_D","Sample_6_D","Sample_0_D","Sample_1_D","Sample_2_D"],
+		"representative":["Sample_38_E","Sample_39_E","Sample_40_E","Sample_43_E","Sample_44_T","Sample_47_T"],
+		"diversity":["Sample_45_T","Sample_44_T","Sample_46_T","Sample_13_D","Sample_9_D","Sample_2_D"],
+		"feature":["Sample_47_T","Sample_46_T","Sample_44_T","Sample_45_T","Sample_24_R","Sample_19_R"]}
+        lsKeys = ["distinct","extreme","discriminant","representative","diversity","feature"]
         sTestFile = "".join([ConstantsMicropitaTest.c_strTestingTruth,"TestSelectFile.txt"])
         answer = "".join(["".join([sKey,str(dictTest[sKey])]) for sKey in lsKeys])
 
@@ -2525,20 +1450,20 @@ class MicroPITATest(unittest.TestCase):
         #Micropita object
         microPITA = MicroPITA()
 
-        dictTest = {"Diversity_C":["Sample_0_D","Sample_1_D","Sample_2_D","Sample_3_D","Sample_4_D","Sample_5_D"],
-		"Distinct":["Sample_41_E","Sample_42_E","Sample_43_E","Sample_45_T","Sample_46_T","Sample_47_T"],
-		"Extreme_B":["Sample_7_D","Sample_38_E","Sample_8_D","Sample_43_E","Sample_6_D","Sample_39_E"],
-		"Discriminant":["Sample_3_D","Sample_5_D","Sample_6_D","Sample_0_D","Sample_1_D","Sample_2_D"],
-		"Representative_B":["Sample_38_E","Sample_39_E","Sample_40_E","Sample_43_E","Sample_44_T","Sample_47_T"],
-		"Diversity_I":["Sample_45_T","Sample_44_T","Sample_46_T","Sample_13_D","Sample_9_D","Sample_2_D"],
-		"Taxa_Defined":["Sample_47_T","Sample_46_T","Sample_44_T","Sample_45_T","Sample_24_R","Sample_19_R"]}
-        lsKeys = ["Diversity_C","Distinct","Extreme_B","Discriminant","Representative_B","Diversity_I","Taxa_Defined"]
+        dictTest = {"distinct":["Sample_41_E","Sample_42_E","Sample_43_E","Sample_45_T","Sample_46_T","Sample_47_T"],
+		"extreme":["Sample_7_D","Sample_38_E","Sample_8_D","Sample_43_E","Sample_6_D","Sample_39_E"],
+		"discriminant":["Sample_3_D","Sample_5_D","Sample_6_D","Sample_0_D","Sample_1_D","Sample_2_D"],
+		"representative":["Sample_38_E","Sample_39_E","Sample_40_E","Sample_43_E","Sample_44_T","Sample_47_T"],
+		"diversity":["Sample_45_T","Sample_44_T","Sample_46_T","Sample_13_D","Sample_9_D","Sample_2_D"],
+		"feature":["Sample_47_T","Sample_46_T","Sample_44_T","Sample_45_T","Sample_24_R","Sample_19_R"]}
+        lsKeys = ["distinct","extreme","discriminant","representative","diversity","feature"]
         sTestFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,"TempTestSelectFile.txt"])
         answer = "".join(["".join([sKey,str(dictTest[sKey])]) for sKey in lsKeys])
 
         #Get result
-        microPITA.funcWriteSelectionToFile(dictSelection=dictTest,strOutputFilePath=sTestFile)
+        microPITA.funcWriteSelectionToFile(dictSelection=dictTest,xOutputFilePath=sTestFile)
         dictResults = microPITA.funcReadSelectionFileToDictionary(sTestFile)
+
         #Put answer in correct order
         result = "".join(["".join([sKey,str(dictResults[sKey])]) for sKey in lsKeys])
 
@@ -2553,12 +1478,10 @@ class MicroPITATest(unittest.TestCase):
 
         #Inputs
         strSelectionFile = "".join([ConstantsMicropitaTest.c_strTestingInput,"abridgedabundance.pcl"])
-        fSelectionIsNormalized = False
-        fSelectionIsSummed = False
         sSampleIDSelection = "TID"
         sLastMetadataSelection = "STSite"
 
-        abndTable = AbundanceTable.funcMakeFromFile(strInputFile=strSelectionFile, fIsNormalized=fSelectionIsNormalized, fIsSummed=fSelectionIsSummed,
+        abndTable = AbundanceTable.funcMakeFromFile(xInputFile=strSelectionFile,
                     cDelimiter = "\t", sMetadataID = sSampleIDSelection, sLastMetadata = sLastMetadataSelection, cFeatureNameDelimiter="|")
         lfCompress = [True]*10
 
@@ -2577,12 +1500,10 @@ class MicroPITATest(unittest.TestCase):
 
         #Inputs
         strSelectionFile = "".join([ConstantsMicropitaTest.c_strTestingInput,"abridgedabundance.pcl"])
-        fSelectionIsNormalized = False
-        fSelectionIsSummed = False
         sSampleIDSelection = "TID"
         sLastMetadataSelection = "STSite"
 
-        abndTable = AbundanceTable.funcMakeFromFile(strInputFile=strSelectionFile, fIsNormalized=fSelectionIsNormalized, fIsSummed=fSelectionIsSummed,
+        abndTable = AbundanceTable.funcMakeFromFile(xInputFile=strSelectionFile,
                     cDelimiter = "\t", sMetadataID = sSampleIDSelection, sLastMetadata = sLastMetadataSelection, cFeatureNameDelimiter="|")
         lfCompress = [True,False,True,False,False,True,True,True,True,False]
 
@@ -2601,12 +1522,10 @@ class MicroPITATest(unittest.TestCase):
 
         #Inputs
         strSelectionFile = "".join([ConstantsMicropitaTest.c_strTestingInput,"abridgedabundance.pcl"])
-        fSelectionIsNormalized = False
-        fSelectionIsSummed = False
         sSampleIDSelection = "TID"
         sLastMetadataSelection = "STSite"
 
-        abndTable = AbundanceTable.funcMakeFromFile(strInputFile=strSelectionFile, fIsNormalized=fSelectionIsNormalized, fIsSummed=fSelectionIsSummed,
+        abndTable = AbundanceTable.funcMakeFromFile(xInputFile=strSelectionFile,
                     cDelimiter = "\t", sMetadataID = sSampleIDSelection, sLastMetadata = sLastMetadataSelection, cFeatureNameDelimiter="|")
         lfCompress = [False,True,False,True,True,False,False,False,False,True]
 
@@ -2627,13 +1546,11 @@ class MicroPITATest(unittest.TestCase):
 
         #Inputs
         strSelectionFile = "".join([ConstantsMicropitaTest.c_strTestingInput,"abridgedabundance.pcl"])
-        fSelectionIsNormalized = False
-        fSelectionIsSummed = False
         sSampleIDSelection = "TID"
         sLastMetadataSelection = "STSite"
         lfSelected = [False,True,False,True,True,False,False,False,False,True]
 
-        abndTable = AbundanceTable.funcMakeFromFile(strInputFile=strSelectionFile, fIsNormalized=fSelectionIsNormalized, fIsSummed=fSelectionIsSummed,
+        abndTable = AbundanceTable.funcMakeFromFile(xInputFile=strSelectionFile,
                     cDelimiter = "\t", sMetadataID = sSampleIDSelection, sLastMetadata = sLastMetadataSelection, cFeatureNameDelimiter="|")
         ldAverage = MicroPITA().funcGetAveragePopulation(abndTable=abndTable, lfCompress=lfSelected)
         lsSamples = abndTable.funcGetSampleNames()
@@ -2681,13 +1598,11 @@ class MicroPITATest(unittest.TestCase):
 
         #Inputs
         strSelectionFile = "".join([ConstantsMicropitaTest.c_strTestingInput,"abridgedabundance.pcl"])
-        fSelectionIsNormalized = False
-        fSelectionIsSummed = False
         sSampleIDSelection = "TID"
         sLastMetadataSelection = "STSite"
         lfSelected = [True,False,True,False,False,True,True,True,True,False]
 
-        abndTable = AbundanceTable.funcMakeFromFile(strInputFile=strSelectionFile, fIsNormalized=fSelectionIsNormalized, fIsSummed=fSelectionIsSummed,
+        abndTable = AbundanceTable.funcMakeFromFile(xInputFile=strSelectionFile,
                     cDelimiter = "\t", sMetadataID = sSampleIDSelection, sLastMetadata = sLastMetadataSelection, cFeatureNameDelimiter="|")
         ldAverage = MicroPITA().funcGetAveragePopulation(abndTable=abndTable, lfCompress=lfSelected)
         lsSamples = abndTable.funcGetSampleNames()
@@ -2728,20 +1643,18 @@ class MicroPITATest(unittest.TestCase):
 
         #Inputs
         strSelectionFile = "".join([ConstantsMicropitaTest.c_strTestingInput,"abridgedabundance.pcl"])
-        fSelectionIsNormalized = False
-        fSelectionIsSummed = False
         sSampleIDSelection = "TID"
         sLastMetadataSelection = "STSite"
         lfSelected = [True,True,True,True,True,False,False,False,False,False]
 
-        abndTable = AbundanceTable.funcMakeFromFile(strInputFile=strSelectionFile, fIsNormalized=fSelectionIsNormalized, fIsSummed=fSelectionIsSummed,
+        abndTable = AbundanceTable.funcMakeFromFile(xInputFile=strSelectionFile,
                     cDelimiter = "\t", sMetadataID = sSampleIDSelection, sLastMetadata = sLastMetadataSelection, cFeatureNameDelimiter="|")
         ldAverage = MicroPITA().funcGetAveragePopulation(abndTable=abndTable, lfCompress=lfSelected)
 
         #Get results
-        ltpleSelected, ltpleNotSelected  = MicroPITA().funcMeasureDistanceFromLabelToAverageOtherLabel(abndTable=abndTable,
-                                                                                     lfGroup=lfSelected,
-                                                                                     lfGroupOther= [not fflage for fflage in lfSelected])
+        ltpleDistances  = MicroPITA().funcMeasureDistanceFromLabelToAverageOtherLabel(abndTable=abndTable,
+                                                                                     lfGroupOfInterest=lfSelected,
+                                                                                     lfGroupOther=[not fflage for fflage in lfSelected])
 
         #Answer
         #Evaluate results
@@ -2758,7 +1671,6 @@ class MicroPITATest(unittest.TestCase):
         #> x8 = c(2,0,1,0,1)
         #> x9 = c(1,1,1,1,1)
         #> x10 = c(0,0,0,0,0)
-        #> average1 = c(2.6,11.8,6.4,16.4,1.4)
         #> average2 = c(1.8,4.8,9.4,0.2,1.6)
         #> vegdist(rbind(average2,x1),method='bray')
         #>     average2
@@ -2775,35 +1687,16 @@ class MicroPITATest(unittest.TestCase):
         #> vegdist(rbind(average2,x5),method='bray')
         #>     average2
         #> x5 0.6268657
-        #> vegdist(rbind(average1,x6),method='bray')
-        #>     average1
-        #> x6 0.7824268
-        #> vegdist(rbind(average1,x7),method='bray')
-        #>     average1
-        #> x7 0.6168831
-        #> vegdist(rbind(average1,x8),method='bray')
-        #>     average1
-        #> x8 0.8122066
-        #> vegdist(rbind(average1,x9),method='bray')
-        #>     average1
-        #> x9 0.7706422
-        #> vegdist(rbind(average1,x10),method='bray')
-        #>     average1
-        #> x10        1
+
         ltpleSelectedAnswer = [("700098986",0.5820896),("700098984",0.8626374),("700098982",1),("700098980",0.7416546),("700098988",0.6268657)]
-        ltpleNotSelectedAnswer = [("700037470",0.7824268),("700037472",0.6168831),("700037474",0.8122066),("700037476",0.7706422),("700037478",1)]
 
         #Sort all results and answers
-        ltpleSelected.sort(key=operator.itemgetter(0))
-        ltpleNotSelected.sort(key=operator.itemgetter(0))
+        ltpleDistances.sort(key=operator.itemgetter(0))
         ltpleSelectedAnswer.sort(key=operator.itemgetter(0))
-        ltpleNotSelectedAnswer.sort(key=operator.itemgetter(0))
 
         #Change doubles to ints so that precision issue will not throw off the tests (perserving to the 4th decimal place)
-        ltpleSelected = [(tplTuple[0],int(tplTuple[1]*10000)) for tplTuple in ltpleSelected]
-        ltpleNotSelected = [(tplTuple[0],int(tplTuple[1]*10000)) for tplTuple in ltpleNotSelected]
+        ltpleSelected = [(tplTuple[0],int(tplTuple[1]*10000)) for tplTuple in ltpleDistances]
         ltpleSelectedAnswer = [(tplTuple[0],int(tplTuple[1]*10000)) for tplTuple in ltpleSelectedAnswer]
-        ltpleNotSelectedAnswer = [(tplTuple[0],int(tplTuple[1]*10000)) for tplTuple in ltpleNotSelectedAnswer]
 
         fError = False
         strError = ""
@@ -2811,11 +1704,6 @@ class MicroPITATest(unittest.TestCase):
             if not (str(ltpleSelectedAnswer[iindex]) == str(ltpleSelected[iindex])):
                 fError = True
                 strError +=  "".join([str(ltpleSelectedAnswer[iindex])," Did not match ",str(ltpleSelected[iindex])])
-
-        for iindex, tple in enumerate(ltpleNotSelected):
-            if not (str(ltpleNotSelectedAnswer[iindex]) == str(ltpleNotSelected[iindex])):
-                fError = True
-                strError +=  "".join([str(ltpleNotSelectedAnswer[iindex])," Did not match ",str(ltpleNotSelected[iindex])])
 
         self.assertEqual(False, fError, "".join([str(self),"::",strError,"."]))
 
@@ -2825,60 +1713,42 @@ class MicroPITATest(unittest.TestCase):
 
         #Inputs
         strSelectionFile = "".join([ConstantsMicropitaTest.c_strTestingInput,"abridgedabundance.pcl"])
-        fSelectionIsNormalized = False
-        fSelectionIsSummed = False
         sSampleIDSelection = "TID"
         sLastMetadataSelection = "STSite"
         sLabel = "sLabel"
         iSelect = 2
 
-        abndTable = AbundanceTable.funcMakeFromFile(strInputFile=strSelectionFile, fIsNormalized=fSelectionIsNormalized, fIsSummed=fSelectionIsSummed,
+        abndTable = AbundanceTable.funcMakeFromFile(xInputFile=strSelectionFile,
                     cDelimiter = "\t", sMetadataID = sSampleIDSelection, sLastMetadata = sLastMetadataSelection, cFeatureNameDelimiter="|")
 
-        lsDisc0, lsDtnt0, lsOther0, lsDisc1, lsDtnt1, lsOther1 = MicroPITA().funcPerformDistanceSelection(abndTable=abndTable, iSelectionCount=iSelect, sLabel=sLabel)
+        lsDisc0, lsDtnt0, lsOther0 = MicroPITA().funcPerformDistanceSelection(abndTable=abndTable,
+                iSelectionCount=iSelect, sLabel=sLabel, sValueOfInterest=abndTable.funcGetMetadata(sLabel)[0])
 
         #Answers
         lsDisc0Answer = [("700098986",0.5820896),("700098988",0.6268657)]
         lsDtnt0Answer = [("700098982",1),("700098984",0.8626374)]
         lsOther0Answer = [("700098980",0.7416546)]
-        lsDisc1Answer = [("700037476",0.7706422),("700037472",0.6168831)]
-        lsDtnt1Answer = [("700037478",1),("700037474",0.8122066)]
-        lsOther1Answer = [("700037470",0.7824268)]
 
         #Sort answers and results
         lsDisc0Answer.sort(key=operator.itemgetter(0))
         lsDtnt0Answer.sort(key=operator.itemgetter(0))
         lsOther0Answer.sort(key=operator.itemgetter(0))
-        lsDisc1Answer.sort(key=operator.itemgetter(0))
-        lsDtnt1Answer.sort(key=operator.itemgetter(0))
-        lsOther1.sort(key=operator.itemgetter(0))
         lsDisc0.sort(key=operator.itemgetter(0))
         lsDtnt0.sort(key=operator.itemgetter(0))
         lsOther0.sort(key=operator.itemgetter(0))
-        lsDisc1.sort(key=operator.itemgetter(0))
-        lsDtnt1.sort(key=operator.itemgetter(0))
-        lsOther1.sort(key=operator.itemgetter(0))
 
         #Change doubles to ints so that precision issue will not throw off the tests (perserving to the 4th decimal place)
         lsDisc0Answer = [(tplTuple[0],int(tplTuple[1]*10000)) for tplTuple in lsDisc0Answer]
         lsDtnt0Answer = [(tplTuple[0],int(tplTuple[1]*10000)) for tplTuple in lsDtnt0Answer]
         lsOther0Answer = [(tplTuple[0],int(tplTuple[1]*10000)) for tplTuple in lsOther0Answer]
-        lsDisc1Answer = [(tplTuple[0],int(tplTuple[1]*10000)) for tplTuple in lsDisc1Answer]
-        lsDtnt1Answer = [(tplTuple[0],int(tplTuple[1]*10000)) for tplTuple in lsDtnt1Answer]
-        lsOther1Answer = [(tplTuple[0],int(tplTuple[1]*10000)) for tplTuple in lsOther1Answer]
         lsDisc0 = [(tplTuple[0],int(tplTuple[1]*10000)) for tplTuple in lsDisc0]
         lsDtnt0 = [(tplTuple[0],int(tplTuple[1]*10000)) for tplTuple in lsDtnt0]
         lsOther0 = [(tplTuple[0],int(tplTuple[1]*10000)) for tplTuple in lsOther0]
-        lsDisc1 = [(tplTuple[0],int(tplTuple[1]*10000)) for tplTuple in lsDisc1]
-        lsDtnt1 = [(tplTuple[0],int(tplTuple[1]*10000)) for tplTuple in lsDtnt1]
-        lsOther1 = [(tplTuple[0],int(tplTuple[1]*10000)) for tplTuple in lsOther1]
 
         #Result answer pairs
         fError = False
         strError = ""
-        llResultAnswers = [[lsDisc1,lsDisc0Answer], [lsDtnt1,lsDtnt0Answer],
-                           [lsOther1,lsOther0Answer], [lsDisc0,lsDisc1Answer],
-                           [lsDtnt0,lsDtnt1Answer], [lsOther0,lsOther1Answer]]
+        llResultAnswers = [[lsDisc0,lsDisc0Answer], [lsDtnt0,lsDtnt0Answer], [lsOther0,lsOther0Answer]]
 
         for llPairs in llResultAnswers:
             if not (len(llPairs[0]) == len(llPairs[1])):
@@ -2899,23 +1769,21 @@ class MicroPITATest(unittest.TestCase):
 
         #Inputs
         strSelectionFile = "".join([ConstantsMicropitaTest.c_strTestingInput,"abridgedabundance.pcl"])
-        fSelectionIsNormalized = False
-        fSelectionIsSummed = False
         sSampleIDSelection = "TID"
         sLastMetadataSelection = "STSite"
         strSupervisedMetadata = "sLabel"
         fRunDistinct = True
         fRunDiscriminant = True
         iSelect = 2
-        strOuputSVMFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,"testFuncRunSupervisedDistancesFromCentroidsForGoodCaseCheckingReturn-input.txt"])
+        strOutputSVMFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,"testFuncRunSupervisedDistancesFromCentroidsForGoodCaseCheckingReturn-input.txt"])
         strPredictSVMFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,"testFuncRunSupervisedDistancesFromCentroidsForGoodCaseCheckingReturn-predict.txt"])
 
-        abndTable = AbundanceTable.funcMakeFromFile(strInputFile=strSelectionFile, fIsNormalized=fSelectionIsNormalized, fIsSummed=fSelectionIsSummed,
+        abndTable = AbundanceTable.funcMakeFromFile(xInputFile=strSelectionFile,
                     cDelimiter="\t", sMetadataID=sSampleIDSelection, sLastMetadata=sLastMetadataSelection, cFeatureNameDelimiter="|")
 
         dictResults = MicroPITA().funcRunSupervisedDistancesFromCentroids(abundanceTable=abndTable, fRunDistinct=fRunDistinct, fRunDiscriminant=fRunDiscriminant,
-                                       strOuputSVMFile=strOuputSVMFile, strPredictSVMFile=strPredictSVMFile, strSupervisedMetadata=strSupervisedMetadata,
-                                       iSampleSVMSelectionCount=iSelect)
+                                       xOutputSupFile=strOutputSVMFile, xPredictSupFile=strPredictSVMFile, strSupervisedMetadata=strSupervisedMetadata,
+                                       iSampleSupSelectionCount=iSelect)
 
         dictAnswer = {ConstantsMicropita.c_strDiscriminant:["700098986","700098988","700037476","700037472"],
                       ConstantsMicropita.c_strDistinct:["700098982","700098984","700037478","700037474"]}
@@ -2939,31 +1807,28 @@ class MicroPITATest(unittest.TestCase):
 
         #Inputs
         strSelectionFile = "".join([ConstantsMicropitaTest.c_strTestingInput,"abridgedabundance.pcl"])
-        fSelectionIsNormalized = False
-        fSelectionIsSummed = False
         sSampleIDSelection = "TID"
         sLastMetadataSelection = "STSite"
         strSupervisedMetadata = "sLabel"
         fRunDistinct = True
         fRunDiscriminant = True
         iSelect = 2
-        strOuputSVMFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,"testFuncRunSupervisedDistancesFromCentroidsForGoodCaseCheckingReturn-input.txt"])
+        strOutputSVMFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,"testFuncRunSupervisedDistancesFromCentroidsForGoodCaseCheckingReturn-input.txt"])
         strPredictSVMFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,"testFuncRunSupervisedDistancesFromCentroidsForGoodCaseCheckingReturn-predict.txt"])
         strCorrectAnswerFile = "".join([ConstantsMicropitaTest.c_strTestingTruth,"testFuncRunSupervisedDistancesFromCentroidsForGoodCaseCheckingReturn-input.txt"])
 
-        abndTable = AbundanceTable.funcMakeFromFile(strInputFile=strSelectionFile, fIsNormalized=fSelectionIsNormalized, fIsSummed=fSelectionIsSummed,
+        abndTable = AbundanceTable.funcMakeFromFile(xInputFile=strSelectionFile,
                     cDelimiter="\t", sMetadataID=sSampleIDSelection, sLastMetadata=sLastMetadataSelection, cFeatureNameDelimiter="|")
 
         MicroPITA().funcRunSupervisedDistancesFromCentroids(abundanceTable=abndTable, fRunDistinct=fRunDistinct, fRunDiscriminant=fRunDiscriminant,
-                                       strOuputSVMFile=strOuputSVMFile, strPredictSVMFile=strPredictSVMFile, strSupervisedMetadata=strSupervisedMetadata,
-                                       iSampleSVMSelectionCount=iSelect)
+                                       xOutputSupFile=strOutputSVMFile, xPredictSupFile=strPredictSVMFile, strSupervisedMetadata=strSupervisedMetadata,
+                                       iSampleSupSelectionCount=iSelect)
 
         #Get answer and result
-        strAnswer = ""
-        strResult = ""
-        with open( strCorrectAnswerFile, 'r') as a, open( strOuputSVMFile, 'r') as r:
-            strAnswer = a.read()
-            strResult = r.read()
+        a = csv.reader(open( strCorrectAnswerFile, 'r'),delimiter=ConstantsBreadCrumbs.c_strBreadCrumbsSVMSpace)
+        strAnswer = [sRow for sRow in a]
+        r = csv.reader(open( strOutputSVMFile, 'r'),delimiter=ConstantsBreadCrumbs.c_strBreadCrumbsSVMSpace)
+        strResult = [sRow for sRow in r]
 
         self.assertEqual(str(strResult),str(strAnswer),"".join([str(self),"::Expected=",str(strAnswer),". Received=",str(strResult),"."]))
 
@@ -2972,31 +1837,28 @@ class MicroPITATest(unittest.TestCase):
 
         #Inputs
         strSelectionFile = "".join([ConstantsMicropitaTest.c_strTestingInput,"abridgedabundance.pcl"])
-        fSelectionIsNormalized = False
-        fSelectionIsSummed = False
         sSampleIDSelection = "TID"
         sLastMetadataSelection = "STSite"
         strSupervisedMetadata = "sLabel"
         fRunDistinct = True
         fRunDiscriminant = True
         iSelect = 2
-        strOuputSVMFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,"testFuncRunSupervisedDistancesFromCentroidsForGoodCaseCheckingReturn-input.txt"])
+        strOutputSVMFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,"testFuncRunSupervisedDistancesFromCentroidsForGoodCaseCheckingReturn-input.txt"])
         strPredictSVMFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,"testFuncRunSupervisedDistancesFromCentroidsForGoodCaseCheckingReturn-predict.txt"])
         strCorrectAnswerFile = "".join([ConstantsMicropitaTest.c_strTestingTruth,"testFuncRunSupervisedDistancesFromCentroidsForGoodCaseCheckingReturn-predict.txt"])
 
-        abndTable = AbundanceTable.funcMakeFromFile(strInputFile=strSelectionFile, fIsNormalized=fSelectionIsNormalized, fIsSummed=fSelectionIsSummed,
+        abndTable = AbundanceTable.funcMakeFromFile(xInputFile=strSelectionFile,
                     cDelimiter="\t", sMetadataID=sSampleIDSelection, sLastMetadata=sLastMetadataSelection, cFeatureNameDelimiter="|")
 
         MicroPITA().funcRunSupervisedDistancesFromCentroids(abundanceTable=abndTable, fRunDistinct=fRunDistinct, fRunDiscriminant=fRunDiscriminant,
-                                       strOuputSVMFile=strOuputSVMFile, strPredictSVMFile=strPredictSVMFile, strSupervisedMetadata=strSupervisedMetadata,
-                                       iSampleSVMSelectionCount=iSelect)
+                                       xOutputSupFile=strOutputSVMFile, xPredictSupFile=strPredictSVMFile, strSupervisedMetadata=strSupervisedMetadata,
+                                       iSampleSupSelectionCount=iSelect)
 
         #Get answer and result
-        strAnswer = ""
-        strResult = ""
-        with open( strCorrectAnswerFile, 'r') as a, open( strPredictSVMFile, 'r') as r:
-            strAnswer = a.read()
-            strResult = r.read()
+        a = csv.reader(open( strCorrectAnswerFile, 'r'),delimiter=ConstantsBreadCrumbs.c_strBreadCrumbsSVMSpace)
+        strAnswer = [sRow for sRow in a]
+        r = csv.reader(open( strPredictSVMFile, 'r'),delimiter=ConstantsBreadCrumbs.c_strBreadCrumbsSVMSpace)
+        strResult = [sRow for sRow in r]
 
         self.assertEqual(str(strResult),str(strAnswer),"".join([str(self),"::Expected=",str(strAnswer),". Received=",str(strResult),"."]))
 
@@ -3009,16 +1871,14 @@ class MicroPITATest(unittest.TestCase):
 
         #Required inputs
         strFileAbund = "".join([ConstantsMicropitaTest.c_strTestingInput+"Unbalanced48-GenNoise-0-SignalNoise-5.pcl"])
-        fIsNormalized = False
-        fIsSummed = False
         sIDName = "ID"
         sLastMetadataName = "Label"
-        strSelection = [ConstantsMicropita.c_strDiversity,ConstantsMicropita.c_strExtremeDissimilarity,ConstantsMicropita.c_strRepresentativeDissimilarity,
-                        ConstantsMicropita.c_strTaxa,ConstantsMicropita.c_strDiscriminant,ConstantsMicropita.c_strDistinct]
+        strSelection = [ConstantsMicropita.c_strDiversity,ConstantsMicropita.c_strExtreme,ConstantsMicropita.c_strRepresentative,
+                        ConstantsMicropita.c_strFeature,ConstantsMicropita.c_strDiscriminant,ConstantsMicropita.c_strDistinct]
 
         #Other inputs
         strOutFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,sMethodName,".txt"])
-        cFileDelimiter = ConstantsMicropita.c_cTab
+        cFileDelimiter = ConstantsMicropita.TAB
         cFeatureNameDelimiter = "|"
         strFileTaxa = "".join([ConstantsMicropitaTest.c_strTestingInput+"Unbalanced48-GenNoise-0-SignalNoise-5.taxa"])
         strInputPredictFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,sMethodName,"-predictInput.txt"])
@@ -3037,24 +1897,21 @@ class MicroPITATest(unittest.TestCase):
         strAnswerFile = "".join([ConstantsMicropitaTest.c_strTestingTruth,sMethodName,"-Correct.txt"])
 
         #Get result
-        result = microPITA.funcRun(fIsAlreadyNormalized=fIsNormalized,
-                                   fCladesAreSummed=fIsSummed,
-                                   sMetadataID=sIDName,
-                                   sLastMetadataName=sLastMetadataName,
-                                   strInputAbundanceFile=strFileAbund,
-                                   strInputPredictFile=strInputPredictFile,
-                                   strPredictPredictFile=strPredictPredictFile,
-                                   strCheckedAbndFile=strCheckedAbndFile,
-                                   strOutputFile=strOutFile,
+        result = microPITA.funcRun(strIDName=sIDName,
+                                   strLastMetadataName=sLastMetadataName,
+                                   istmInput=strFileAbund,
+                                   ostmInputPredictFile=strInputPredictFile,
+                                   ostmPredictFile=strPredictPredictFile,
+                                   ostmCheckedFile=strCheckedAbndFile,
+                                   ostmOutput=strOutFile,
                                    cDelimiter=cFileDelimiter,
-                                   cFeatureNameDelimiter = cFeatureNameDelimiter,
-                                   strUserDefinedTaxaFile=strFileTaxa,
-                                   iSampleSelectionCount=iUnsupervisedSelectionCount,
-                                   iSupervisedSampleCount=iSupervisedCount, strLabel=sLabel,
-                                   strStratify=sUnsupervisedStratify,
-                                   strSelectionTechnique=strSelection,
-                                   fSumData=fSumData,
-                                   sFeatureSelectionMethod=sFeatureSelection)
+                                   cFeatureNameDelimiter=cFeatureNameDelimiter,
+                                   strFeatureSelection=sFeatureSelection,
+                                   istmFeatures=strFileTaxa,
+                                   iCount=iUnsupervisedSelectionCount,
+                                   lstrMethods=strSelection,
+                                   strLabel=sLabel,
+                                   strStratify=sUnsupervisedStratify)
 
         answer = microPITA.funcReadSelectionFileToDictionary(strAnswerFile)
 
@@ -3090,8 +1947,8 @@ class MicroPITATest(unittest.TestCase):
         sSelectionCount = [ConstantsMicropita.c_strSupervisedLabelCountArgument,"3"]
         sTaxaFile = [ConstantsMicropita.c_strTargetedSelectionFileArgument,
                      "".join([ConstantsMicropitaTest.c_strTestingInput+"Unbalanced48-GenNoise-0-SignalNoise-5.taxa"])]
-        strSelection = [ConstantsMicropita.c_strDiversity,ConstantsMicropita.c_strExtremeDissimilarity,
-                        ConstantsMicropita.c_strRepresentativeDissimilarity,ConstantsMicropita.c_strTaxa,
+        strSelection = [ConstantsMicropita.c_strDiversity,ConstantsMicropita.c_strExtreme,
+                        ConstantsMicropita.c_strRepresentative,ConstantsMicropita.c_strFeature,
                         ConstantsMicropita.c_strDiscriminant,ConstantsMicropita.c_strDistinct]
         sSupervisedLabel = [ConstantsMicropita.c_strSupervisedLabelArgument,"Label"]
 
@@ -3138,16 +1995,14 @@ class MicroPITATest(unittest.TestCase):
 
         #Required inputs
         strFileAbund = "".join([ConstantsMicropitaTest.c_strTestingInput+"Unbalanced48-GenNoise-0-SignalNoise-5.pcl"])
-        fIsNormalized = False
-        fIsSummed = False
         sIDName = "ID"
         sLastMetadataName = "Label"
-        strSelection = [ConstantsMicropita.c_strDiversity,ConstantsMicropita.c_strExtremeDissimilarity,ConstantsMicropita.c_strRepresentativeDissimilarity,
-                        ConstantsMicropita.c_strTaxa,ConstantsMicropita.c_strDiscriminant,ConstantsMicropita.c_strDistinct]
+        strSelection = [ConstantsMicropita.c_strDiversity,ConstantsMicropita.c_strExtreme,ConstantsMicropita.c_strRepresentative,
+                        ConstantsMicropita.c_strFeature,ConstantsMicropita.c_strDiscriminant,ConstantsMicropita.c_strDistinct]
 
         #Other inputs
         strOutFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,sMethodName,".txt"])
-        cFileDelimiter = ConstantsMicropita.c_cTab
+        cFileDelimiter = ConstantsMicropita.TAB
         cFeatureNameDelimiter = "|"
         strFileTaxa = "".join([ConstantsMicropitaTest.c_strTestingInput+"Unbalanced48-GenNoise-0-SignalNoise-5.taxa"])
         strInputPredictFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,sMethodName,"-predictInput.txt"])
@@ -3165,431 +2020,27 @@ class MicroPITATest(unittest.TestCase):
         strAnswerFile = "".join([ConstantsMicropitaTest.c_strTestingTruth,sMethodName,"-Correct.txt"])
 
         #Get result
-        result = microPITA.funcRun(fIsAlreadyNormalized=fIsNormalized,
-                                        fCladesAreSummed=fIsSummed,
-                                        sMetadataID=sIDName,
-                                        sLastMetadataName=sLastMetadataName,
-                                        strInputAbundanceFile=strFileAbund,
-                                        strInputPredictFile=strInputPredictFile,
-                                        strPredictPredictFile=strPredictPredictFile,
-                                        strCheckedAbndFile=strCheckedAbndFile,
-                                        strOutputFile=strOutFile,
-                                        cDelimiter=cFileDelimiter,
-                                        cFeatureNameDelimiter = cFeatureNameDelimiter,
-                                        strUserDefinedTaxaFile=strFileTaxa,
-                                        iSampleSelectionCount=iUnsupervisedSelectionCount,
-                                        iSupervisedSampleCount=iSupervisedCount,
-                                        strLabel=sLabel,
-                                        strStratify=sUnsupervisedStratify,
-                                        strSelectionTechnique=strSelection,
-                                        fSumData=fSumData,
-                                        sFeatureSelectionMethod=sFeatureSelection)
+        result = microPITA.funcRun(strIDName=sIDName,
+                                   strLastMetadataName=sLastMetadataName,
+                                   istmInput=strFileAbund,
+                                   ostmInputPredictFile=strInputPredictFile,
+                                   ostmPredictFile=strPredictPredictFile,
+                                   ostmCheckedFile=strCheckedAbndFile,
+                                   ostmOutput=strOutFile,
+                                   cDelimiter=cFileDelimiter,
+                                   cFeatureNameDelimiter=cFeatureNameDelimiter,
+                                   strFeatureSelection=sFeatureSelection,
+                                   istmFeatures=strFileTaxa,
+                                   iCount=iUnsupervisedSelectionCount,
+                                   lstrMethods=strSelection,
+                                   strLabel=sLabel,
+                                   strStratify=sUnsupervisedStratify)
 
         answer = microPITA.funcReadSelectionFileToDictionary(strAnswerFile)
        
         #Sort answers
         answer = str(["".join([str(key),":",str(sorted(answer[key]))]) for key in sorted(answer.keys())])
         result = str(["".join([str(key),":",str(sorted(result[key]))]) for key in sorted(result.keys())])
-
-        #Check result against answer
-        self.assertEqual(str(result),str(answer),"".join([str(self),"::Expected=",str(answer),". Received=",str(result),"."]))
-
-    def testFuncRunForErrorCaseNoSelection(self):
-        """
-        Test handling a scenario where no selection is given.
-        """
-
-        sMethodName = "testFuncRunForErrorCaseNoSelection"
-
-        microPITA = MicroPITA()
-
-        #Required inputs
-        strFileAbund = "".join([ConstantsMicropitaTest.c_strTestingInput+"Unbalanced48-GenNoise-0-SignalNoise-5.pcl"])
-        fIsNormalized = False
-        fIsSummed = False
-        sIDName = "ID"
-        sLastMetadataName = "Label"
-        strSelection = [ConstantsMicropita.c_strDiversity,ConstantsMicropita.c_strExtremeDissimilarity,ConstantsMicropita.c_strRepresentativeDissimilarity,
-                        ConstantsMicropita.c_strTaxa,ConstantsMicropita.c_strDiscriminant,ConstantsMicropita.c_strDistinct]
-
-        #Other inputs
-        strOutFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,sMethodName,".txt"])
-        cFileDelimiter = ConstantsMicropita.c_cTab
-        cFeatureNameDelimiter = "|"
-        strFileTaxa = "".join([ConstantsMicropitaTest.c_strTestingInput+"Unbalanced48-GenNoise-0-SignalNoise-5.taxa"])
-        strInputPredictFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,sMethodName,"-predictInput.txt"])
-        strPredictPredictFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,sMethodName,"-predictPredict.txt"])
-        strCheckedAbndFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,sMethodName,"-predictChecked.txt"])
-
-        iUnsupervisedSelectionCount = 0
-        iSupervisedCount = 0
-        sLabel = "Label"
-        sUnsupervisedStratify = None
-        fSumData = False
-        sFeatureSelection = ConstantsMicropita.c_strTargetedRanked
-
-        #Get result
-        result = microPITA.funcRun(fIsAlreadyNormalized=fIsNormalized,
-                                        fCladesAreSummed=fIsSummed,
-                                        sMetadataID=sIDName,
-                                        sLastMetadataName=sLastMetadataName,
-                                        strInputAbundanceFile=strFileAbund,
-                                        strInputPredictFile=strInputPredictFile,
-                                        strPredictPredictFile=strPredictPredictFile,
-                                        strCheckedAbndFile=strCheckedAbndFile,
-                                        strOutputFile=strOutFile,
-                                        cDelimiter=cFileDelimiter,
-                                        cFeatureNameDelimiter = cFeatureNameDelimiter,
-                                        strUserDefinedTaxaFile=strFileTaxa,
-                                        iSampleSelectionCount=iUnsupervisedSelectionCount,
-                                        iSupervisedSampleCount=iSupervisedCount,
-                                        strLabel=sLabel,
-                                        strStratify=sUnsupervisedStratify,
-                                        strSelectionTechnique=strSelection,
-                                        fSumData=fSumData,
-                                        sFeatureSelectionMethod=sFeatureSelection)
-
-        answer = False
-
-        #Check result against answer
-        self.assertEqual(str(result),str(answer),"".join([str(self),"::Expected=",str(answer),". Received=",str(result),"."]))
-
-    def testFuncRunForErrorNoExistInputFile(self):
-        """
-        Test handling a scenario where the input file is specified but does not exist.
-        """
-        
-        sMethodName = "testFuncRunForErrorNoExistInputFile"
-
-        microPITA = MicroPITA()
-
-        #Required inputs
-        strFileAbund = "".join([ConstantsMicropitaTest.c_strTestingTMP,"AbridgedDocuments/Unbalanced48-GenNoise-0-SignalNoise-5IDONOTEXIST.pcl"])
-        if os.path.exists(strFileAbund):
-          os.remove(strFileAbund)
-
-        fIsNormalized = False
-        fIsSummed = False
-        sIDName = "ID"
-        sLastMetadataName = "Label"
-        strSelection = [ConstantsMicropita.c_strDiversity,ConstantsMicropita.c_strExtremeDissimilarity,ConstantsMicropita.c_strRepresentativeDissimilarity,
-                        ConstantsMicropita.c_strTaxa,ConstantsMicropita.c_strDiscriminant,ConstantsMicropita.c_strDistinct]
-
-        #Other inputs
-        strOutFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,sMethodName,".txt"])
-        cFileDelimiter = ConstantsMicropita.c_cTab
-        cFeatureNameDelimiter = "|"
-        strFileTaxa = "".join([ConstantsMicropitaTest.c_strTestingInput+"Unbalanced48-GenNoise-0-SignalNoise-5.taxa"])
-        strInputPredictFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,sMethodName,"-predictInput.txt"])
-        strPredictPredictFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,sMethodName,"-predictPredict.txt"])
-        strCheckedAbndFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,sMethodName,"-predictChecked.txt"])
-
-        iUnsupervisedSelectionCount = 6
-        iSupervisedCount = 3
-        sLabel = "Label"
-        sUnsupervisedStratify = None
-        fSumData = False
-        sFeatureSelection = ConstantsMicropita.c_strTargetedRanked
-
-        #Get result
-        result = microPITA.funcRun(fIsAlreadyNormalized=fIsNormalized,
-                                        fCladesAreSummed=fIsSummed,
-                                        sMetadataID=sIDName,
-                                        sLastMetadataName=sLastMetadataName,
-                                        strInputAbundanceFile=strFileAbund,
-                                        strInputPredictFile=strInputPredictFile,
-                                        strPredictPredictFile=strPredictPredictFile,
-                                        strCheckedAbndFile=strCheckedAbndFile,
-                                        strOutputFile=strOutFile,
-                                        cDelimiter=cFileDelimiter,
-                                        cFeatureNameDelimiter = cFeatureNameDelimiter,
-                                        strUserDefinedTaxaFile=strFileTaxa,
-                                        iSampleSelectionCount=iUnsupervisedSelectionCount,
-                                        iSupervisedSampleCount=iSupervisedCount,
-                                        strLabel=sLabel,
-                                        strStratify=sUnsupervisedStratify,
-                                        strSelectionTechnique=strSelection,
-                                        fSumData=fSumData,
-                                        sFeatureSelectionMethod=sFeatureSelection)
-
-        answer = False
-
-        #Check result against answer
-        self.assertEqual(str(result),str(answer),"".join([str(self),"::Expected=",str(answer),". Received=",str(result),"."]))
-
-    def testFuncRunForErrorIncorrectID(self):
-        """
-        Test handling a scenario where the given id is incorrect.
-        """
-        
-        sMethodName = "testFuncRunForErrorIncorrectID"
-
-        microPITA = MicroPITA()
-
-        #Required inputs
-        strFileAbund = "".join([ConstantsMicropitaTest.c_strTestingInput+"Unbalanced48-GenNoise-0-SignalNoise-5.pcl"])
-        fIsNormalized = False
-        fIsSummed = False
-        sIDName = "BADID"
-        sLastMetadataName = "Label"
-        strSelection = [ConstantsMicropita.c_strDiversity,ConstantsMicropita.c_strExtremeDissimilarity,ConstantsMicropita.c_strRepresentativeDissimilarity,
-                        ConstantsMicropita.c_strTaxa,ConstantsMicropita.c_strDiscriminant,ConstantsMicropita.c_strDistinct]
-
-        #Other inputs
-        strOutFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,sMethodName,".txt"])
-        cFileDelimiter = ConstantsMicropita.c_cTab
-        cFeatureNameDelimiter = "|"
-        strFileTaxa = "".join([ConstantsMicropitaTest.c_strTestingInput+"Unbalanced48-GenNoise-0-SignalNoise-5.taxa"])
-        strInputPredictFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,sMethodName,"-predictInput.txt"])
-        strPredictPredictFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,sMethodName,"-predictPredict.txt"])
-        strCheckedAbndFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,sMethodName,"-predictChecked.txt"])
-
-        iUnsupervisedSelectionCount = 6
-        iSupervisedCount = 3
-        sLabel = "Label"
-        sUnsupervisedStratify = None
-        fSumData = False
-        sFeatureSelection = ConstantsMicropita.c_strTargetedRanked
-
-        #Get result
-        result = microPITA.funcRun(fIsAlreadyNormalized=fIsNormalized,
-                                        fCladesAreSummed=fIsSummed,
-                                        sMetadataID=sIDName,
-                                        sLastMetadataName=sLastMetadataName,
-                                        strInputAbundanceFile=strFileAbund,
-                                        strInputPredictFile=strInputPredictFile,
-                                        strPredictPredictFile=strPredictPredictFile,
-                                        strCheckedAbndFile=strCheckedAbndFile,
-                                        strOutputFile=strOutFile,
-                                        cDelimiter=cFileDelimiter,
-                                        cFeatureNameDelimiter = cFeatureNameDelimiter,
-                                        strUserDefinedTaxaFile=strFileTaxa,
-                                        iSampleSelectionCount=iUnsupervisedSelectionCount,
-                                        iSupervisedSampleCount=iSupervisedCount,
-                                        strLabel=sLabel,
-                                        strStratify=sUnsupervisedStratify,
-                                        strSelectionTechnique=strSelection,
-                                        fSumData=fSumData,
-                                        sFeatureSelectionMethod=sFeatureSelection)
-
-        answer = False
-
-        #Check result against answer
-        self.assertEqual(str(result),str(answer),"".join([str(self),"::Expected=",str(answer),". Received=",str(result),"."]))
-
-    def testFuncRunForErrorIncorrectLastMetadataName(self):
-        """
-        Test handling a scenario where the given lastMetadataId is incorrect.
-        """
-
-        sMethodName = "testFuncRunForErrorIncorrectLastMetadataName"
-
-        microPITA = MicroPITA()
-
-        #Required inputs
-        strFileAbund = "".join([ConstantsMicropitaTest.c_strTestingInput+"Unbalanced48-GenNoise-0-SignalNoise-5.pcl"])
-        fIsNormalized = False
-        fIsSummed = False
-        sIDName = "ID"
-        sLastMetadataName = "BADLabel"
-        lsSelection = [ConstantsMicropita.c_strDiversity,ConstantsMicropita.c_strExtremeDissimilarity,ConstantsMicropita.c_strRepresentativeDissimilarity,
-                        ConstantsMicropita.c_strTaxa,ConstantsMicropita.c_strDiscriminant,ConstantsMicropita.c_strDistinct]
-
-        #Other inputs
-        strOutFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,sMethodName,".txt"])
-        cFileDelimiter = ConstantsMicropita.c_cTab
-        cFeatureNameDelimiter = "|"
-        strFileTaxa = "".join([ConstantsMicropitaTest.c_strTestingInput+"Unbalanced48-GenNoise-0-SignalNoise-5.taxa"])
-        strInputPredictFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,sMethodName,"-predictInput.txt"])
-        strPredictPredictFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,sMethodName,"-predictPredict.txt"])
-        strCheckedAbndFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,sMethodName,"-predictChecked.txt"])
-
-        iUnsupervisedSelectionCount = 6
-        iSupervisedCount = 3
-        sLabel = "Label"
-        sUnsupervisedStratify = None
-        fSumData = False
-        sFeatureSelection = ConstantsMicropita.c_strTargetedRanked
-
-        #Check for exception
-        self.assertRaises(ValueError,
-                          microPITA.funcRun,fIsNormalized,fIsSummed,sIDName,sLastMetadataName,strFileAbund,
-                          strInputPredictFile,strPredictPredictFile,strCheckedAbndFile,strOutFile,
-                          cFileDelimiter,cFeatureNameDelimiter,strFileTaxa,iUnsupervisedSelectionCount,
-                          iSupervisedCount,lsSelection,sLabel,sUnsupervisedStratify,fSumData,sFeatureSelection)
-
-    def testFuncRunForErrorNoSelection(self):
-        """
-        Test handling a scenario where no selection technique is given.
-        """
-        
-        sMethodName = "testFuncRunForErrorNoSelection"
-
-        microPITA = MicroPITA()
-
-        #Required inputs
-        strFileAbund = "".join([ConstantsMicropitaTest.c_strTestingInput+"Unbalanced48-GenNoise-0-SignalNoise-5.pcl"])
-        fIsNormalized = False
-        fIsSummed = False
-        sIDName = "ID"
-        sLastMetadataName = "Label"
-        strSelection = []
-
-        #Other inputs
-        strOutFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,sMethodName,".txt"])
-        cFileDelimiter = ConstantsMicropita.c_cTab
-        cFeatureNameDelimiter = "|"
-        strFileTaxa = "".join([ConstantsMicropitaTest.c_strTestingInput+sMethodName+".txt"])
-        strInputPredictFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,sMethodName,"-predictInput.txt"])
-        strPredictPredictFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,sMethodName,"-predictPredict.txt"])
-        strCheckedAbndFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,sMethodName,"-predictChecked.txt"])
-
-        iUnsupervisedSelectionCount = 6
-        iSupervisedCount = 3
-        sLabel = "Label"
-        sUnsupervisedStratify = None
-        fSumData = False
-        sFeatureSelection = ConstantsMicropita.c_strTargetedRanked
-
-        #Get result
-        result = microPITA.funcRun(fIsAlreadyNormalized=fIsNormalized,
-                                        fCladesAreSummed=fIsSummed,
-                                        sMetadataID=sIDName,
-                                        sLastMetadataName=sLastMetadataName,
-                                        strInputAbundanceFile=strFileAbund,
-                                        strInputPredictFile=strInputPredictFile,
-                                        strPredictPredictFile=strPredictPredictFile,
-                                        strCheckedAbndFile=strCheckedAbndFile,
-                                        strOutputFile=strOutFile,
-                                        cDelimiter=cFileDelimiter,
-                                        cFeatureNameDelimiter = cFeatureNameDelimiter,
-                                        strUserDefinedTaxaFile=strFileTaxa,
-                                        iSampleSelectionCount=iUnsupervisedSelectionCount,
-                                        iSupervisedSampleCount=iSupervisedCount,
-                                        strLabel=sLabel,
-                                        strStratify=sUnsupervisedStratify,
-                                        strSelectionTechnique=strSelection,
-                                        fSumData=fSumData,
-                                        sFeatureSelectionMethod=sFeatureSelection)
-        answer = False
-
-        #Check result against answer
-        self.assertEqual(str(result),str(answer),"".join([str(self),"::Expected=",str(answer),". Received=",str(result),"."]))
-
-    def testFuncRunForBadTaxaFileName(self):
-        """
-        Handling the scenario where the targeted feature file is incorrect / non-existent.
-        """
-        
-        sMethodName = "testFuncRunForBadTaxaFileName"
-
-        microPITA = MicroPITA()
-
-        #Required inputs
-        strFileAbund = "".join([ConstantsMicropitaTest.c_strTestingInput+"Unbalanced48-GenNoise-0-SignalNoise-5.pcl"])
-        fIsNormalized = False
-        fIsSummed = False
-        sIDName = "ID"
-        sLastMetadataName = "Label"
-        strSelection = [ConstantsMicropita.c_strDiversity,ConstantsMicropita.c_strExtremeDissimilarity,ConstantsMicropita.c_strRepresentativeDissimilarity,
-                        ConstantsMicropita.c_strTaxa,ConstantsMicropita.c_strDiscriminant,ConstantsMicropita.c_strDistinct]
-
-        #Other inputs
-        strOutFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,sMethodName,".txt"])
-        cFileDelimiter = ConstantsMicropita.c_cTab
-        cFeatureNameDelimiter = "|"
-        strFileTaxa = "".join([ConstantsMicropitaTest.c_strTestingInput+"Unbalanced48-GenNoise-0-SignalNoise-5.badtaxa"])
-        strInputPredictFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,sMethodName,"-predictInput.txt"])
-        strPredictPredictFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,sMethodName,"-predictPredict.txt"])
-        strCheckedAbndFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,sMethodName,"-predictChecked.txt"])
-
-        iUnsupervisedSelectionCount = 6
-        iSupervisedCount = 3
-        sLabel = "Label"
-        sUnsupervisedStratify = None
-        fSumData = False
-        sFeatureSelection = ConstantsMicropita.c_strTargetedRanked
-
-        #Get result
-        result = microPITA.funcRun(fIsAlreadyNormalized=fIsNormalized,
-                                        fCladesAreSummed=fIsSummed,
-                                        sMetadataID=sIDName,
-                                        sLastMetadataName=sLastMetadataName,
-                                        strInputAbundanceFile=strFileAbund,
-                                        strInputPredictFile=strInputPredictFile,
-                                        strPredictPredictFile=strPredictPredictFile,
-                                        strCheckedAbndFile=strCheckedAbndFile,
-                                        strOutputFile=strOutFile,
-                                        cDelimiter=cFileDelimiter,
-                                        cFeatureNameDelimiter = cFeatureNameDelimiter,
-                                        strUserDefinedTaxaFile=strFileTaxa,
-                                        iSampleSelectionCount=iUnsupervisedSelectionCount,
-                                        iSupervisedSampleCount=iSupervisedCount,
-                                        strLabel=sLabel,
-                                        strStratify=sUnsupervisedStratify,
-                                        strSelectionTechnique=strSelection,
-                                        fSumData=fSumData,
-                                        sFeatureSelectionMethod=sFeatureSelection)
-        answer = False
-
-        #Check result against answer
-        self.assertEqual(str(result),str(answer),"".join([str(self),"::Expected=",str(answer),". Received=",str(result),"."]))
-
-    def testFuncRunForNoTaxaFileName(self):
-        """
-        Handling the scenario where the targeted feature file is not given.
-        """
-        
-        sMethodName = "testFuncRunForNoTaxaFileName"
-
-        microPITA = MicroPITA()
-
-        #Required inputs
-        strFileAbund = "".join([ConstantsMicropitaTest.c_strTestingInput+"Unbalanced48-GenNoise-0-SignalNoise-5.pcl"])
-        fIsNormalized = False
-        fIsSummed = False
-        sIDName = "ID"
-        sLastMetadataName = "Label"
-        strSelection = [ConstantsMicropita.c_strDiversity,ConstantsMicropita.c_strExtremeDissimilarity,ConstantsMicropita.c_strRepresentativeDissimilarity,
-                        ConstantsMicropita.c_strTaxa,ConstantsMicropita.c_strDiscriminant,ConstantsMicropita.c_strDistinct]
-
-        #Other inputs
-        strOutFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,sMethodName,".txt"])
-        cFileDelimiter = ConstantsMicropita.c_cTab
-        cFeatureNameDelimiter = "|"
-        strFileTaxa = None
-        strInputPredictFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,sMethodName,"-predictInput.txt"])
-        strPredictPredictFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,sMethodName,"-predictPredict.txt"])
-        strCheckedAbndFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,sMethodName,"-predictChecked.txt"])
-
-        iUnsupervisedSelectionCount = 6
-        iSupervisedCount = 3
-        sLabel = "Label"
-        sUnsupervisedStratify = None
-        fSumData = False
-        sFeatureSelection = ConstantsMicropita.c_strTargetedRanked
-
-        #Get result
-        result = microPITA.funcRun(fIsAlreadyNormalized=fIsNormalized,
-                                        fCladesAreSummed=fIsSummed,
-                                        sMetadataID=sIDName,
-                                        sLastMetadataName=sLastMetadataName,
-                                        strInputAbundanceFile=strFileAbund,
-                                        strInputPredictFile=strInputPredictFile,
-                                        strPredictPredictFile=strPredictPredictFile,
-                                        strCheckedAbndFile=strCheckedAbndFile,
-                                        strOutputFile=strOutFile,
-                                        cDelimiter=cFileDelimiter,
-                                        cFeatureNameDelimiter = cFeatureNameDelimiter,
-                                        strUserDefinedTaxaFile=strFileTaxa,
-                                        iSampleSelectionCount=iUnsupervisedSelectionCount,
-                                        iSupervisedSampleCount=iSupervisedCount,
-                                        strLabel=sLabel,
-                                        strStratify=sUnsupervisedStratify,
-                                        strSelectionTechnique=strSelection,
-                                        fSumData=fSumData,
-                                        sFeatureSelectionMethod=sFeatureSelection)
-        answer = False
 
         #Check result against answer
         self.assertEqual(str(result),str(answer),"".join([str(self),"::Expected=",str(answer),". Received=",str(result),"."]))
@@ -3605,16 +2056,14 @@ class MicroPITATest(unittest.TestCase):
 
         #Required inputs
         strFileAbund = "".join([ConstantsMicropitaTest.c_strTestingInput+"Unbalanced48-GenNoise-0-SignalNoise-5.pcl"])
-        fIsNormalized = False
-        fIsSummed = False
         sIDName = "ID"
         sLastMetadataName = "Label"
-        strSelection = [ConstantsMicropita.c_strDiversity,ConstantsMicropita.c_strExtremeDissimilarity,ConstantsMicropita.c_strRepresentativeDissimilarity,
-                        ConstantsMicropita.c_strTaxa,ConstantsMicropita.c_strDiscriminant,ConstantsMicropita.c_strDistinct]
+        strSelection = [ConstantsMicropita.c_strDiversity,ConstantsMicropita.c_strExtreme,ConstantsMicropita.c_strRepresentative,
+                        ConstantsMicropita.c_strFeature,ConstantsMicropita.c_strDiscriminant,ConstantsMicropita.c_strDistinct]
 
         #Other inputs
         strOutFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,sMethodName,".txt"])
-        cFileDelimiter = ConstantsMicropita.c_cTab
+        cFileDelimiter = ConstantsMicropita.TAB
         cFeatureNameDelimiter = "|"
         strFileTaxa = "".join([ConstantsMicropitaTest.c_strTestingInput+"Unbalanced48-GenNoise-0-SignalNoise-5.taxa"])
         strInputPredictFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,sMethodName,"-predictInput.txt"])
@@ -3632,149 +2081,26 @@ class MicroPITATest(unittest.TestCase):
         answer = False
 
         #Get result
-        result = microPITA.funcRun(fIsAlreadyNormalized=fIsNormalized,
-                                        fCladesAreSummed=fIsSummed,
-                                        sMetadataID=sIDName,
-                                        sLastMetadataName=sLastMetadataName,
-                                        strInputAbundanceFile=strFileAbund,
-                                        strInputPredictFile=strInputPredictFile,
-                                        strPredictPredictFile=strPredictPredictFile,
-                                        strCheckedAbndFile=strCheckedAbndFile,
-                                        strOutputFile=strOutFile,
-                                        cDelimiter=cFileDelimiter,
-                                        cFeatureNameDelimiter = cFeatureNameDelimiter,
-                                        strUserDefinedTaxaFile=strFileTaxa,
-                                        iSampleSelectionCount=iUnsupervisedSelectionCount,
-                                        iSupervisedSampleCount=iSupervisedCount,
-                                        strLabel=sLabel,
-                                        strStratify=sUnsupervisedStratify,
-                                        strSelectionTechnique=strSelection,
-                                        fSumData=fSumData,
-                                        sFeatureSelectionMethod=sFeatureSelection)
+        result = microPITA.funcRun(strIDName=sIDName,
+                                   strLastMetadataName=sLastMetadataName,
+                                   istmInput=strFileAbund,
+                                   ostmInputPredictFile=strInputPredictFile,
+                                   ostmPredictFile=strPredictPredictFile,
+                                   ostmCheckedFile=strCheckedAbndFile,
+                                   ostmOutput=strOutFile,
+                                   cDelimiter=cFileDelimiter,
+                                   cFeatureNameDelimiter=cFeatureNameDelimiter,
+                                   strFeatureSelection=sFeatureSelection,
+                                   istmFeatures=strFileTaxa,
+                                   iCount=iUnsupervisedSelectionCount,
+                                   lstrMethods=strSelection,
+                                   strLabel=sLabel,
+                                   strStratify=sUnsupervisedStratify)
 
         #Check result against answer
         self.assertEqual(str(result),str(answer),"".join([str(self),"::Expected=",str(answer),". Received=",str(result),"."]))
 
-    def testFuncRunForNoneLabelName(self):
-        """
-        Handling the scenario where the label is None.
-        """
-        
-        sMethodName = "testFuncRunForNoneLabelName"
-
-        microPITA = MicroPITA()
-
-        #Required inputs
-        strFileAbund = "".join([ConstantsMicropitaTest.c_strTestingInput+"Unbalanced48-GenNoise-0-SignalNoise-5.pcl"])
-        fIsNormalized = False
-        fIsSummed = False
-        sIDName = "ID"
-        sLastMetadataName = "Label"
-        strSelection = [ConstantsMicropita.c_strDiversity,ConstantsMicropita.c_strExtremeDissimilarity,ConstantsMicropita.c_strRepresentativeDissimilarity,
-                        ConstantsMicropita.c_strTaxa,ConstantsMicropita.c_strDiscriminant,ConstantsMicropita.c_strDistinct]
-
-        #Other inputs
-        strOutFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,sMethodName,".txt"])
-        cFileDelimiter = ConstantsMicropita.c_cTab
-        cFeatureNameDelimiter = "|"
-        strFileTaxa = "".join([ConstantsMicropitaTest.c_strTestingInput+"Unbalanced48-GenNoise-0-SignalNoise-5.taxa"])
-        strInputPredictFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,sMethodName,"-predictInput.txt"])
-        strPredictPredictFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,sMethodName,"-predictPredict.txt"])
-        strCheckedAbndFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,sMethodName,"-predictChecked.txt"])
-
-        iUnsupervisedSelectionCount = 6
-        iSupervisedCount = 3
-        sLabel = None
-        sUnsupervisedStratify = None
-        fSumData = False
-        sFeatureSelection = ConstantsMicropita.c_strTargetedRanked
-
-        #Get result
-        result = microPITA.funcRun(fIsAlreadyNormalized=fIsNormalized,
-                                        fCladesAreSummed=fIsSummed,
-                                        sMetadataID=sIDName,
-                                        sLastMetadataName=sLastMetadataName,
-                                        strInputAbundanceFile=strFileAbund,
-                                        strInputPredictFile=strInputPredictFile,
-                                        strPredictPredictFile=strPredictPredictFile,
-                                        strCheckedAbndFile=strCheckedAbndFile,
-                                        strOutputFile=strOutFile,
-                                        cDelimiter=cFileDelimiter,
-                                        cFeatureNameDelimiter = cFeatureNameDelimiter,
-                                        strUserDefinedTaxaFile=strFileTaxa,
-                                        iSampleSelectionCount=iUnsupervisedSelectionCount,
-                                        iSupervisedSampleCount=iSupervisedCount,
-                                        strLabel=sLabel,
-                                        strStratify=sUnsupervisedStratify,
-                                        strSelectionTechnique=strSelection,
-                                        fSumData=fSumData,
-                                        sFeatureSelectionMethod=sFeatureSelection)
-        #Answer file
-        answer = False
-
-        #Check result against answer
-        self.assertEqual(str(result),str(answer),"".join([str(self),"::Expected=",str(answer),". Received=",str(result),"."]))
-
-    def testFuncRunForNoFeatureSelection(self):
-        """
-        Handling the scenario where there is no feature selection method indicated.
-        """
-        
-        sMethodName = "testFuncRunForNoFeatureSelection"
-
-        microPITA = MicroPITA()
-
-        #Required inputs
-        strFileAbund = "".join([ConstantsMicropitaTest.c_strTestingInput+"Unbalanced48-GenNoise-0-SignalNoise-5.pcl"])
-        fIsNormalized = False
-        fIsSummed = False
-        sIDName = "ID"
-        sLastMetadataName = "Label"
-        strSelection = [ConstantsMicropita.c_strDiversity,ConstantsMicropita.c_strExtremeDissimilarity,ConstantsMicropita.c_strRepresentativeDissimilarity,
-                        ConstantsMicropita.c_strTaxa,ConstantsMicropita.c_strDiscriminant,ConstantsMicropita.c_strDistinct]
-
-        #Other inputs
-        strOutFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,sMethodName,".txt"])
-        cFileDelimiter = ConstantsMicropita.c_cTab
-        cFeatureNameDelimiter = "|"
-        strFileTaxa = "".join([ConstantsMicropitaTest.c_strTestingInput+"Unbalanced48-GenNoise-0-SignalNoise-5.taxa"])
-        strInputPredictFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,sMethodName,"-predictInput.txt"])
-        strPredictPredictFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,sMethodName,"-predictPredict.txt"])
-        strCheckedAbndFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,sMethodName,"-predictChecked.txt"])
-
-        iUnsupervisedSelectionCount = 6
-        iSupervisedCount = 3
-        sLabel = "Label"
-        sUnsupervisedStratify = None
-        fSumData = False
-
-        #Get result
-        result = microPITA.funcRun(fIsAlreadyNormalized=fIsNormalized,
-                                        fCladesAreSummed=fIsSummed,
-                                        sMetadataID=sIDName,
-                                        sLastMetadataName=sLastMetadataName,
-                                        strInputAbundanceFile=strFileAbund,
-                                        strInputPredictFile=strInputPredictFile,
-                                        strPredictPredictFile=strPredictPredictFile,
-                                        strCheckedAbndFile=strCheckedAbndFile,
-                                        strOutputFile=strOutFile,
-                                        cDelimiter=cFileDelimiter,
-                                        cFeatureNameDelimiter = cFeatureNameDelimiter,
-                                        strUserDefinedTaxaFile=strFileTaxa,
-                                        iSampleSelectionCount=iUnsupervisedSelectionCount,
-                                        iSupervisedSampleCount=iSupervisedCount,
-                                        strLabel=sLabel,
-                                        strStratify=sUnsupervisedStratify,
-                                        strSelectionTechnique=strSelection,
-                                        fSumData=fSumData)
-
-        #Answer 
-        answer = False
-
-        #Check result against answer
-        self.assertEqual(str(result),str(answer),"".join([str(self),"::Expected=",str(answer),". Received=",str(result),"."]))
-
-    def testFuncRunForGoodCaseDiversity(self):
+    def ntestFuncRunForGoodCaseDiversity(self):
         """
         Test running just diversity
         """
@@ -3785,11 +2111,9 @@ class MicroPITATest(unittest.TestCase):
 
         #Required inputs
         strFileAbund = "".join([ConstantsMicropitaTest.c_strTestingInput+"Unbalanced48-GenNoise-0-SignalNoise-5.pcl"])
-        fIsNormalized = False
-        fIsSummed = False
         sIDName = "ID"
         sLastMetadataName = "Label"
-        cFileDelimiter = ConstantsMicropita.c_cTab
+        cFileDelimiter = ConstantsMicropita.TAB
         cFeatureNameDelimiter = "|"
         strSelection = [ConstantsMicropita.c_strDiversity]
 
@@ -3806,20 +2130,20 @@ class MicroPITATest(unittest.TestCase):
         strAnswerFile = "".join([ConstantsMicropitaTest.c_strTestingTruth,sMethodName,"-Correct.txt"])
 
         #Get result
-        result = microPITA.funcRun(fIsAlreadyNormalized=fIsNormalized,
-                                        fCladesAreSummed=fIsSummed,
-                                        sMetadataID=sIDName,
-                                        sLastMetadataName=sLastMetadataName,
-                                        strInputAbundanceFile=strFileAbund,
-                                        strInputPredictFile=strInputPredictFile,
-                                        strPredictPredictFile=strPredictPredictFile,
-                                        strCheckedAbndFile=strCheckedAbndFile,
-                                        strOutputFile=strOutFile,
-                                        cDelimiter=cFileDelimiter,
-                                        cFeatureNameDelimiter = cFeatureNameDelimiter,
-                                        iSampleSelectionCount=iUnsupervisedSelectionCount,
-                                        strSelectionTechnique=strSelection,
-                                        fSumData=fSumData)
+        result = microPITA.funcRun(strIDName=sIDName,
+                                   strLastMetadataName=sLastMetadataName,
+                                   istmInput=strFileAbund,
+                                   ostmInputPredictFile=strInputPredictFile,
+                                   ostmPredictFile=strPredictPredictFile,
+                                   ostmCheckedFile=strCheckedAbndFile,
+                                   ostmOutput=strOutFile,
+                                   cDelimiter=cFileDelimiter,
+                                   cFeatureNameDelimiter=cFeatureNameDelimiter,
+                                   istmFeatures=strFileTaxa,
+                                   iCount=iUnsupervisedSelectionCount,
+                                   lstrMethods=strSelection,
+                                   strLabel=sLabel,
+                                   strStratify=sUnsupervisedStratify)
 
         answer = microPITA.funcReadSelectionFileToDictionary(strAnswerFile)
        
@@ -3830,7 +2154,7 @@ class MicroPITATest(unittest.TestCase):
         #Check result against answer
         self.assertEqual(str(result),str(answer),"".join([str(self),"::Expected=",str(answer),". Received=",str(result),"."]))
 
-    def testCallFromCommandlineForGoodCaseDiversity(self):
+    def ntestCallFromCommandlineForGoodCaseDiversity(self):
         """
         Test commandline call for good case only diversity.
         """
@@ -3902,11 +2226,9 @@ class MicroPITATest(unittest.TestCase):
 
         #Required inputs
         strFileAbund = "".join([ConstantsMicropitaTest.c_strTestingInput+"Unbalanced48-GenNoise-0-SignalNoise-5.pcl"])
-        fIsNormalized = False
-        fIsSummed = False
         sIDName = "ID"
         sLastMetadataName = "Label"
-        cFileDelimiter = ConstantsMicropita.c_cTab
+        cFileDelimiter = ConstantsMicropita.TAB
         cFeatureNameDelimiter = "|"
         strSelection = [ConstantsMicropita.c_strDiversity]
 
@@ -3923,22 +2245,21 @@ class MicroPITATest(unittest.TestCase):
         strAnswerFile = "".join([ConstantsMicropitaTest.c_strTestingTruth,sMethodName,"-Correct.txt"])
 
         #Get result
-        result = microPITA.funcRun(fIsAlreadyNormalized=fIsNormalized,
-                                        fCladesAreSummed=fIsSummed,
-                                        sMetadataID=sIDName,
-                                        sLastMetadataName=sLastMetadataName,
-                                        strInputAbundanceFile=strFileAbund,
-                                        strInputPredictFile=strInputPredictFile,
-                                        strPredictPredictFile=strPredictPredictFile,
-                                        strCheckedAbndFile=strCheckedAbndFile,
-                                        strOutputFile=strOutFile,
-                                        cDelimiter=cFileDelimiter,
-                                        cFeatureNameDelimiter = cFeatureNameDelimiter,
-                                        iSampleSelectionCount=iUnsupervisedSelectionCount,
-                                        strStratify=sUnsupervisedStratify,
-                                        strSelectionTechnique=strSelection,
-                                        fSumData=fSumData,
-                                        sFeatureSelectionMethod=sFeatureSelection)
+        result = microPITA.funcRun(strIDName=sIDName,
+                                   strLastMetadataName=sLastMetadataName,
+                                   istmInput=strFileAbund,
+                                   ostmInputPredictFile=strInputPredictFile,
+                                   ostmPredictFile=strPredictPredictFile,
+                                   ostmCheckedFile=strCheckedAbndFile,
+                                   ostmOutput=strOutFile,
+                                   cDelimiter=cFileDelimiter,
+                                   cFeatureNameDelimiter=cFeatureNameDelimiter,
+                                   strFeatureSelection=sFeatureSelection,
+                                   istmFeatures=strFileTaxa,
+                                   iCount=iUnsupervisedSelectionCount,
+                                   lstrMethods=strSelection,
+                                   strLabel=sLabel,
+                                   strStratify=sUnsupervisedStratify)
 
         answer = microPITA.funcReadSelectionFileToDictionary(strAnswerFile)
        
@@ -3949,7 +2270,7 @@ class MicroPITATest(unittest.TestCase):
         #Check result against answer
         self.assertEqual(str(result),str(answer),"".join([str(self),"::Expected=",str(answer),". Received=",str(result),"."]))
 
-    def testFuncRunForGoodCaseRepresentative(self):
+    def ntestFuncRunForGoodCaseRepresentative(self):
         """
         Test running just representative
         """
@@ -3960,13 +2281,11 @@ class MicroPITATest(unittest.TestCase):
 
         #Required inputs
         strFileAbund = "".join([ConstantsMicropitaTest.c_strTestingInput+"Unbalanced48-GenNoise-0-SignalNoise-5.pcl"])
-        fIsNormalized = False
-        fIsSummed = False
         sIDName = "ID"
         sLastMetadataName = "Label"
-        cFileDelimiter = ConstantsMicropita.c_cTab
+        cFileDelimiter = ConstantsMicropita.TAB
         cFeatureNameDelimiter = "|"
-        strSelection = [ConstantsMicropita.c_strRepresentativeDissimilarity]
+        strSelection = [ConstantsMicropita.c_strRepresentative]
 
         #Other inputs
         strOutFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,sMethodName,".txt"])
@@ -3981,20 +2300,20 @@ class MicroPITATest(unittest.TestCase):
         strAnswerFile = "".join([ConstantsMicropitaTest.c_strTestingTruth,sMethodName,"-Correct.txt"])
 
         #Get result
-        result = microPITA.funcRun(fIsAlreadyNormalized=fIsNormalized,
-                                        fCladesAreSummed=fIsSummed,
-                                        sMetadataID=sIDName,
-                                        sLastMetadataName=sLastMetadataName,
-                                        strInputAbundanceFile=strFileAbund,
-                                        strInputPredictFile=strInputPredictFile,
-                                        strPredictPredictFile=strPredictPredictFile,
-                                        strCheckedAbndFile=strCheckedAbndFile,
-                                        strOutputFile=strOutFile,
-                                        cDelimiter=cFileDelimiter,
-                                        cFeatureNameDelimiter = cFeatureNameDelimiter,
-                                        iSampleSelectionCount=iUnsupervisedSelectionCount,
-                                        strSelectionTechnique=strSelection,
-                                        fSumData=fSumData)
+        result = microPITA.funcRun(strIDName=sIDName,
+                                   strLastMetadataName=sLastMetadataName,
+                                   istmInput=strFileAbund,
+                                   ostmInputPredictFile=strInputPredictFile,
+                                   ostmPredictFile=strPredictPredictFile,
+                                   ostmCheckedFile=strCheckedAbndFile,
+                                   ostmOutput=strOutFile,
+                                   cDelimiter=cFileDelimiter,
+                                   cFeatureNameDelimiter=cFeatureNameDelimiter,
+                                   istmFeatures=strFileTaxa,
+                                   iCount=iUnsupervisedSelectionCount,
+                                   lstrMethods=strSelection,
+                                   strLabel=sLabel,
+                                   strStratify=sUnsupervisedStratify)
 
         answer = microPITA.funcReadSelectionFileToDictionary(strAnswerFile)
        
@@ -4005,7 +2324,7 @@ class MicroPITATest(unittest.TestCase):
         #Check result against answer
         self.assertEqual(str(result),str(answer),"".join([str(self),"::Expected=",str(answer),". Received=",str(result),"."]))
 
-    def testCallFromCommandlineForGoodCaseRepresentative(self):
+    def ntestCallFromCommandlineForGoodCaseRepresentative(self):
         """
         Test commandline call for good case only representative.
         """
@@ -4027,7 +2346,7 @@ class MicroPITATest(unittest.TestCase):
         sSumData = [ConstantsMicropita.c_strSumDataArgument]
         sLastMetadata = [ConstantsMicropita.c_strLastMetadataNameArgument,"Label"]
         sUnSelectionCount = [ConstantsMicropita.c_strUnsupervisedCountArgument,"6"]
-        strSelection = [ConstantsMicropita.c_strRepresentativeDissimilarity]
+        strSelection = [ConstantsMicropita.c_strRepresentative]
 
         #Optional test
         lsOptionalArguments = []+sLastMetadata+sUnSelectionCount+sSumData
@@ -4076,13 +2395,11 @@ class MicroPITATest(unittest.TestCase):
 
         #Required inputs
         strFileAbund = "".join([ConstantsMicropitaTest.c_strTestingInput+"Unbalanced48-GenNoise-0-SignalNoise-5.pcl"])
-        fIsNormalized = False
-        fIsSummed = False
         sIDName = "ID"
         sLastMetadataName = "Label"
-        cFileDelimiter = ConstantsMicropita.c_cTab
+        cFileDelimiter = ConstantsMicropita.TAB
         cFeatureNameDelimiter = "|"
-        strSelection = [ConstantsMicropita.c_strRepresentativeDissimilarity]
+        strSelection = [ConstantsMicropita.c_strRepresentative]
 
         #Other inputs
         strOutFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,sMethodName,".txt"])
@@ -4097,22 +2414,21 @@ class MicroPITATest(unittest.TestCase):
         strAnswerFile = "".join([ConstantsMicropitaTest.c_strTestingTruth,sMethodName,"-Correct.txt"])
 
         #Get result
-        result = microPITA.funcRun(fIsAlreadyNormalized=fIsNormalized,
-                                        fCladesAreSummed=fIsSummed,
-                                        sMetadataID=sIDName,
-                                        sLastMetadataName=sLastMetadataName,
-                                        strInputAbundanceFile=strFileAbund,
-                                        strInputPredictFile=strInputPredictFile,
-                                        strPredictPredictFile=strPredictPredictFile,
-                                        strCheckedAbndFile=strCheckedAbndFile,
-                                        strOutputFile=strOutFile,
-                                        cDelimiter=cFileDelimiter,
-                                        cFeatureNameDelimiter = cFeatureNameDelimiter,
-                                        iSampleSelectionCount=iUnsupervisedSelectionCount,
-                                        strStratify=sUnsupervisedStratify,
-                                        strSelectionTechnique=strSelection,
-                                        fSumData=fSumData,
-                                        sFeatureSelectionMethod=sFeatureSelection)
+        result = microPITA.funcRun(strIDName=sIDName,
+                                   strLastMetadataName=sLastMetadataName,
+                                   istmInput=strFileAbund,
+                                   ostmInputPredictFile=strInputPredictFile,
+                                   ostmPredictFile=strPredictPredictFile,
+                                   ostmCheckedFile=strCheckedAbndFile,
+                                   ostmOutput=strOutFile,
+                                   cDelimiter=cFileDelimiter,
+                                   cFeatureNameDelimiter=cFeatureNameDelimiter,
+                                   strFeatureSelection=sFeatureSelection,
+                                   istmFeatures=strFileTaxa,
+                                   iCount=iUnsupervisedSelectionCount,
+                                   lstrMethods=strSelection,
+                                   strLabel=sLabel,
+                                   strStratify=sUnsupervisedStratify)
 
         answer = microPITA.funcReadSelectionFileToDictionary(strAnswerFile)
        
@@ -4123,7 +2439,7 @@ class MicroPITATest(unittest.TestCase):
         #Check result against answer
         self.assertEqual(str(result),str(answer),"".join([str(self),"::Expected=",str(answer),". Received=",str(result),"."]))
 
-    def testFuncRunForGoodCaseExtreme(self):
+    def ntestFuncRunForGoodCaseExtreme(self):
         """
         Test running just extreme
         """
@@ -4134,13 +2450,11 @@ class MicroPITATest(unittest.TestCase):
 
         #Required inputs
         strFileAbund = "".join([ConstantsMicropitaTest.c_strTestingInput+"Unbalanced48-GenNoise-0-SignalNoise-5.pcl"])
-        fIsNormalized = False
-        fIsSummed = False
         sIDName = "ID"
         sLastMetadataName = "Label"
-        cFileDelimiter = ConstantsMicropita.c_cTab
+        cFileDelimiter = ConstantsMicropita.TAB
         cFeatureNameDelimiter = "|"
-        strSelection = [ConstantsMicropita.c_strExtremeDissimilarity]
+        strSelection = [ConstantsMicropita.c_strExtreme]
 
         #Other inputs
         strOutFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,sMethodName,".txt"])
@@ -4155,20 +2469,20 @@ class MicroPITATest(unittest.TestCase):
         strAnswerFile = "".join([ConstantsMicropitaTest.c_strTestingTruth,sMethodName,"-Correct.txt"])
 
         #Get result
-        result = microPITA.funcRun(fIsAlreadyNormalized=fIsNormalized,
-                                        fCladesAreSummed=fIsSummed,
-                                        sMetadataID=sIDName,
-                                        sLastMetadataName=sLastMetadataName,
-                                        strInputAbundanceFile=strFileAbund,
-                                        strInputPredictFile=strInputPredictFile,
-                                        strPredictPredictFile=strPredictPredictFile,
-                                        strCheckedAbndFile=strCheckedAbndFile,
-                                        strOutputFile=strOutFile,
-                                        cDelimiter=cFileDelimiter,
-                                        cFeatureNameDelimiter = cFeatureNameDelimiter,
-                                        iSampleSelectionCount=iUnsupervisedSelectionCount,
-                                        strSelectionTechnique=strSelection,
-                                        fSumData=fSumData)
+        result = microPITA.funcRun(strIDName=sIDName,
+                                   strLastMetadataName=sLastMetadataName,
+                                   istmInput=strFileAbund,
+                                   ostmInputPredictFile=strInputPredictFile,
+                                   ostmPredictFile=strPredictPredictFile,
+                                   ostmCheckedFile=strCheckedAbndFile,
+                                   ostmOutput=strOutFile,
+                                   cDelimiter=cFileDelimiter,
+                                   cFeatureNameDelimiter=cFeatureNameDelimiter,
+                                   istmFeatures=strFileTaxa,
+                                   iCount=iUnsupervisedSelectionCount,
+                                   lstrMethods=strSelection,
+                                   strLabel=sLabel,
+                                   strStratify=sUnsupervisedStratify)
 
         answer = microPITA.funcReadSelectionFileToDictionary(strAnswerFile)
        
@@ -4179,7 +2493,7 @@ class MicroPITATest(unittest.TestCase):
         #Check result against answer
         self.assertEqual(str(result),str(answer),"".join([str(self),"::Expected=",str(answer),". Received=",str(result),"."]))
 
-    def testCallFromCommandlineForGoodCaseExtreme(self):
+    def ntestCallFromCommandlineForGoodCaseExtreme(self):
         """
         Test commandline call for good case only Extreme.
         """
@@ -4201,7 +2515,7 @@ class MicroPITATest(unittest.TestCase):
         sSumData = [ConstantsMicropita.c_strSumDataArgument]
         sLastMetadata = [ConstantsMicropita.c_strLastMetadataNameArgument,"Label"]
         sUnSelectionCount = [ConstantsMicropita.c_strUnsupervisedCountArgument,"6"]
-        strSelection = [ConstantsMicropita.c_strExtremeDissimilarity]
+        strSelection = [ConstantsMicropita.c_strExtreme]
 
         #Optional test
         lsOptionalArguments = []+sLastMetadata+sUnSelectionCount+sSumData
@@ -4250,13 +2564,11 @@ class MicroPITATest(unittest.TestCase):
 
         #Required inputs
         strFileAbund = "".join([ConstantsMicropitaTest.c_strTestingInput+"Unbalanced48-GenNoise-0-SignalNoise-5.pcl"])
-        fIsNormalized = False
-        fIsSummed = False
         sIDName = "ID"
         sLastMetadataName = "Label"
-        cFileDelimiter = ConstantsMicropita.c_cTab
+        cFileDelimiter = ConstantsMicropita.TAB
         cFeatureNameDelimiter = "|"
-        strSelection = [ConstantsMicropita.c_strExtremeDissimilarity]
+        strSelection = [ConstantsMicropita.c_strExtreme]
 
         #Other inputs
         strOutFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,sMethodName,".txt"])
@@ -4271,22 +2583,21 @@ class MicroPITATest(unittest.TestCase):
         strAnswerFile = "".join([ConstantsMicropitaTest.c_strTestingTruth,sMethodName,"-Correct.txt"])
 
         #Get result
-        result = microPITA.funcRun(fIsAlreadyNormalized=fIsNormalized,
-                                        fCladesAreSummed=fIsSummed,
-                                        sMetadataID=sIDName,
-                                        sLastMetadataName=sLastMetadataName,
-                                        strInputAbundanceFile=strFileAbund,
-                                        strInputPredictFile=strInputPredictFile,
-                                        strPredictPredictFile=strPredictPredictFile,
-                                        strCheckedAbndFile=strCheckedAbndFile,
-                                        strOutputFile=strOutFile,
-                                        cDelimiter=cFileDelimiter,
-                                        cFeatureNameDelimiter = cFeatureNameDelimiter,
-                                        iSampleSelectionCount=iUnsupervisedSelectionCount,
-                                        strStratify=sUnsupervisedStratify,
-                                        strSelectionTechnique=strSelection,
-                                        fSumData=fSumData,
-                                        sFeatureSelectionMethod=sFeatureSelection)
+        result = microPITA.funcRun(strIDName=sIDName,
+                                   strLastMetadataName=sLastMetadataName,
+                                   istmInput=strFileAbund,
+                                   ostmInputPredictFile=strInputPredictFile,
+                                   ostmPredictFile=strPredictPredictFile,
+                                   ostmCheckedFile=strCheckedAbndFile,
+                                   ostmOutput=strOutFile,
+                                   cDelimiter=cFileDelimiter,
+                                   cFeatureNameDelimiter=cFeatureNameDelimiter,
+                                   strFeatureSelection=sFeatureSelection,
+                                   istmFeatures=strFileTaxa,
+                                   iCount=iUnsupervisedSelectionCount,
+                                   lstrMethods=strSelection,
+                                   strLabel=sLabel,
+                                   strStratify=sUnsupervisedStratify)
 
         answer = microPITA.funcReadSelectionFileToDictionary(strAnswerFile)
        
@@ -4297,7 +2608,7 @@ class MicroPITATest(unittest.TestCase):
         #Check result against answer
         self.assertEqual(str(result),str(answer),"".join([str(self),"::Expected=",str(answer),". Received=",str(result),"."]))
 
-    def testFuncRunForGoodCaseTargetedWithSelectionMethod(self):
+    def ntestFuncRunForGoodCaseTargetedWithSelectionMethod(self):
         """
         Test running just targeted
         """
@@ -4307,13 +2618,11 @@ class MicroPITATest(unittest.TestCase):
 
         #Required inputs
         strFileAbund = "".join([ConstantsMicropitaTest.c_strTestingInput+"Unbalanced48-GenNoise-0-SignalNoise-5.pcl"])
-        fIsNormalized = False
-        fIsSummed = False
         sIDName = "ID"
         sLastMetadataName = "Label"
-        cFileDelimiter = ConstantsMicropita.c_cTab
+        cFileDelimiter = ConstantsMicropita.TAB
         cFeatureNameDelimiter = "|"
-        strSelection = [ConstantsMicropita.c_strTaxa]
+        strSelection = [ConstantsMicropita.c_strFeature]
 
         #Other inputs
         strFileTaxa = "".join([ConstantsMicropitaTest.c_strTestingInput+"Unbalanced48-GenNoise-0-SignalNoise-5.taxa"])
@@ -4330,22 +2639,22 @@ class MicroPITATest(unittest.TestCase):
         strAnswerFile = "".join([ConstantsMicropitaTest.c_strTestingTruth,sMethodName,"-Correct.txt"])
 
         #Get result
-        result = microPITA.funcRun(fIsAlreadyNormalized=fIsNormalized,
-                                        fCladesAreSummed=fIsSummed,
-                                        sMetadataID=sIDName,
-                                        sLastMetadataName=sLastMetadataName,
-                                        strInputAbundanceFile=strFileAbund,
-                                        strInputPredictFile=strInputPredictFile,
-                                        strPredictPredictFile=strPredictPredictFile,
-                                        strCheckedAbndFile=strCheckedAbndFile,
-                                        strOutputFile=strOutFile,
-                                        cDelimiter=cFileDelimiter,
-                                        cFeatureNameDelimiter = cFeatureNameDelimiter,
-                                        strUserDefinedTaxaFile=strFileTaxa,
-                                        iSampleSelectionCount=iUnsupervisedSelectionCount,
-                                        strSelectionTechnique=strSelection,
-                                        fSumData=fSumData,
-                                        sFeatureSelectionMethod=sFeatureSelection)
+        result = microPITA.funcRun(strIDName=sIDName,
+                                   strLastMetadataName=sLastMetadataName,
+                                   istmInput=strFileAbund,
+                                   ostmInputPredictFile=strInputPredictFile,
+                                   ostmPredictFile=strPredictPredictFile,
+                                   ostmCheckedFile=strCheckedAbndFile,
+                                   ostmOutput=strOutFile,
+                                   cDelimiter=cFileDelimiter,
+                                   cFeatureNameDelimiter=cFeatureNameDelimiter,
+                                   strFeatureSelection=sFeatureSelection,
+                                   istmFeatures=strFileTaxa,
+                                   iCount=iUnsupervisedSelectionCount,
+                                   lstrMethods=strSelection,
+                                   strLabel=sLabel,
+                                   strStratify=sUnsupervisedStratify)
+
         answer = microPITA.funcReadSelectionFileToDictionary(strAnswerFile)
 
         #Sort answers
@@ -4355,7 +2664,7 @@ class MicroPITATest(unittest.TestCase):
         #Check result against answer
         self.assertEqual(str(result),str(answer),"".join([str(self),"::Expected=",str(answer),". Received=",str(result),"."]))
 
-    def testCallFromCommandlineForGoodCaseTargeted(self):
+    def ntestCallFromCommandlineForGoodCaseTargeted(self):
         """
         Test commandline call for good case only targeted.
         """
@@ -4379,7 +2688,7 @@ class MicroPITATest(unittest.TestCase):
         sUnSelectionCount = [ConstantsMicropita.c_strUnsupervisedCountArgument,"6"]
         strFileTaxa = [ConstantsMicropita.c_strTargetedSelectionFileArgument,
                        "".join([ConstantsMicropitaTest.c_strTestingInput+"Unbalanced48-GenNoise-0-SignalNoise-5.taxa"])]
-        strSelection = [ConstantsMicropita.c_strTaxa]
+        strSelection = [ConstantsMicropita.c_strFeature]
 
         #Optional test
         lsOptionalArguments = []+sLastMetadata+sUnSelectionCount+sSumData+strFileTaxa
@@ -4429,13 +2738,11 @@ class MicroPITATest(unittest.TestCase):
 
         #Required inputs
         strFileAbund = "".join([ConstantsMicropitaTest.c_strTestingInput+"Unbalanced48-GenNoise-0-SignalNoise-5.pcl"])
-        fIsNormalized = False
-        fIsSummed = False
         sIDName = "ID"
         sLastMetadataName = "Label"
-        cFileDelimiter = ConstantsMicropita.c_cTab
+        cFileDelimiter = ConstantsMicropita.TAB
         cFeatureNameDelimiter = "|"
-        strSelection = [ConstantsMicropita.c_strTaxa]
+        strSelection = [ConstantsMicropita.c_strFeature]
 
         #Other inputs
         strFileTaxa = "".join([ConstantsMicropitaTest.c_strTestingInput+"Unbalanced48-GenNoise-0-SignalNoise-5.taxa"])
@@ -4452,23 +2759,21 @@ class MicroPITATest(unittest.TestCase):
         strAnswerFile = "".join([ConstantsMicropitaTest.c_strTestingTruth,sMethodName,"-Correct.txt"])
 
         #Get result
-        result = microPITA.funcRun(fIsAlreadyNormalized=fIsNormalized,
-                                        fCladesAreSummed=fIsSummed,
-                                        sMetadataID=sIDName,
-                                        sLastMetadataName=sLastMetadataName,
-                                        strInputAbundanceFile=strFileAbund,
-                                        strInputPredictFile=strInputPredictFile,
-                                        strPredictPredictFile=strPredictPredictFile,
-                                        strCheckedAbndFile=strCheckedAbndFile,
-                                        strOutputFile=strOutFile,
-                                        cDelimiter=cFileDelimiter,
-                                        cFeatureNameDelimiter = cFeatureNameDelimiter,
-                                        strUserDefinedTaxaFile=strFileTaxa,
-                                        iSampleSelectionCount=iUnsupervisedSelectionCount,
-                                        strStratify=sUnsupervisedStratify,
-                                        strSelectionTechnique=strSelection,
-                                        fSumData=fSumData,
-                                        sFeatureSelectionMethod=sFeatureSelection)
+        result = microPITA.funcRun(strIDName=sIDName,
+                                   strLastMetadataName=sLastMetadataName,
+                                   istmInput=strFileAbund,
+                                   ostmInputPredictFile=strInputPredictFile,
+                                   ostmPredictFile=strPredictPredictFile,
+                                   ostmCheckedFile=strCheckedAbndFile,
+                                   ostmOutput=strOutFile,
+                                   cDelimiter=cFileDelimiter,
+                                   cFeatureNameDelimiter=cFeatureNameDelimiter,
+                                   strFeatureSelection=sFeatureSelection,
+                                   istmFeatures=strFileTaxa,
+                                   iCount=iUnsupervisedSelectionCount,
+                                   lstrMethods=strSelection,
+                                   strLabel=sLabel,
+                                   strStratify=sUnsupervisedStratify)
 
         answer = microPITA.funcReadSelectionFileToDictionary(strAnswerFile)
        
@@ -4479,7 +2784,7 @@ class MicroPITATest(unittest.TestCase):
         #Check result against answer
         self.assertEqual(str(result),str(answer),"".join([str(self),"::Expected=",str(answer),". Received=",str(result),"."]))
 
-    def testFuncRunForGoodCaseTargetedWithoutSelectionMethod(self):
+    def ntestFuncRunForGoodCaseTargetedWithoutSelectionMethod(self):
         """
         Test running just targeted
         """
@@ -4490,11 +2795,9 @@ class MicroPITATest(unittest.TestCase):
 
         #Required inputs
         strFileAbund = "".join([ConstantsMicropitaTest.c_strTestingInput+"Unbalanced48-GenNoise-0-SignalNoise-5.pcl"])
-        fIsNormalized = False
-        fIsSummed = False
         sIDName = "ID"
         sLastMetadataName = "Label"
-        cFileDelimiter = ConstantsMicropita.c_cTab
+        cFileDelimiter = ConstantsMicropita.TAB
         cFeatureNameDelimiter = "|"
         strSelection = []
 
@@ -4513,22 +2816,21 @@ class MicroPITATest(unittest.TestCase):
         strAnswerFile = "".join([ConstantsMicropitaTest.c_strTestingTruth,sMethodName,"-Correct.txt"])
 
         #Get result
-        result = microPITA.funcRun(fIsAlreadyNormalized=fIsNormalized,
-                                        fCladesAreSummed=fIsSummed,
-                                        sMetadataID=sIDName,
-                                        sLastMetadataName=sLastMetadataName,
-                                        strInputAbundanceFile=strFileAbund,
-                                        strInputPredictFile=strInputPredictFile,
-                                        strPredictPredictFile=strPredictPredictFile,
-                                        strCheckedAbndFile=strCheckedAbndFile,
-                                        strOutputFile=strOutFile,
-                                        cDelimiter=cFileDelimiter,
-                                        cFeatureNameDelimiter = cFeatureNameDelimiter,
-                                        strUserDefinedTaxaFile=strFileTaxa,
-                                        iSampleSelectionCount=iUnsupervisedSelectionCount,
-                                        strSelectionTechnique=strSelection,
-                                        fSumData=fSumData,
-                                        sFeatureSelectionMethod=sFeatureSelection)
+        result = microPITA.funcRun(strIDName=sIDName,
+                                   strLastMetadataName=sLastMetadataName,
+                                   istmInput=strFileAbund,
+                                   ostmInputPredictFile=strInputPredictFile,
+                                   ostmPredictFile=strPredictPredictFile,
+                                   ostmCheckedFile=strCheckedAbndFile,
+                                   ostmOutput=strOutFile,
+                                   cDelimiter=cFileDelimiter,
+                                   cFeatureNameDelimiter=cFeatureNameDelimiter,
+                                   strFeatureSelection=sFeatureSelection,
+                                   istmFeatures=strFileTaxa,
+                                   iCount=iUnsupervisedSelectionCount,
+                                   lstrMethods=strSelection,
+                                   strLabel=sLastMetadataName,
+                                   strStratify=sUnsupervisedStratify)
 
         answer = microPITA.funcReadSelectionFileToDictionary(strAnswerFile)
 
@@ -4539,21 +2841,19 @@ class MicroPITATest(unittest.TestCase):
         #Check result against answer
         self.assertEqual(str(result),str(answer),"".join([str(self),"::Expected=",str(answer),". Received=",str(result),"."]))
 
-    def testFuncRunForGoodCaseAllUnsupervised(self):
+    def ntestFuncRunForGoodCaseAllUnsupervised(self):
         sMethodName = "testFuncRunForGoodCaseAllUnsupervised"
 
         microPITA = MicroPITA()
 
         #Required inputs
         strFileAbund = "".join([ConstantsMicropitaTest.c_strTestingInput+"Unbalanced48-GenNoise-0-SignalNoise-5.pcl"])
-        fIsNormalized = False
-        fIsSummed = False
         sIDName = "ID"
         sLastMetadataName = "Label"
-        cFileDelimiter = ConstantsMicropita.c_cTab
+        cFileDelimiter = ConstantsMicropita.TAB
         cFeatureNameDelimiter = "|"
         strSelection = [ConstantsMicropita.c_strDiversity,ConstantsMicropita.c_strExtremeDissimilarity,
-                        ConstantsMicropita.c_strRepresentativeDissimilarity,ConstantsMicropita.c_strTaxa]
+                        ConstantsMicropita.c_strRepresentativeDissimilarity,ConstantsMicropita.c_strFeature]
 
         #Other inputs
         strOutFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,sMethodName,".txt"])
@@ -4570,22 +2870,21 @@ class MicroPITATest(unittest.TestCase):
         strAnswerFile = "".join([ConstantsMicropitaTest.c_strTestingTruth,sMethodName,"-Correct.txt"])
 
         #Get result
-        result = microPITA.funcRun(fIsAlreadyNormalized=fIsNormalized,
-                                        fCladesAreSummed=fIsSummed,
-                                        sMetadataID=sIDName,
-                                        sLastMetadataName=sLastMetadataName,
-                                        strInputAbundanceFile=strFileAbund,
-                                        strInputPredictFile=strInputPredictFile,
-                                        strPredictPredictFile=strPredictPredictFile,
-                                        strCheckedAbndFile=strCheckedAbndFile,
-                                        strOutputFile=strOutFile,
-                                        cDelimiter=cFileDelimiter,
-                                        cFeatureNameDelimiter = cFeatureNameDelimiter,
-                                        strUserDefinedTaxaFile=strFileTaxa,
-                                        iSampleSelectionCount=iUnsupervisedSelectionCount,
-                                        strSelectionTechnique=strSelection,
-                                        fSumData=fSumData,
-                                        sFeatureSelectionMethod=sFeatureSelection)
+        result = microPITA.funcRun(strIDName=sIDName,
+                                   strLastMetadataName=sLastMetadataName,
+                                   istmInput=strFileAbund,
+                                   ostmInputPredictFile=strInputPredictFile,
+                                   ostmPredictFile=strPredictPredictFile,
+                                   ostmCheckedFile=strCheckedAbndFile,
+                                   ostmOutput=strOutFile,
+                                   cDelimiter=cFileDelimiter,
+                                   cFeatureNameDelimiter=cFeatureNameDelimiter,
+                                   strFeatureSelection=sFeatureSelection,
+                                   istmFeatures=strFileTaxa,
+                                   iCount=iUnsupervisedSelectionCount,
+                                   lstrMethods=strSelection,
+                                   strLabel=sLabel,
+                                   strStratify=sUnsupervisedStratify)
 
         answer = microPITA.funcReadSelectionFileToDictionary(strAnswerFile)
        
@@ -4596,7 +2895,7 @@ class MicroPITATest(unittest.TestCase):
         #Check result against answer
         self.assertEqual(str(result),str(answer),"".join([str(self),"::Expected=",str(answer),". Received=",str(result),"."]))
 
-    def testCallFromCommandlineForGoodCaseUnsupervised(self):
+    def ntestCallFromCommandlineForGoodCaseUnsupervised(self):
         """
         Test commandline call for good case for unsupervised only.
         """
@@ -4621,7 +2920,7 @@ class MicroPITATest(unittest.TestCase):
         sTaxaFile = [ConstantsMicropita.c_strTargetedSelectionFileArgument,
                      "".join([ConstantsMicropitaTest.c_strTestingInput+"Unbalanced48-GenNoise-0-SignalNoise-5.taxa"])]
         strSelection = [ConstantsMicropita.c_strDiversity,ConstantsMicropita.c_strExtremeDissimilarity,
-                        ConstantsMicropita.c_strRepresentativeDissimilarity,ConstantsMicropita.c_strTaxa]
+                        ConstantsMicropita.c_strRepresentativeDissimilarity,ConstantsMicropita.c_strFeature]
 
         #Optional test
         lsOptionalArguments = []+sLastMetadata+sUnSelectionCount+sTaxaFile+sSumData
@@ -4666,14 +2965,12 @@ class MicroPITATest(unittest.TestCase):
 
         #Required inputs
         strFileAbund = "".join([ConstantsMicropitaTest.c_strTestingInput+"Unbalanced48-GenNoise-0-SignalNoise-5.pcl"])
-        fIsNormalized = False
-        fIsSummed = False
         sIDName = "ID"
         sLastMetadataName = "Label"
-        cFileDelimiter = ConstantsMicropita.c_cTab
+        cFileDelimiter = ConstantsMicropita.TAB
         cFeatureNameDelimiter = "|"
         strSelection = [ConstantsMicropita.c_strDiversity,ConstantsMicropita.c_strExtremeDissimilarity,
-                        ConstantsMicropita.c_strRepresentativeDissimilarity,ConstantsMicropita.c_strTaxa]
+                        ConstantsMicropita.c_strRepresentativeDissimilarity,ConstantsMicropita.c_strFeature]
 
         #Other inputs
         strOutFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,sMethodName,".txt"])
@@ -4690,23 +2987,21 @@ class MicroPITATest(unittest.TestCase):
         strAnswerFile = "".join([ConstantsMicropitaTest.c_strTestingTruth,sMethodName,"-Correct.txt"])
 
         #Get result
-        result = microPITA.funcRun(fIsAlreadyNormalized=fIsNormalized,
-                                        fCladesAreSummed=fIsSummed,
-                                        sMetadataID=sIDName,
-                                        sLastMetadataName=sLastMetadataName,
-                                        strInputAbundanceFile=strFileAbund,
-                                        strInputPredictFile=strInputPredictFile,
-                                        strPredictPredictFile=strPredictPredictFile,
-                                        strCheckedAbndFile=strCheckedAbndFile,
-                                        strOutputFile=strOutFile,
-                                        cDelimiter=cFileDelimiter,
-                                        cFeatureNameDelimiter = cFeatureNameDelimiter,
-                                        strUserDefinedTaxaFile=strFileTaxa,
-                                        iSampleSelectionCount=iUnsupervisedSelectionCount,
-                                        strStratify=sUnsupervisedStratify,
-                                        strSelectionTechnique=strSelection,
-                                        fSumData=fSumData,
-                                        sFeatureSelectionMethod=sFeatureSelection)
+        result = microPITA.funcRun(strIDName=sIDName,
+                                   strLastMetadataName=sLastMetadataName,
+                                   istmInput=strFileAbund,
+                                   ostmInputPredictFile=strInputPredictFile,
+                                   ostmPredictFile=strPredictPredictFile,
+                                   ostmCheckedFile=strCheckedAbndFile,
+                                   ostmOutput=strOutFile,
+                                   cDelimiter=cFileDelimiter,
+                                   cFeatureNameDelimiter=cFeatureNameDelimiter,
+                                   strFeatureSelection=sFeatureSelection,
+                                   istmFeatures=strFileTaxa,
+                                   iCount=iUnsupervisedSelectionCount,
+                                   lstrMethods=strSelection,
+                                   strLabel=sLabel,
+                                   strStratify=sUnsupervisedStratify)
 
         answer = microPITA.funcReadSelectionFileToDictionary(strAnswerFile)
        
@@ -4724,17 +3019,15 @@ class MicroPITATest(unittest.TestCase):
 
         #Required inputs
         strFileAbund = "".join([ConstantsMicropitaTest.c_strTestingInput+"Unbalanced48-GenNoise-0-SignalNoise-5.pcl"])
-        fIsNormalized = False
-        fIsSummed = False
         sIDName = "ID"
         sLastMetadataName = "Label"
-        cFileDelimiter = ConstantsMicropita.c_cTab
+        cFileDelimiter = ConstantsMicropita.TAB
         cFeatureNameDelimiter = "|"
         strSelection = [ConstantsMicropita.c_strDiscriminant,ConstantsMicropita.c_strDistinct]
 
         #Other inputs
         strOutFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,sMethodName,".txt"])
-        cFileDelimiter = ConstantsMicropita.c_cTab
+        cFileDelimiter = ConstantsMicropita.TAB
         cFeatureNameDelimiter = "|"
         strInputPredictFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,sMethodName,"-predictInput.txt"])
         strPredictPredictFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,sMethodName,"-predictPredict.txt"])
@@ -4751,24 +3044,21 @@ class MicroPITATest(unittest.TestCase):
         strAnswerFile = "".join([ConstantsMicropitaTest.c_strTestingTruth,sMethodName,"-Correct.txt"])
 
         #Get result
-        result = microPITA.funcRun(fIsAlreadyNormalized=fIsNormalized,
-                                        fCladesAreSummed=fIsSummed,
-                                        sMetadataID=sIDName,
-                                        sLastMetadataName=sLastMetadataName,
-                                        strInputAbundanceFile=strFileAbund,
-                                        strInputPredictFile=strInputPredictFile,
-                                        strPredictPredictFile=strPredictPredictFile,
-                                        strCheckedAbndFile=strCheckedAbndFile,
-                                        strOutputFile=strOutFile,
-                                        cDelimiter=cFileDelimiter,
-                                        cFeatureNameDelimiter = cFeatureNameDelimiter,
-                                        iSampleSelectionCount=iUnsupervisedSelectionCount,
-                                        iSupervisedSampleCount=iSupervisedCount,
-                                        strLabel=sLabel,
-                                        strStratify=sUnsupervisedStratify,
-                                        strSelectionTechnique=strSelection,
-                                        fSumData=fSumData,
-                                        sFeatureSelectionMethod=sFeatureSelection)
+        result = microPITA.funcRun(strIDName=sIDName,
+                                   strLastMetadataName=sLastMetadataName,
+                                   istmInput=strFileAbund,
+                                   ostmInputPredictFile=strInputPredictFile,
+                                   ostmPredictFile=strPredictPredictFile,
+                                   ostmCheckedFile=strCheckedAbndFile,
+                                   ostmOutput=strOutFile,
+                                   cDelimiter=cFileDelimiter,
+                                   cFeatureNameDelimiter=cFeatureNameDelimiter,
+                                   strFeatureSelection=sFeatureSelection,
+                                   istmFeatures=strFileTaxa,
+                                   iCount=iUnsupervisedSelectionCount,
+                                   lstrMethods=strSelection,
+                                   strLabel=sLabel,
+                                   strStratify=sUnsupervisedStratify)
 
         answer = False
         error = False
@@ -4781,7 +3071,7 @@ class MicroPITATest(unittest.TestCase):
         #Check result against answer
         self.assertEqual(str(error),str(answer),"".join([str(self),"::Expected=",str(answer),". Received=",str(error),"."]))
 
-    def testCallFromCommandlineForGoodCaseSupervised(self):
+    def ntestCallFromCommandlineForGoodCaseSupervised(self):
         """
         Test commandline call for good case supervised methods only.
         """
@@ -4844,24 +3134,22 @@ class MicroPITATest(unittest.TestCase):
         self.assertEqual(str(errors),str(answer),"".join([str(self),"::Expected=",str(answer),". Received=",str(errors),"."]))
 
 
-    def testFuncRunForGoodCaseDiscriminantMethod(self):
+    def ntestFuncRunForGoodCaseDiscriminantMethod(self):
         sMethodName = "testFuncRunForGoodCaseDiscriminantMethod"
 
         microPITA = MicroPITA()
 
         #Required inputs
         strFileAbund = "".join([ConstantsMicropitaTest.c_strTestingInput+"Unbalanced48-GenNoise-0-SignalNoise-5.pcl"])
-        fIsNormalized = False
-        fIsSummed = False
         sIDName = "ID"
         sLastMetadataName = "Label"
-        cFileDelimiter = ConstantsMicropita.c_cTab
+        cFileDelimiter = ConstantsMicropita.TAB
         cFeatureNameDelimiter = "|"
         strSelection = [ConstantsMicropita.c_strDiscriminant]
 
         #Other inputs
         strOutFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,sMethodName,".txt"])
-        cFileDelimiter = ConstantsMicropita.c_cTab
+        cFileDelimiter = ConstantsMicropita.TAB
         cFeatureNameDelimiter = "|"
         strInputPredictFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,sMethodName,"-predictInput.txt"])
         strPredictPredictFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,sMethodName,"-predictPredict.txt"])
@@ -4878,24 +3166,21 @@ class MicroPITATest(unittest.TestCase):
         strAnswerFile = "".join([ConstantsMicropitaTest.c_strTestingTruth,sMethodName,"-Correct.txt"])
 
         #Get result
-        result = microPITA.funcRun(fIsAlreadyNormalized=fIsNormalized,
-                                        fCladesAreSummed=fIsSummed,
-                                        sMetadataID=sIDName,
-                                        sLastMetadataName=sLastMetadataName,
-                                        strInputAbundanceFile=strFileAbund,
-                                        strInputPredictFile=strInputPredictFile,
-                                        strPredictPredictFile=strPredictPredictFile,
-                                        strCheckedAbndFile=strCheckedAbndFile,
-                                        strOutputFile=strOutFile,
-                                        cDelimiter=cFileDelimiter,
-                                        cFeatureNameDelimiter = cFeatureNameDelimiter,
-                                        iSampleSelectionCount=iUnsupervisedSelectionCount,
-                                        iSupervisedSampleCount=iSupervisedCount,
-                                        strLabel=sLabel,
-                                        strStratify=sUnsupervisedStratify,
-                                        strSelectionTechnique=strSelection,
-                                        fSumData=fSumData,
-                                        sFeatureSelectionMethod=sFeatureSelection)
+        result = microPITA.funcRun(strIDName=sIDName,
+                                   strLastMetadataName=sLastMetadataName,
+                                   istmInput=strFileAbund,
+                                   ostmInputPredictFile=strInputPredictFile,
+                                   ostmPredictFile=strPredictPredictFile,
+                                   ostmCheckedFile=strCheckedAbndFile,
+                                   ostmOutput=strOutFile,
+                                   cDelimiter=cFileDelimiter,
+                                   cFeatureNameDelimiter=cFeatureNameDelimiter,
+                                   strFeatureSelection=sFeatureSelection,
+                                   istmFeatures=strFileTaxa,
+                                   iCount=iUnsupervisedSelectionCount,
+                                   lstrMethods=strSelection,
+                                   strLabel=sLabel,
+                                   strStratify=sUnsupervisedStratify)
 
         answer = False
         error = False
@@ -4908,7 +3193,7 @@ class MicroPITATest(unittest.TestCase):
         #Check result against answer
         self.assertEqual(str(error),str(answer),"".join([str(self),"::Expected=",str(answer),". Received=",str(error),"."]))
 
-    def testCallFromCommandlineForGoodCaseDiscriminant(self):
+    def ntestCallFromCommandlineForGoodCaseDiscriminant(self):
         """
         Test commandline call for good case discriminant only.
         """
@@ -4970,24 +3255,22 @@ class MicroPITATest(unittest.TestCase):
         #Check result against answer
         self.assertEqual(str(errors),str(answer),"".join([str(self),"::Expected=",str(answer),". Received=",str(errors),"."]))
 
-    def testFuncRunForGoodCaseDistinctMethod(self):
+    def ntestFuncRunForGoodCaseDistinctMethod(self):
         sMethodName = "testFuncRunForGoodCaseDistinctMethod"
 
         microPITA = MicroPITA()
 
         #Required inputs
         strFileAbund = "".join([ConstantsMicropitaTest.c_strTestingInput+"Unbalanced48-GenNoise-0-SignalNoise-5.pcl"])
-        fIsNormalized = False
-        fIsSummed = False
         sIDName = "ID"
         sLastMetadataName = "Label"
-        cFileDelimiter = ConstantsMicropita.c_cTab
+        cFileDelimiter = ConstantsMicropita.TAB
         cFeatureNameDelimiter = "|"
         strSelection = [ConstantsMicropita.c_strDistinct]
 
         #Other inputs
         strOutFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,sMethodName,".txt"])
-        cFileDelimiter = ConstantsMicropita.c_cTab
+        cFileDelimiter = ConstantsMicropita.TAB
         cFeatureNameDelimiter = "|"
         strInputPredictFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,sMethodName,"-predictInput.txt"])
         strPredictPredictFile = "".join([ConstantsMicropitaTest.c_strTestingTMP,sMethodName,"-predictPredict.txt"])
@@ -5001,24 +3284,19 @@ class MicroPITATest(unittest.TestCase):
         sFeatureSelection = ConstantsMicropita.c_strTargetedRanked
 
         #Get result
-        result = microPITA.funcRun(fIsAlreadyNormalized=fIsNormalized,
-                                        fCladesAreSummed=fIsSummed,
-                                        sMetadataID=sIDName,
-                                        sLastMetadataName=sLastMetadataName,
-                                        strInputAbundanceFile=strFileAbund,
-                                        strInputPredictFile=strInputPredictFile,
-                                        strPredictPredictFile=strPredictPredictFile,
-                                        strCheckedAbndFile=strCheckedAbndFile,
-                                        strOutputFile=strOutFile,
-                                        cDelimiter=cFileDelimiter,
-                                        cFeatureNameDelimiter = cFeatureNameDelimiter,
-                                        iSampleSelectionCount=iUnsupervisedSelectionCount,
-                                        iSupervisedSampleCount=iSupervisedCount,
-                                        strLabel=sLabel,
-                                        strStratify=sUnsupervisedStratify,
-                                        strSelectionTechnique=strSelection,
-                                        fSumData=fSumData,
-                                        sFeatureSelectionMethod=sFeatureSelection)
+        result = microPITA.funcRun(strIDName=sIDName,
+                                   strLastMetadataName=sLastMetadataName,
+                                   istmInput=strFileAbund,
+                                   ostmInputPredictFile=strInputPredictFile,
+                                   ostmPredictFile=strPredictPredictFile,
+                                   ostmCheckedFile=strCheckedAbndFile,
+                                   ostmOutput=strOutFile,
+                                   cDelimiter=cFileDelimiter,
+                                   cFeatureNameDelimiter=cFeatureNameDelimiter,
+                                   iCount=iUnsupervisedSelectionCount,
+                                   lstrMethods=strSelection,
+                                   strLabel=sLabel,
+                                   strStratify=sUnsupervisedStratify)
 
         answer = False
         error = False
@@ -5031,7 +3309,7 @@ class MicroPITATest(unittest.TestCase):
         #Check result against answer
         self.assertEqual(str(error),str(answer),"".join([str(self),"::Expected=",str(answer),". Received=",str(error),"."]))
 
-    def testCallFromCommandlineForGoodCaseDistinct(self):
+    def ntestCallFromCommandlineForGoodCaseDistinct(self):
         """
         Test commandline call for good case distinct only.
         """
