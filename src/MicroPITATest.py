@@ -1925,7 +1925,7 @@ class MicroPITATest(unittest.TestCase):
                     cDelimiter="\t", sMetadataID=sSampleIDSelection, sLastMetadata=sLastMetadataSelection, cFeatureNameDelimiter="|")
 
         lsOriginalSampleNames = abndTable.funcGetSampleNames()
-        lsOriginalLabels = SVM.funcMakeLabels(lsOriginalSampleNames)
+        lsOriginalLabels = SVM.funcMakeLabels(abndTable.funcGetMetadata(strSupervisedMetadata))
 
         MicroPITA().funcRunSupervisedDistancesFromCentroids(abundanceTable=abndTable, fRunDistinct=fRunDistinct, fRunDiscriminant=fRunDiscriminant,
                                        xOutputSupFile=strOutputSVMFile, xPredictSupFile=strPredictSVMFile, strSupervisedMetadata=strSupervisedMetadata,
@@ -1958,7 +1958,7 @@ class MicroPITATest(unittest.TestCase):
                     cDelimiter="\t", sMetadataID=sSampleIDSelection, sLastMetadata=sLastMetadataSelection, cFeatureNameDelimiter="|")
 
         lsOriginalSampleNames = abndTable.funcGetSampleNames()
-        lsOriginalLabels = SVM.funcMakeLabels(lsOriginalSampleNames)
+        lsOriginalLabels = SVM.funcMakeLabels(abndTable.funcGetMetadata(strSupervisedMetadata))
 
         MicroPITA().funcRunSupervisedDistancesFromCentroids(abundanceTable=abndTable, fRunDistinct=fRunDistinct, fRunDiscriminant=fRunDiscriminant,
                                        xOutputSupFile=strOutputSVMFile, xPredictSupFile=strPredictSVMFile, strSupervisedMetadata=strSupervisedMetadata,
