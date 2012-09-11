@@ -1,1 +1,1 @@
-Diversity_I	Sample_12_D	Sample_1_D	Sample_6_D	Sample_9_D	Sample_4_D	Sample_5_D
+diverse	Sample_12_D	Sample_0_D	Sample_13_D

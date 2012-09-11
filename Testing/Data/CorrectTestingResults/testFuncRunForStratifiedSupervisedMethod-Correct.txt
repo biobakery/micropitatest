@@ -1,0 +1,2 @@
+discriminant	Sample_14_D	Sample_3_D	Sample_13_D	Sample_2_D	Sample_1_D	Sample_4_D
+distinct	Sample_42_E	Sample_31_E	Sample_39_E	Sample_35_E	Sample_34_E	Sample_37_E

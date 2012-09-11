@@ -1,1 +1,1 @@
-Distinct	Sample_42_E	Sample_28_R	Sample_45_T	Sample_38_E	Sample_20_R	Sample_37_E
+distinct	Sample_39_E	Sample_42_E	Sample_31_E	Sample_35_E	Sample_34_E	Sample_37_E

@@ -1,1 +1,1 @@
-Discriminant	Sample_13_D	Sample_12_D	Sample_7_D	Sample_4_D	Sample_0_D	Sample_6_D
+discriminant	Sample_14_D	Sample_3_D	Sample_13_D	Sample_4_D	Sample_1_D	Sample_15_D
