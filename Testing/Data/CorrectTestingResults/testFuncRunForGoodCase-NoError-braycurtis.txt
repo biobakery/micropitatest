@@ -1,0 +1,6 @@
+features	Not_checking
+discriminant	Not_checking
+distinct	Not_checking
+diverse	Not_checking
+representative=braycurtis	Not_checking
+extreme=braycurtis	Not_checking

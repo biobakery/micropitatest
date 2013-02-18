@@ -1,0 +1,52 @@
+Good Case
+diverse:['Sample_0_D', 'Sample_12_D', 'Sample_13_D']
+
+Results from custom Alpha and beta metrics:
+
+Diversity Good:
+diverse=margalef:['Sample_11_D', 'Sample_3_D', 'Sample_7_D']
+diverse=observed_species:['Sample_0_D', 'Sample_1_D', 'Sample_2_D']
+diverse=ACE:['Sample_0_D', 'Sample_1_D', 'Sample_2_D']
+diverse=brillouin_d:['Sample_0_D', 'Sample_12_D', 'Sample_13_D']
+diverse=chao1:['Sample_0_D', 'Sample_1_D', 'Sample_2_D']
+diverse=equitability:['Sample_0_D', 'Sample_12_D', 'Sample_13_D']
+diverse=fisher_alpha:['Sample_11_D', 'Sample_3_D', 'Sample_7_D']
+diverse=heip_e:['Sample_0_D', 'Sample_12_D', 'Sample_13_D']
+diverse=mcintosh_d:['Sample_0_D', 'Sample_11_D', 'Sample_12_D']
+diverse=michaelis_menten_fit:['Sample_2_D', 'Sample_4_D', 'Sample_7_D']
+diverse=robbins:['Sample_0_D', 'Sample_1_D', 'Sample_2_D']
+diverse=shannon:['Sample_0_D', 'Sample_12_D', 'Sample_13_D']
+
+Diversity Bad:
+diverse=dominance:['Sample_45_T', 'Sample_46_T', 'Sample_47_T'] * 0 = even diversity
+diverse=menhinick:['Sample_44_T', 'Sample_45_T', 'Sample_47_T']
+diverse=reciprocal_simpson:['Sample_45_T', 'Sample_46_T', 'Sample_47_T']
+diverse=berger_parker_d:['Sample_45_T', 'Sample_46_T', 'Sample_47_T']
+diverse=mcintosh_e:['Sample_45_T', 'Sample_46_T', 'Sample_47_T']
+diverse=simpson_e:['Sample_45_T', 'Sample_46_T', 'Sample_47_T']
+diverse=strong:['Sample_45_T', 'Sample_46_T', 'Sample_47_T']
+
+Extreme Good:
+extreme=braycurtis:['Sample_16_R', 'Sample_17_R', 'Sample_32_E']
+extreme=canberra:['Sample_16_R', 'Sample_17_R', 'Sample_32_E']
+extreme=chebyshev:['Sample_42_E', 'Sample_43_E', 'Sample_46_T']
+extreme=cityblock:['Sample_16_R', 'Sample_17_R', 'Sample_32_E']
+extreme=correlation:['Sample_38_E', 'Sample_41_E', 'Sample_45_T']
+extreme=cosine:['Sample_38_E', 'Sample_41_E', 'Sample_45_T']
+extreme=euclidean:['Sample_38_E', 'Sample_41_E', 'Sample_45_T']
+extreme=sqeuclidean:['Sample_38_E', 'Sample_41_E', 'Sample_45_T']
+
+Extreme Bad:
+extreme=hamming:['Sample_14_D', 'Sample_7_D', 'Sample_8_D']
+
+Representative Good:
+representative=braycurtis:['Sample_26_R', 'Sample_46_T', 'Sample_4_D']
+representative=canberra:['Sample_26_R', 'Sample_46_T', 'Sample_4_D']
+representative=chebyshev:['Sample_37_E', 'Sample_45_T', 'Sample_6_D']
+representative=cityblock:['Sample_26_R', 'Sample_46_T', 'Sample_4_D']
+representative=correlation:['Sample_14_D', 'Sample_26_R', 'Sample_29_R']
+representative=cosine:['Sample_14_D', 'Sample_26_R', 'Sample_29_R']
+representative=euclidean:['Sample_14_D', 'Sample_26_R', 'Sample_29_R']
+representative=hamming:['Sample_26_R', 'Sample_47_T', 'Sample_4_D']
+representative=sqeuclidean:['Sample_14_D', 'Sample_26_R', 'Sample_29_R']
+

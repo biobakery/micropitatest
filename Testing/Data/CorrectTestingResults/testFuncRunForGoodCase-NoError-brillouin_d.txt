@@ -1,0 +1,6 @@
+features	Not_checking
+discriminant	Not_checking
+distinct	Not_checking
+diverse=brillouin_d	Not_checking
+representative	Not_checking
+extreme	Not_checking

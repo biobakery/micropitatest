@@ -1,4 +1,4 @@
 features	Sample_29_R	Sample_22_R	Sample_26_R
-diverse	Sample_12_D	Sample_13_D	Sample_11_D	Sample_0_D	Sample_2_D	Sample_4_D
+diverse	Sample_0_D	Sample_11_D	Sample_12_D	Sample_13_D	Sample_2_D	Sample_6_D
 representative	Sample_3_D	Sample_41_E	Sample_46_T	Sample_40_E	Sample_1_D	Sample_29_R
 extreme	Sample_17_R	Sample_32_E	Sample_25_R	Sample_38_E	Sample_43_E	Sample_35_E
