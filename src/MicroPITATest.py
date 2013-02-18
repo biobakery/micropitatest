@@ -2521,6 +2521,27 @@ class MicroPITATest(unittest.TestCase):
         self._testAnyReturnCommandLineHelper(sMethodName=sMethodName,strAnswerFile=strAnswerFile,lsSelection=lsSelection,sTaxaFile=sTaxaFile,
                                     sAbundance=sAbundance,sSupervisedLabel=sSupervisedLabel,sStratify=sStratify,lsOther=lsOther)
 
+    def testCallFromCommandlineFordominanceGoodCase(self):
+        """
+        Test commandline call for all selection using a custom alpha metric (dominance). This is an inverted measurement and requires the -f.
+        """
+
+        sMethodName = "testCallFromCommandlineFordominanceGoodCase"
+
+        strAnswerFile = "".join([ConstantsMicropitaTest.c_strTestingTruth,"testFuncRunForGoodCase-dominance.txt"])
+        lsSelection = [ConstantsMicropita.c_strDiversity,ConstantsMicropita.c_strExtreme,
+                        ConstantsMicropita.c_strRepresentative,ConstantsMicropita.c_strFeature,
+                        ConstantsMicropita.c_strDiscriminant,ConstantsMicropita.c_strDistinct]
+        sTaxaFile = [ConstantsMicropita.c_strTargetedSelectionFileArgument,
+                     "".join([ConstantsMicropitaTest.c_strTestingInput+"Unbalanced48-GenNoise-0-SignalNoise-5.taxa"])]
+        sSupervisedLabel = [ConstantsMicropita.c_strSupervisedLabelArgument,"Label"]
+        sAbundance = []
+        sStratify = []
+        lsOther = ["-a","dominance","-f"]
+
+        self._testCommandLineHelper(sMethodName=sMethodName,strAnswerFile=strAnswerFile,lsSelection=lsSelection,sTaxaFile=sTaxaFile,
+                                    sAbundance=sAbundance,sSupervisedLabel=sSupervisedLabel,sStratify=sStratify,lsOther=lsOther)
+
     def testCallFromCommandlineFormargalefGoodCase(self):
         """
         Test commandline call for all selection using a custom alpha metric (margalef)
