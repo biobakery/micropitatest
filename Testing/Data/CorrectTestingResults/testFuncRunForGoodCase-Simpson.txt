@@ -1,0 +1,6 @@
+features	Sample_45_T	Sample_46_T	Sample_47_T
+discriminant	Sample_14_D	Sample_3_D	Sample_13_D	Sample_4_D	Sample_1_D	Sample_15_D
+distinct	Sample_30_E	Sample_31_E	Sample_34_E	Sample_35_E	Sample_37_E	Sample_42_E
+diverse=simpson	Sample_12_D	Sample_0_D	Sample_13_D
+representative	Sample_46_T	Sample_4_D	Sample_26_R
+extreme	Sample_16_R	Sample_17_R	Sample_32_E

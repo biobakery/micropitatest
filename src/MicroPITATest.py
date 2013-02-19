@@ -1969,7 +1969,7 @@ class MicroPITATest(unittest.TestCase):
 
         sMethodName = "testCallFromCommandlineForGoodCaseMACFormat"
 
-        strAnswerFile = "".join([ConstantsMicropitaTest.c_strTestingTruth,"testFuncRunForGoodCase-Correct.txt"])
+        strAnswerFile = "".join([ConstantsMicropitaTest.c_strTestingTruth,"testFuncRunForGoodCase-MAC-Correct.txt"])
 	strFileAbund = "".join([ConstantsMicropitaTest.c_strTestingInput+"Unbalanced48-GenNoise-0-SignalNoise-5-MACFormatted.pcl"])
         lsSelection = [ConstantsMicropita.c_strDiversity,ConstantsMicropita.c_strExtreme,
                         ConstantsMicropita.c_strRepresentative,ConstantsMicropita.c_strFeature,
@@ -2442,7 +2442,7 @@ class MicroPITATest(unittest.TestCase):
 
         sMethodName = "testCallFromCommandlineForGoodCase"
 
-        strAnswerFile = "".join([ConstantsMicropitaTest.c_strTestingTruth,"testFuncRunForGoodCase-Correct.txt"])
+        strAnswerFile = "".join([ConstantsMicropitaTest.c_strTestingTruth,"testFuncRunForGoodCase-Simpson.txt"])
         lsSelection = [ConstantsMicropita.c_strDiversity,ConstantsMicropita.c_strExtreme,
                         ConstantsMicropita.c_strRepresentative,ConstantsMicropita.c_strFeature,
                         ConstantsMicropita.c_strDiscriminant,ConstantsMicropita.c_strDistinct]
@@ -2451,7 +2451,7 @@ class MicroPITATest(unittest.TestCase):
         sSupervisedLabel = [ConstantsMicropita.c_strSupervisedLabelArgument,"Label"]
         sAbundance = []
         sStratify = []
-        lsOther = ["-a","reciprocal_simpson"]
+        lsOther = ["-a","simpson"]
 
         self._testCommandLineHelper(sMethodName=sMethodName,strAnswerFile=strAnswerFile,lsSelection=lsSelection,sTaxaFile=sTaxaFile,
                                     sAbundance=sAbundance,sSupervisedLabel=sSupervisedLabel,sStratify=sStratify,lsOther=lsOther)
