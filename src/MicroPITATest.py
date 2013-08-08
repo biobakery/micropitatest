@@ -15,14 +15,14 @@ __status__ = "Development"
 #Import libraries
 from ConstantsMicropitaTest import ConstantsMicropitaTest
 from micropita.MicroPITA import MicroPITA
-from micropita.src.breadcrumbs.AbundanceTable import AbundanceTable
-from micropita.src.breadcrumbs.CommandLine import CommandLine
-from micropita.src.breadcrumbs.ConstantsBreadCrumbs import ConstantsBreadCrumbs
+from micropita.src.breadcrumbs.src.AbundanceTable import AbundanceTable
+from micropita.src.breadcrumbs.src.CommandLine import CommandLine
+from micropita.src.breadcrumbs.src.ConstantsBreadCrumbs import ConstantsBreadCrumbs
 from micropita.src.ConstantsMicropita import ConstantsMicropita
-from micropita.src.breadcrumbs.Metric import Metric
-from micropita.src.breadcrumbs.MLPYDistanceAdaptor import MLPYDistanceAdaptor
-from micropita.src.breadcrumbs.SVM import SVM
-from micropita.src.breadcrumbs.UtilityMath import UtilityMath
+from micropita.src.breadcrumbs.src.Metric import Metric
+from micropita.src.breadcrumbs.src.MLPYDistanceAdaptor import MLPYDistanceAdaptor
+from micropita.src.breadcrumbs.src.SVM import SVM
+from micropita.src.breadcrumbs.src.UtilityMath import UtilityMath
 import csv
 import mlpy
 import numpy as np
@@ -1843,7 +1843,7 @@ class MicroPITATest(unittest.TestCase):
         commandLine = CommandLine()
 
         #Script
-        strMicropitaScript = "".join([ConstantsMicropitaTest.c_strSRC,"micropita/MicroPITA.py"])
+        strMicropitaScript = "".join([ConstantsMicropitaTest.c_strSRC,"micropita",os.sep,"MicroPITA.py"])
 
         #Required inputs
         strFileAbund = "".join([ConstantsMicropitaTest.c_strTestingInput+"Unbalanced48-GenNoise-0-SignalNoise-5.pcl"]) if not strFileAbund else strFileAbund
@@ -1894,7 +1894,7 @@ class MicroPITATest(unittest.TestCase):
         commandLine = CommandLine()
 
         #Script
-        strMicropitaScript = "".join([ConstantsMicropitaTest.c_strSRC,"micropita/MicroPITA.py"])
+        strMicropitaScript = "".join([ConstantsMicropitaTest.c_strSRC,"micropita",os.sep,"MicroPITA.py"])
 
         #Required inputs
         strFileAbund = "".join([ConstantsMicropitaTest.c_strTestingInput+"Unbalanced48-GenNoise-0-SignalNoise-5.pcl"])
@@ -1942,12 +1942,12 @@ class MicroPITATest(unittest.TestCase):
         #Check result against answer
         self.assertEqual(str(result),str(answer),"".join([str(self),"::Expected=",str(answer),". Received=",str(result),"."]))
 
-    def testCallFromCommandlineForGoodCase(self):
+    def testCallFromCommandlineForGoodCasePCL(self):
         """
         Test commandline call for good case.
         """
 
-        sMethodName = "testCallFromCommandlineForGoodCase"
+        sMethodName = "testCallFromCommandlineForGoodCasePCL"
 
         strAnswerFile = "".join([ConstantsMicropitaTest.c_strTestingTruth,"testFuncRunForGoodCase-Correct.txt"])
         lsSelection = [ConstantsMicropita.c_strDiversity,ConstantsMicropita.c_strExtreme,
@@ -1961,6 +1961,27 @@ class MicroPITATest(unittest.TestCase):
 
         self._testCommandLineHelper(sMethodName=sMethodName,strAnswerFile=strAnswerFile,lsSelection=lsSelection,sTaxaFile=sTaxaFile,
                                     sAbundance=sAbundance,sSupervisedLabel=sSupervisedLabel,sStratify=sStratify)
+
+    def testCallFromCommandlineForGoodCaseBIOME(self):
+        """
+        Test commandline call for good case BIOME file input.
+        """
+
+        sMethodName = "testCallFromCommandlineForGoodCaseBIOME"
+
+	strBiomeFile = "".join([ConstantsMicropitaTest.c_strTestingInput+"micropita.biom"])
+        strAnswerFile = "".join([ConstantsMicropitaTest.c_strTestingTruth,"testFuncRunForGoodCase-Correct.txt"])
+        lsSelection = [ConstantsMicropita.c_strDiversity,ConstantsMicropita.c_strExtreme,
+                        ConstantsMicropita.c_strRepresentative,ConstantsMicropita.c_strFeature,
+                        ConstantsMicropita.c_strDiscriminant,ConstantsMicropita.c_strDistinct]
+        sTaxaFile = [ConstantsMicropita.c_strTargetedSelectionFileArgument,
+                     "".join([ConstantsMicropitaTest.c_strTestingInput+"Unbalanced48-GenNoise-0-SignalNoise-5.taxa"])]
+        sSupervisedLabel = [ConstantsMicropita.c_strSupervisedLabelArgument,"Label"]
+        sAbundance = []
+        sStratify = []
+
+        self._testCommandLineHelper(sMethodName=sMethodName,strAnswerFile=strAnswerFile,lsSelection=lsSelection,strFileAbund=strBiomeFile,
+		sTaxaFile=sTaxaFile,sAbundance=sAbundance,sSupervisedLabel=sSupervisedLabel,sStratify=sStratify)
 
     def testCallFromCommandlineForGoodCaseMACFormat(self):
         """
