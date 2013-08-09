@@ -49,7 +49,7 @@ class MicroPITATest(unittest.TestCase):
     c_strEndline = os.linesep	
 
 #####Test funcGetTopRankedSamples
-    def testfuncGetTopRankedSamplesForGoodCase1(self):
+    def ntestfuncGetTopRankedSamplesForGoodCase1(self):
         
         #Inputs
         scores = [[1,2,3,4,5,6,7,8,9,10]]
@@ -64,7 +64,7 @@ class MicroPITATest(unittest.TestCase):
         #Check result against answer
         self.assertEqual(str(result),str(answer),"".join([str(self),"::Expected=",str(answer),". Received=",str(result),"."]))
 
-    def testfuncGetTopRankedSamplesForGoodCase2(self):
+    def ntestfuncGetTopRankedSamplesForGoodCase2(self):
         
         #Inputs
         scores = [[10,9,8,7,6,5,4,3,2,1]]
@@ -79,7 +79,7 @@ class MicroPITATest(unittest.TestCase):
         #Check result against answer
         self.assertEqual(str(result),str(answer),"".join([str(self),"::Expected=",str(answer),". Received=",str(result),"."]))
 
-    def testfuncGetTopRankedSamplesForGoodCase3(self):
+    def ntestfuncGetTopRankedSamplesForGoodCase3(self):
         
         #Inputs
         scores = [[10,3,40,56,35,678,3,0,-2366]]
@@ -94,7 +94,7 @@ class MicroPITATest(unittest.TestCase):
         #Check result against answer
         self.assertEqual(str(result),str(answer),"".join([str(self),"::Expected=",str(answer),". Received=",str(result),"."]))
 
-    def testfuncGetTopRankedSamplesForGoodCase4(self):
+    def ntestfuncGetTopRankedSamplesForGoodCase4(self):
         
         #Inputs
         scores = [[.1,.4,.2,.5,.6,.7,.46,.9]]
@@ -109,7 +109,7 @@ class MicroPITATest(unittest.TestCase):
         #Check result against answer
         self.assertEqual(str(result),str(answer),"".join([str(self),"::Expected=",str(answer),". Received=",str(result),"."]))
 
-    def testfuncGetTopRankedSamplesForGoodCase5(self):
+    def ntestfuncGetTopRankedSamplesForGoodCase5(self):
         
         #Inputs
         scores = [[-10,-9,-8,-7,-6,-5,-4,-3,-2,-1]]
@@ -124,7 +124,7 @@ class MicroPITATest(unittest.TestCase):
         #Check result against answer
         self.assertEqual(str(result),str(answer),"".join([str(self),"::Expected=",str(answer),". Received=",str(result),"."]))
 
-    def testfuncGetTopRankedSamplesForGoodCase6(self):
+    def ntestfuncGetTopRankedSamplesForGoodCase6(self):
         
         #Inputs
         scores = [[1,2,3,4,5,6,7,8,9,10],[-10,-9,-8,-7,-6,-5,-4,-3,-2,-1],[.1,.4,.2,.5,.6,.7,.46,.9]]
@@ -139,7 +139,7 @@ class MicroPITATest(unittest.TestCase):
         #Check result against answer
         self.assertEqual(str(result),str(answer),"".join([str(self),"::Expected=",str(answer),". Received=",str(result),"."]))
 
-    def testfuncGetTopRankedSamplesForGoodCase6WithSamples(self):
+    def ntestfuncGetTopRankedSamplesForGoodCase6WithSamples(self):
         
         #Inputs
         scores = [[1,2,3,4,5,6,7,8,9,10],[-10,-9,-8,-7,-6,-5,-4,-3,-2,-1],[.1,.4,.2,.5,.6,.7,.46,.9]]
@@ -155,7 +155,7 @@ class MicroPITATest(unittest.TestCase):
         #Check result against answer
         self.assertEqual(str(result),str(answer),"".join([str(self),"::Expected=",str(answer),". Received=",str(result),"."]))
 
-    def testfuncGetTopRankedSamplesForGoodCaseAbridgedData1InvSimpson(self):
+    def ntestfuncGetTopRankedSamplesForGoodCaseAbridgedData1InvSimpson(self):
 
         #Inputs
         normalize = True
@@ -190,7 +190,7 @@ class MicroPITATest(unittest.TestCase):
         #Check result against answer
         self.assertEqual(str(result),str(answer),"".join([str(self),"::Expected=",str(answer),". Received=",str(result),"."]))
 
-    def testfuncGetTopRankedSamplesForGoodCaseAbridgedData1InvSimpson(self):
+    def ntestfuncGetTopRankedSamplesForGoodCaseAbridgedData1InvSimpson(self):
 
         #Inputs
         normalize = True
@@ -225,7 +225,7 @@ class MicroPITATest(unittest.TestCase):
         #Check result against answer
         self.assertEqual(str(result),str(answer),"".join([str(self),"::Expected=",str(answer),". Received=",str(result),"."]))
 
-    def testfuncGetTopRankedSamplesForGoodCaseAbridgedData1InvSimpson(self):
+    def ntestfuncGetTopRankedSamplesForGoodCaseAbridgedData1InvSimpson(self):
 
         #Inputs
         normalize = True
@@ -260,7 +260,7 @@ class MicroPITATest(unittest.TestCase):
         #Check result against answer
         self.assertEqual(str(result),str(answer),"".join([str(self),"::Expected=",str(answer),". Received=",str(result),"."]))
 
-    def testfuncGetTopRankedSamplesForGoodCaseAbridgedData1InvSimpson(self):
+    def ntestfuncGetTopRankedSamplesForGoodCaseAbridgedData1InvSimpson(self):
 
         #Inputs
         normalize = True
@@ -295,7 +295,7 @@ class MicroPITATest(unittest.TestCase):
         #Check result against answer
         self.assertEqual(str(result),str(answer),"".join([str(self),"::Expected=",str(answer),". Received=",str(result),"."]))
 
-    def testfuncGetTopRankedSamplesForGoodCaseAbridgedData2InvSimpson(self):
+    def ntestfuncGetTopRankedSamplesForGoodCaseAbridgedData2InvSimpson(self):
 
         #Inputs
         normalize = True
@@ -330,7 +330,7 @@ class MicroPITATest(unittest.TestCase):
         #Check result against answer
         self.assertEqual(str(result),str(answer),"".join([str(self),"::Expected=",str(answer),". Received=",str(result),"."]))
 
-    def testfuncGetTopRankedSamplesForGoodCaseAbridgedData3InvSimpson(self):
+    def ntestfuncGetTopRankedSamplesForGoodCaseAbridgedData3InvSimpson(self):
 
         #Inputs
         normalize = True
@@ -365,7 +365,7 @@ class MicroPITATest(unittest.TestCase):
         #Check result against answer
         self.assertEqual(str(result),str(answer),"".join([str(self),"::Expected=",str(answer),". Received=",str(result),"."]))
 
-    def testfuncGetTopRankedSamplesForGoodCaseAbridgedData4InvSimpson(self):
+    def ntestfuncGetTopRankedSamplesForGoodCaseAbridgedData4InvSimpson(self):
 
         #Inputs
         normalize = True
@@ -400,7 +400,7 @@ class MicroPITATest(unittest.TestCase):
         #Check result against answer
         self.assertEqual(str(result),str(answer),"".join([str(self),"::Expected=",str(answer),". Received=",str(result),"."]))
 
-    def testfuncGetTopRankedSamplesForGoodCaseAbridgedData5InvSimpson(self):
+    def ntestfuncGetTopRankedSamplesForGoodCaseAbridgedData5InvSimpson(self):
 
         #Inputs
         normalize = True
@@ -436,7 +436,7 @@ class MicroPITATest(unittest.TestCase):
         self.assertEqual(str(result),str(answer),"".join([str(self),"::Expected=",str(answer),". Received=",str(result),"."]))
 
 #####Test funcGetCentralSamplesByKMedoids
-    def testfuncGetCentralSamplesByKMedoidsForGoodCaseBC(self):
+    def ntestfuncGetCentralSamplesByKMedoidsForGoodCaseBC(self):
 
         #Micropita object
         microPITA = MicroPITA()
@@ -469,7 +469,7 @@ class MicroPITATest(unittest.TestCase):
         self.assertEqual(str(result),str(answer),"".join([str(self),"::Expected=",str(answer),". Received=",str(result),"."]))
 
 ###Test selectExtremeSamplesFromHClust
-    def testFuncSelectExtremeSamplesForGoodCase1Different(self):
+    def ntestFuncSelectExtremeSamplesForGoodCase1Different(self):
 
         #Micropita object
         microPITA = MicroPITA()
@@ -491,7 +491,7 @@ class MicroPITATest(unittest.TestCase):
         #Check result against answer
         self.assertEqual(str(result),str(answer),"".join([str(self),"::Expected=",str(answer),". Received=",str(result),"."]))
 
-    def testFuncSelectExtremeSamplesForGoodCase2Different(self):
+    def ntestFuncSelectExtremeSamplesForGoodCase2Different(self):
 
         #Micropita object
         microPITA = MicroPITA()
@@ -513,7 +513,7 @@ class MicroPITATest(unittest.TestCase):
         #Check result against answer
         self.assertEqual(str(result),str(answer),"".join([str(self),"::Expected=",str(answer),". Received=",str(result),"."]))
 
-    def testFuncSelectExtremeSamplesForGoodCase1Different1Groups(self):
+    def ntestFuncSelectExtremeSamplesForGoodCase1Different1Groups(self):
 
         #Micropita object
         microPITA = MicroPITA()
@@ -539,7 +539,7 @@ class MicroPITATest(unittest.TestCase):
         #Check result against answer
         self.assertEqual(str(result),str(answer),"".join([str(self),"::Expected=",str(answer),". Received=",str(result),"."]))
 
-    def testFuncSelectExtremeSamplesForGoodCase2GradientGroups2Samples(self):
+    def ntestFuncSelectExtremeSamplesForGoodCase2GradientGroups2Samples(self):
 
         #Micropita object
         microPITA = MicroPITA()
@@ -570,7 +570,7 @@ class MicroPITATest(unittest.TestCase):
         #Check result against answer
         self.assertEqual(str(result),str(answer),"".join([str(self),"::Expected=",str(answer),". Received=",str(result),"."]))
 
-    def testFuncSelectExtremeSamplesForGoodCase2GradientGroups4Samples(self):
+    def ntestFuncSelectExtremeSamplesForGoodCase2GradientGroups4Samples(self):
 
         #Micropita object
         microPITA = MicroPITA()
@@ -601,7 +601,7 @@ class MicroPITATest(unittest.TestCase):
         #Check result against answer
         self.assertEqual(str(result),str(answer),"".join([str(self),"::Expected=",str(answer),". Received=",str(result),"."]))
 
-    def testFuncSelectExtremeSamplesForGoodCase2GradientGroups6Samples(self):
+    def ntestFuncSelectExtremeSamplesForGoodCase2GradientGroups6Samples(self):
 
         #Micropita object
         microPITA = MicroPITA()
@@ -632,7 +632,7 @@ class MicroPITATest(unittest.TestCase):
         #Check result against answer
         self.assertEqual(str(result),str(answer),"".join([str(self),"::Expected=",str(answer),". Received=",str(result),"."]))
 
-    def testFuncSelectExtremeSamplesForGoodCase3Different3Groups(self):
+    def ntestFuncSelectExtremeSamplesForGoodCase3Different3Groups(self):
 
         #Micropita object
         microPITA = MicroPITA()
@@ -662,7 +662,7 @@ class MicroPITATest(unittest.TestCase):
 
 
 ###Test funcGetAverageAbundanceSamples
-    def testfuncGetAverageAbundanceSamplesForGoodCase1Feature(self):
+    def ntestfuncGetAverageAbundanceSamplesForGoodCase1Feature(self):
 
         #Micropita object
         microPITA = MicroPITA()
@@ -690,7 +690,7 @@ class MicroPITATest(unittest.TestCase):
         #Check result against answer
         self.assertEqual(str(result),str(answer),"".join([str(self),"::\nExpected=\n",str(answer),". \nReceived=\n",str(result),"."]))
 
-    def testfuncGetAverageAbundanceSamplesForGoodCase1FeatureRanked(self):
+    def ntestfuncGetAverageAbundanceSamplesForGoodCase1FeatureRanked(self):
 
         #Micropita object
         microPITA = MicroPITA()
@@ -717,7 +717,7 @@ class MicroPITATest(unittest.TestCase):
         #Check result against answer
         self.assertEqual(str(result),str(answer),"".join([str(self),"::\nExpected=\n",str(answer),". \nReceived=\n",str(result),"."]))
 
-    def testfuncGetAverageAbundanceSamplesForGoodCase2Feature(self):
+    def ntestfuncGetAverageAbundanceSamplesForGoodCase2Feature(self):
 
         #Micropita object
         microPITA = MicroPITA()
@@ -746,7 +746,7 @@ class MicroPITATest(unittest.TestCase):
         #Check result against answer
         self.assertEqual(str(result),str(answer),"".join([str(self),"::\nExpected=\n",str(answer),". \nReceived=\n",str(result),"."]))
 
-    def testfuncGetAverageAbundanceSamplesForGoodCase2FeatureRanked(self):
+    def ntestfuncGetAverageAbundanceSamplesForGoodCase2FeatureRanked(self):
 
         #Micropita object
         microPITA = MicroPITA()
@@ -775,7 +775,7 @@ class MicroPITATest(unittest.TestCase):
         #Check result against answer
         self.assertEqual(str(result),str(answer),"".join([str(self),"::\nExpected=\n",str(answer),". \nReceived=\n",str(result),"."]))
 
-    def testfuncGetAverageAbundanceSamplesForGoodCaseAllFeature(self):
+    def ntestfuncGetAverageAbundanceSamplesForGoodCaseAllFeature(self):
 
         #Micropita object
         microPITA = MicroPITA()
@@ -805,7 +805,7 @@ class MicroPITATest(unittest.TestCase):
         #Check result against answer
         self.assertEqual(str(result),str(answer),"".join([str(self),"::\nExpected=\n",str(answer),". \nReceived=\n",str(result),"."]))
 
-    def testfuncGetAverageAbundanceSamplesForGoodCaseAllFeatureRankedWithTie(self):
+    def ntestfuncGetAverageAbundanceSamplesForGoodCaseAllFeatureRankedWithTie(self):
 
         #Micropita object
         microPITA = MicroPITA()
@@ -836,7 +836,7 @@ class MicroPITATest(unittest.TestCase):
         #Check result against answer
         self.assertEqual(str(result),str(answer),"".join([str(self),"::\nExpected=\n",str(answer),". \nReceived=\n",str(result),"."]))
 
-    def testfuncGetAverageAbundanceSamplesForGoodCaseAllFeatureRankedWithTies2(self):
+    def ntestfuncGetAverageAbundanceSamplesForGoodCaseAllFeatureRankedWithTies2(self):
 
         #Micropita object
         microPITA = MicroPITA()
@@ -864,7 +864,7 @@ class MicroPITATest(unittest.TestCase):
         self.assertEqual(str(result),str(answer),"".join([str(self),"::\nExpected=\n",str(answer),". \nReceived=\n",str(result),"."]))
 
 ###Test funcSelectTargetedTaxaSamples
-    def testfuncSelectTargetedTaxaSamplesForGoodCase1FeatureSelect1(self):
+    def ntestfuncSelectTargetedTaxaSamplesForGoodCase1FeatureSelect1(self):
 
         #Micropita object
         microPITA = MicroPITA()
@@ -892,7 +892,7 @@ class MicroPITATest(unittest.TestCase):
         #Check result against answer
         self.assertEqual(str(result),str(answer),"".join([str(self),"::\nExpected=\n",str(answer),". \nReceived=\n",str(result),"."]))
 
-    def testfuncSelectTargetedTaxaSamplesForGoodCase1FeatureSelect2(self):
+    def ntestfuncSelectTargetedTaxaSamplesForGoodCase1FeatureSelect2(self):
 
         #Micropita object
         microPITA = MicroPITA()
@@ -920,7 +920,7 @@ class MicroPITATest(unittest.TestCase):
         #Check result against answer
         self.assertEqual(str(result),str(answer),"".join([str(self),"::\nExpected=\n",str(answer),". \nReceived=\n",str(result),"."]))
 
-    def testfuncSelectTargetedTaxaSamplesForGoodCase1FeatureSelect3(self):
+    def ntestfuncSelectTargetedTaxaSamplesForGoodCase1FeatureSelect3(self):
 
         #Micropita object
         microPITA = MicroPITA()
@@ -948,7 +948,7 @@ class MicroPITATest(unittest.TestCase):
         #Check result against answer
         self.assertEqual(str(result),str(answer),"".join([str(self),"::\nExpected=\n",str(answer),". \nReceived=\n",str(result),"."]))
 
-    def testfuncSelectTargetedTaxaSamplesForGoodCase1FeatureSelect4(self):
+    def ntestfuncSelectTargetedTaxaSamplesForGoodCase1FeatureSelect4(self):
 
         #Micropita object
         microPITA = MicroPITA()
@@ -976,7 +976,7 @@ class MicroPITATest(unittest.TestCase):
         #Check result against answer
         self.assertEqual(str(result),str(answer),"".join([str(self),"::\nExpected=\n",str(answer),". \nReceived=\n",str(result),"."]))
 
-    def testfuncSelectTargetedTaxaSamplesForGoodCase1FeatureSelect5(self):
+    def ntestfuncSelectTargetedTaxaSamplesForGoodCase1FeatureSelect5(self):
 
         #Micropita object
         microPITA = MicroPITA()
@@ -1004,7 +1004,7 @@ class MicroPITATest(unittest.TestCase):
         #Check result against answer
         self.assertEqual(str(result),str(answer),"".join([str(self),"::\nExpected=\n",str(answer),". \nReceived=\n",str(result),"."]))
 
-    def testfuncSelectTargetedTaxaSamplesForGoodCase1FeatureSelect1Ranked(self):
+    def ntestfuncSelectTargetedTaxaSamplesForGoodCase1FeatureSelect1Ranked(self):
 
         #Micropita object
         microPITA = MicroPITA()
@@ -1032,7 +1032,7 @@ class MicroPITATest(unittest.TestCase):
         #Check result against answer
         self.assertEqual(str(result),str(answer),"".join([str(self),"::\nExpected=\n",str(answer),". \nReceived=\n",str(result),"."]))
 
-    def testfuncSelectTargetedTaxaSamplesForGoodCase1FeatureSelect2Ranked(self):
+    def ntestfuncSelectTargetedTaxaSamplesForGoodCase1FeatureSelect2Ranked(self):
 
         #Micropita object
         microPITA = MicroPITA()
@@ -1060,7 +1060,7 @@ class MicroPITATest(unittest.TestCase):
         #Check result against answer
         self.assertEqual(str(result),str(answer),"".join([str(self),"::\nExpected=\n",str(answer),". \nReceived=\n",str(result),"."]))
 
-    def testfuncSelectTargetedTaxaSamplesForGoodCase1FeatureSelect3Ranked(self):
+    def ntestfuncSelectTargetedTaxaSamplesForGoodCase1FeatureSelect3Ranked(self):
 
         #Micropita object
         microPITA = MicroPITA()
@@ -1088,7 +1088,7 @@ class MicroPITATest(unittest.TestCase):
         #Check result against answer
         self.assertEqual(str(result),str(answer),"".join([str(self),"::\nExpected=\n",str(answer),". \nReceived=\n",str(result),"."]))
 
-    def testfuncSelectTargetedTaxaSamplesForGoodCase1FeatureSelect4Ranked(self):
+    def ntestfuncSelectTargetedTaxaSamplesForGoodCase1FeatureSelect4Ranked(self):
 
         #Micropita object
         microPITA = MicroPITA()
@@ -1116,7 +1116,7 @@ class MicroPITATest(unittest.TestCase):
         #Check result against answer
         self.assertEqual(str(result),str(answer),"".join([str(self),"::\nExpected=\n",str(answer),". \nReceived=\n",str(result),"."]))
 
-    def testfuncSelectTargetedTaxaSamplesForGoodCase1FeatureSelect5Ranked(self):
+    def ntestfuncSelectTargetedTaxaSamplesForGoodCase1FeatureSelect5Ranked(self):
 
         #Micropita object
         microPITA = MicroPITA()
@@ -1145,7 +1145,7 @@ class MicroPITATest(unittest.TestCase):
         self.assertEqual(str(result),str(answer),"".join([str(self),"::\nExpected=\n",str(answer),". \nReceived=\n",str(result),"."]))
 
 ##### Test funcGetRandomSamples
-    def testfuncGetRandomSamplesForGoodCase1of10Samples(self):
+    def ntestfuncGetRandomSamplesForGoodCase1of10Samples(self):
         
         #Inputs
         samples = ["one","two","three","four","five","six","seven","eight","nine","ten"]
@@ -1178,7 +1178,7 @@ class MicroPITATest(unittest.TestCase):
         #Check result against answer
         self.assertEqual(str(foundError),str(answer),"".join([str(self),"::",str(errorString),"."]))
 
-    def testfuncGetRandomSamplesForGoodCase3of10Samples(self):
+    def ntestfuncGetRandomSamplesForGoodCase3of10Samples(self):
         
         #Inputs
         samples = ["one","two","three","four","five","six","seven","eight","nine","ten"]
@@ -1211,7 +1211,7 @@ class MicroPITATest(unittest.TestCase):
         #Check result against answer
         self.assertEqual(str(foundError),str(answer),"".join([str(self),"::",str(errorString),"."]))
 
-    def testfuncGetRandomSamplesForGoodCase10of10Samples(self):
+    def ntestfuncGetRandomSamplesForGoodCase10of10Samples(self):
         
         #Inputs
         samples = ["one","two","three","four","five","six","seven","eight","nine","ten"]
@@ -1249,7 +1249,7 @@ class MicroPITATest(unittest.TestCase):
 ### TestfuncRunNormalizeSensitiveMethods, should be tested in funcRun tests
 
 ### Test funcWriteSelectionToFile
-    def testFuncWriteSelectionToFileForGoodCase(self):
+    def ntestFuncWriteSelectionToFileForGoodCase(self):
 
         #Micropita object
         microPITA = MicroPITA()
@@ -1288,7 +1288,7 @@ class MicroPITATest(unittest.TestCase):
         self.assertEqual(str(result),str(answer),"".join([str(self),"::Expected=",str(answer),". Received=",str(result),"."]))
 
 ### Test funcReadSelectionFileToDictionary
-    def testFuncReadSelectionFileToDictionaryForGoodCase(self):
+    def ntestFuncReadSelectionFileToDictionaryForGoodCase(self):
 
         #Micropita object
         microPITA = MicroPITA()
@@ -1311,7 +1311,7 @@ class MicroPITATest(unittest.TestCase):
         #Check result against answer
         self.assertEqual(str(result),str(answer),"".join([str(self),"::Expected=",str(answer),". Received=",str(result),"."]))
 
-    def testFuncReadSelectionFileToDictionaryAndFuncWriteSelectionToFileForGoodCase(self):
+    def ntestFuncReadSelectionFileToDictionaryAndFuncWriteSelectionToFileForGoodCase(self):
 
         #Micropita object
         microPITA = MicroPITA()
@@ -1340,7 +1340,7 @@ class MicroPITATest(unittest.TestCase):
         self.assertEqual(str(result),str(answer),"".join([str(self),"::Expected=",str(answer),". Received=",str(result),"."]))
 
 ### Test funcGetAveragePopulation(abndTable, lfCompress)
-    def testFuncGetAveragePopulationForGoodCase(self):
+    def ntestFuncGetAveragePopulationForGoodCase(self):
 
         #Inputs
         strSelectionFile = "".join([ConstantsMicropitaTest.c_strTestingInput,"abridgedabundance.pcl"])
@@ -1362,7 +1362,7 @@ class MicroPITATest(unittest.TestCase):
         #Check result against answer
         self.assertEqual(str(result),str(answer),"".join([str(self),"::Expected=",str(answer),". Received=",str(result),"."]))
 
-    def testFuncGetAveragePopulationForGoodCaseCollapsing4(self):
+    def ntestFuncGetAveragePopulationForGoodCaseCollapsing4(self):
 
         #Inputs
         strSelectionFile = "".join([ConstantsMicropitaTest.c_strTestingInput,"abridgedabundance.pcl"])
@@ -1384,7 +1384,7 @@ class MicroPITATest(unittest.TestCase):
         #Check result against answer
         self.assertEqual(str(result),str(answer),"".join([str(self),"::Expected=",str(answer),". Received=",str(result),"."]))
 
-    def testFuncGetAveragePopulationForGoodCaseCollapsing6(self):
+    def ntestFuncGetAveragePopulationForGoodCaseCollapsing6(self):
 
         #Inputs
         strSelectionFile = "".join([ConstantsMicropitaTest.c_strTestingInput,"abridgedabundance.pcl"])
@@ -1408,7 +1408,7 @@ class MicroPITATest(unittest.TestCase):
 
 
 ### Test funcGetDistanceFromAverage(abndTable,ldAverage,lsSamples,lfSelected,lfNotSelected)
-    def testFuncGetDistanceFromAverageForGoodCaseAverage4distance6(self):
+    def ntestFuncGetDistanceFromAverageForGoodCaseAverage4distance6(self):
 
         #Inputs
         strSelectionFile = "".join([ConstantsMicropitaTest.c_strTestingInput,"abridgedabundance.pcl"])
@@ -1460,7 +1460,7 @@ class MicroPITATest(unittest.TestCase):
         #Check result against answer
         self.assertEqual(str(result),str(answer),"".join([str(self),"::Expected=",str(answer),". Received=",str(result),"."]))
 
-    def testFuncGetDistanceFromAverageForGoodCaseAverage6distance4(self):
+    def ntestFuncGetDistanceFromAverageForGoodCaseAverage6distance4(self):
 
         #Inputs
         strSelectionFile = "".join([ConstantsMicropitaTest.c_strTestingInput,"abridgedabundance.pcl"])
@@ -1505,7 +1505,7 @@ class MicroPITATest(unittest.TestCase):
         self.assertEqual(str(result),str(answer),"".join([str(self),"::Expected=",str(answer),". Received=",str(result),"."]))
 
 #funcMeasureDistanceFromLabelToAverageOtherLabel
-    def testFuncMeasureDistanceFromLabelToAverageOtherLabelForGoodCase(self):
+    def ntestFuncMeasureDistanceFromLabelToAverageOtherLabelForGoodCase(self):
 
         #Inputs
         strSelectionFile = "".join([ConstantsMicropitaTest.c_strTestingInput,"abridgedabundance.pcl"])
@@ -1575,7 +1575,7 @@ class MicroPITATest(unittest.TestCase):
 
 #funcPerformDistanceSelection
     #See testFuncMeasureDistanceFromLabelToAverageOtherLabelForGoodCase for calculations in R
-    def testFuncPerformDistanceSelectionForGoodCase2labels(self):
+    def ntestFuncPerformDistanceSelectionForGoodCase2labels(self):
 
         #Inputs
         strSelectionFile = "".join([ConstantsMicropitaTest.c_strTestingInput,"abridgedabundance.pcl"])
@@ -1628,7 +1628,7 @@ class MicroPITATest(unittest.TestCase):
 
         self.assertEqual(False, fError, "".join([str(self),"::",strError,"."]))
 
-    def testFuncPerformDistanceSelectionForGoodCase3labels(self):
+    def ntestFuncPerformDistanceSelectionForGoodCase3labels(self):
 
         #Inputs
         strSelectionFile = "".join([ConstantsMicropitaTest.c_strTestingInput,"abridgedabundance.pcl"])
@@ -1731,7 +1731,7 @@ class MicroPITATest(unittest.TestCase):
 #funcRunSupervisedDistancesFromCentroids
 #Test for return
     #See testFuncMeasureDistanceFromLabelToAverageOtherLabelForGoodCase for calculations in R
-    def testFuncRunSupervisedDistancesFromCentroidsForGoodCaseCheckingReturn(self):
+    def ntestFuncRunSupervisedDistancesFromCentroidsForGoodCaseCheckingReturn(self):
 
         #Inputs
         strSelectionFile = "".join([ConstantsMicropitaTest.c_strTestingInput,"abridgedabundance.pcl"])
@@ -1772,7 +1772,7 @@ class MicroPITATest(unittest.TestCase):
         self.assertEqual(False, fError, "".join([str(self),"::",strError,"."]))
 
 #Test for created input file
-    def testFuncRunSupervisedDistancesFromCentroidsForInputFile(self):
+    def ntestFuncRunSupervisedDistancesFromCentroidsForInputFile(self):
 
         #Inputs
         strSelectionFile = "".join([ConstantsMicropitaTest.c_strTestingInput,"abridgedabundance.pcl"])
@@ -1805,7 +1805,7 @@ class MicroPITATest(unittest.TestCase):
         self.assertEqual(str(strResult),str(strAnswer),"".join([str(self),"::Expected=",str(strAnswer),". Received=",str(strResult),"."]))
 
 #Test for created predict file
-    def testFuncRunSupervisedDistancesFromCentroidsForPredictFile(self):
+    def ntestFuncRunSupervisedDistancesFromCentroidsForPredictFile(self):
 
         #Inputs
         strSelectionFile = "".join([ConstantsMicropitaTest.c_strTestingInput,"abridgedabundance.pcl"])
@@ -1942,7 +1942,7 @@ class MicroPITATest(unittest.TestCase):
         #Check result against answer
         self.assertEqual(str(result),str(answer),"".join([str(self),"::Expected=",str(answer),". Received=",str(result),"."]))
 
-    def testCallFromCommandlineForGoodCasePCL(self):
+    def ntestCallFromCommandlineForGoodCasePCL(self):
         """
         Test commandline call for good case.
         """
@@ -1983,7 +1983,7 @@ class MicroPITATest(unittest.TestCase):
         self._testCommandLineHelper(sMethodName=sMethodName,strAnswerFile=strAnswerFile,lsSelection=lsSelection,strFileAbund=strBiomeFile,
 		sTaxaFile=sTaxaFile,sAbundance=sAbundance,sSupervisedLabel=sSupervisedLabel,sStratify=sStratify)
 
-    def testCallFromCommandlineForGoodCaseMACFormat(self):
+    def ntestCallFromCommandlineForGoodCaseMACFormat(self):
         """
         Test commandline call for good case on a MAC formatted file.
         """
@@ -2004,7 +2004,7 @@ class MicroPITATest(unittest.TestCase):
         self._testCommandLineHelper(sMethodName=sMethodName,strAnswerFile=strAnswerFile,lsSelection=lsSelection,strFileAbund=strFileAbund,sTaxaFile=sTaxaFile,
                                     sAbundance=sAbundance,sSupervisedLabel=sSupervisedLabel,sStratify=sStratify)
 
-    def testCallFromCommandlineForGoodCaseDiversity(self):
+    def ntestCallFromCommandlineForGoodCaseDiversity(self):
         """
         Test commandline call for good case only diversity.
         """
@@ -2022,7 +2022,7 @@ class MicroPITATest(unittest.TestCase):
         self._testCommandLineHelper(sMethodName=sMethodName,strAnswerFile=strAnswerFile,lsSelection=lsSelection,sTaxaFile=sTaxaFile,
                                     sAbundance=sAbundance,sSupervisedLabel=sSupervisedLabel,sStratify=sStratify)
 
-    def testCallFromCommandlineForGoodCaseRepresentative(self):
+    def ntestCallFromCommandlineForGoodCaseRepresentative(self):
         """
         Test commandline call for good case only representative.
         """
@@ -2040,7 +2040,7 @@ class MicroPITATest(unittest.TestCase):
         self._testCommandLineHelper(sMethodName=sMethodName,strAnswerFile=strAnswerFile,lsSelection=lsSelection,sTaxaFile=sTaxaFile,
                                     sAbundance=sAbundance,sSupervisedLabel=sSupervisedLabel,sStratify=sStratify)
 
-    def testCallFromCommandlineForGoodCaseExtreme(self):
+    def ntestCallFromCommandlineForGoodCaseExtreme(self):
         """
         Test commandline call for good case only Extreme.
         """
@@ -2058,7 +2058,7 @@ class MicroPITATest(unittest.TestCase):
         self._testCommandLineHelper(sMethodName=sMethodName,strAnswerFile=strAnswerFile,lsSelection=lsSelection,sTaxaFile=sTaxaFile,
                                     sAbundance=sAbundance,sSupervisedLabel=sSupervisedLabel,sStratify=sStratify)
 
-    def testCallFromCommandlineForGoodCaseTargeted(self):
+    def ntestCallFromCommandlineForGoodCaseTargeted(self):
         """
         Test commandline call for good case only targeted.
         """
@@ -2078,7 +2078,7 @@ class MicroPITATest(unittest.TestCase):
         self._testCommandLineHelper(sMethodName=sMethodName,strAnswerFile=strAnswerFile,lsSelection=lsSelection,sTaxaFile=sTaxaFile,
                                     sAbundance=sAbundance,sSupervisedLabel=sSupervisedLabel,sStratify=sStratify)
 
-    def testCallFromCommandlineForGoodCaseTargetedAbundance(self):
+    def ntestCallFromCommandlineForGoodCaseTargetedAbundance(self):
         """
         Test commandline call for good case only targeted using the abundance-based method.
         """
@@ -2097,7 +2097,7 @@ class MicroPITATest(unittest.TestCase):
         self._testCommandLineHelper(sMethodName=sMethodName,strAnswerFile=strAnswerFile,lsSelection=lsSelection,sTaxaFile=sTaxaFile,
                                     sAbundance=sAbundance,sSupervisedLabel=sSupervisedLabel,sStratify=sStratify)
 
-    def testCallFromCommandlineForGoodCaseWithoutTargetedFile(self):
+    def ntestCallFromCommandlineForGoodCaseWithoutTargetedFile(self):
         """
         Test commandline call for good case without targeted file.
         """
@@ -2118,7 +2118,7 @@ class MicroPITATest(unittest.TestCase):
                                     sAbundance=sAbundance,sSupervisedLabel=sSupervisedLabel,sStratify=sStratify)
 
 
-    def testCallFromCommandlineForGoodCaseUnsupervised(self):
+    def ntestCallFromCommandlineForGoodCaseUnsupervised(self):
         """
         Test commandline call for good case for unsupervised only.
         """
@@ -2138,7 +2138,7 @@ class MicroPITATest(unittest.TestCase):
         self._testCommandLineHelper(sMethodName=sMethodName,strAnswerFile=strAnswerFile,lsSelection=lsSelection,sTaxaFile=sTaxaFile,
                                     sAbundance=sAbundance,sSupervisedLabel=sSupervisedLabel,sStratify=sStratify)
 
-    def testCallFromCommandlineForGoodCaseSupervised(self):
+    def ntestCallFromCommandlineForGoodCaseSupervised(self):
         """
         Test commandline call for good case supervised methods only.
         """
@@ -2156,7 +2156,7 @@ class MicroPITATest(unittest.TestCase):
         self._testCommandLineHelper(sMethodName=sMethodName,strAnswerFile=strAnswerFile,lsSelection=lsSelection,sTaxaFile=sTaxaFile,
                                     sAbundance=sAbundance,sSupervisedLabel=sSupervisedLabel,sStratify=sStratify)
 
-    def testCallFromCommandlineForGoodCaseDiscriminant(self):
+    def ntestCallFromCommandlineForGoodCaseDiscriminant(self):
         """
         Test commandline call for good case discriminant only.
         """
@@ -2174,7 +2174,7 @@ class MicroPITATest(unittest.TestCase):
         self._testCommandLineHelper(sMethodName=sMethodName,strAnswerFile=strAnswerFile,lsSelection=lsSelection,sTaxaFile=sTaxaFile,
                                     sAbundance=sAbundance,sSupervisedLabel=sSupervisedLabel,sStratify=sStratify)
 
-    def testCallFromCommandlineForGoodCaseDistinct(self):
+    def ntestCallFromCommandlineForGoodCaseDistinct(self):
         """
         Test commandline call for good case distinct only.
         """
@@ -2193,7 +2193,7 @@ class MicroPITATest(unittest.TestCase):
                                     sAbundance=sAbundance,sSupervisedLabel=sSupervisedLabel,sStratify=sStratify)
 
 #######Test Commandline stratified
-    def testCallFromCommandlineForStratifiedGoodCase(self):
+    def ntestCallFromCommandlineForStratifiedGoodCase(self):
         """
         Test commandline call for Stratified good case.
         """
@@ -2214,7 +2214,7 @@ class MicroPITATest(unittest.TestCase):
         self._testCommandLineHelper(sMethodName=sMethodName,strAnswerFile=strAnswerFile,lsSelection=lsSelection,sTaxaFile=sTaxaFile,
                                     sAbundance=sAbundance,sSupervisedLabel=sSupervisedLabel,sStratify=sStratify)
 
-    def testCallFromCommandlineForStratifiedGoodCaseDiversity(self):
+    def ntestCallFromCommandlineForStratifiedGoodCaseDiversity(self):
         """
         Test commandline call for Stratified good case only diversity.
         """
@@ -2233,7 +2233,7 @@ class MicroPITATest(unittest.TestCase):
                                     sAbundance=sAbundance,sSupervisedLabel=sSupervisedLabel,sStratify=sStratify)
 
 
-    def testCallFromCommandlineForStratifiedGoodCaseRepresentative(self):
+    def ntestCallFromCommandlineForStratifiedGoodCaseRepresentative(self):
         """
         Test commandline call for Stratified good case only representative.
         """
@@ -2252,7 +2252,7 @@ class MicroPITATest(unittest.TestCase):
                                     sAbundance=sAbundance,sSupervisedLabel=sSupervisedLabel,sStratify=sStratify)
 
 
-    def testCallFromCommandlineForStratifiedGoodCaseExtreme(self):
+    def ntestCallFromCommandlineForStratifiedGoodCaseExtreme(self):
         """
         Test commandline call for Stratified good case only Extreme.
         """
@@ -2271,7 +2271,7 @@ class MicroPITATest(unittest.TestCase):
         self._testCommandLineHelper(sMethodName=sMethodName,strAnswerFile=strAnswerFile,lsSelection=lsSelection,sTaxaFile=sTaxaFile,
                                     sAbundance=sAbundance,sSupervisedLabel=sSupervisedLabel,sStratify=sStratify)
 
-    def testCallFromCommandlineForStratifiedGoodCaseTargeted(self):
+    def ntestCallFromCommandlineForStratifiedGoodCaseTargeted(self):
         """
         Test commandline call for Stratified good case only targeted.
         """
@@ -2290,7 +2290,7 @@ class MicroPITATest(unittest.TestCase):
         self._testCommandLineHelper(sMethodName=sMethodName,strAnswerFile=strAnswerFile,lsSelection=lsSelection,sTaxaFile=sTaxaFile,
                                     sAbundance=sAbundance,sSupervisedLabel=sSupervisedLabel,sStratify=sStratify)
 
-    def testCallFromCommandlineForStratifiedGoodCaseUnsupervised(self):
+    def ntestCallFromCommandlineForStratifiedGoodCaseUnsupervised(self):
         """
         Test commandline call for Stratified good case for unsupervised only.
         """
@@ -2310,7 +2310,7 @@ class MicroPITATest(unittest.TestCase):
         self._testCommandLineHelper(sMethodName=sMethodName,strAnswerFile=strAnswerFile,lsSelection=lsSelection,sTaxaFile=sTaxaFile,
                                     sAbundance=sAbundance,sSupervisedLabel=sSupervisedLabel,sStratify=sStratify)
 
-    def testCallFromCommandlineForStratifiedGoodCaseSupervised(self):
+    def ntestCallFromCommandlineForStratifiedGoodCaseSupervised(self):
         """
         Test commandline call for Stratified good case supervised methods only.
         """
@@ -2328,7 +2328,7 @@ class MicroPITATest(unittest.TestCase):
         self._testCommandLineHelper(sMethodName=sMethodName,strAnswerFile=strAnswerFile,lsSelection=lsSelection,sTaxaFile=sTaxaFile,
                                     sAbundance=sAbundance,sSupervisedLabel=sSupervisedLabel,sStratify=sStratify)
 
-    def testCallFromCommandlineForStratifiedGoodCaseDiscriminant(self):
+    def ntestCallFromCommandlineForStratifiedGoodCaseDiscriminant(self):
         """
         Test commandline call for Stratified good case discriminant only.
         """
@@ -2347,7 +2347,7 @@ class MicroPITATest(unittest.TestCase):
         self._testCommandLineHelper(sMethodName=sMethodName,strAnswerFile=strAnswerFile,lsSelection=lsSelection,sTaxaFile=sTaxaFile,
                                     sAbundance=sAbundance,sSupervisedLabel=sSupervisedLabel,sStratify=sStratify)
 
-    def testCallFromCommandlineForStratifiedGoodCaseDistinct(self):
+    def ntestCallFromCommandlineForStratifiedGoodCaseDistinct(self):
         """
         Test commandline call for Stratified good case distinct only.
         """
@@ -2367,7 +2367,7 @@ class MicroPITATest(unittest.TestCase):
                                     sAbundance=sAbundance,sSupervisedLabel=sSupervisedLabel,sStratify=sStratify)
 
 ############ Test new optional custom features
-    def testCallFromCommandlineForCustomBetaBCGoodCase(self):
+    def ntestCallFromCommandlineForCustomBetaBCGoodCase(self):
         """
         Test commandline call for all selection using a custom beta metric (bray-curtis because I can check that with what I have)
         """
@@ -2388,7 +2388,7 @@ class MicroPITATest(unittest.TestCase):
         self._testCommandLineHelper(sMethodName=sMethodName,strAnswerFile=strAnswerFile,lsSelection=lsSelection,sTaxaFile=sTaxaFile,
                                     sAbundance=sAbundance,sSupervisedLabel=sSupervisedLabel,sStratify=sStratify,lsOther=lsOther)
 
-    def testCallFromCommandlineForCustomBetaUGoodCase(self):
+    def ntestCallFromCommandlineForCustomBetaUGoodCase(self):
         """
         Test commandline call for all selection using a custom beta metric (Unifrac given it has special files associated with it)
         """
@@ -2413,7 +2413,7 @@ class MicroPITATest(unittest.TestCase):
         self._testCommandLineHelper(sMethodName=sMethodName,strAnswerFile=strAnswerFile,lsSelection=lsSelection,sTaxaFile=sTaxaFile,
                                     sAbundance=sAbundance,sSupervisedLabel=sSupervisedLabel,sStratify=sStratify,lsOther=lsOther)
 
-    def testCallFromCommandlineForCustomBetaEGoodCase(self):
+    def ntestCallFromCommandlineForCustomBetaEGoodCase(self):
         """
         Test commandline call for all selection using a custom beta metric (Euclidean because I have never tried this before)
         """
@@ -2434,7 +2434,7 @@ class MicroPITATest(unittest.TestCase):
         self._testCommandLineHelper(sMethodName=sMethodName,strAnswerFile=strAnswerFile,lsSelection=lsSelection,sTaxaFile=sTaxaFile,
                                     sAbundance=sAbundance,sSupervisedLabel=sSupervisedLabel,sStratify=sStratify,lsOther=lsOther)
 
-    def testCallFromCommandlineForCustomBetaMatrixGoodCase(self):
+    def ntestCallFromCommandlineForCustomBetaMatrixGoodCase(self):
         """
         Test commandline call for all selection using a custom beta metadata
         """
@@ -2456,7 +2456,7 @@ class MicroPITATest(unittest.TestCase):
         self._testCommandLineHelper(sMethodName=sMethodName,strAnswerFile=strAnswerFile,lsSelection=lsSelection,sTaxaFile=sTaxaFile,
                                     sAbundance=sAbundance,sSupervisedLabel=sSupervisedLabel,sStratify=sStratify,lsOther=lsOther)
 
-    def testCallFromCommandlineForCustomAlphaSimpGoodCase(self):
+    def ntestCallFromCommandlineForCustomAlphaSimpGoodCase(self):
         """
         Test commandline call for all selection using a custom alpha metric (reciprocal_simpson because that is what we are using)
         """
@@ -2477,7 +2477,7 @@ class MicroPITATest(unittest.TestCase):
         self._testCommandLineHelper(sMethodName=sMethodName,strAnswerFile=strAnswerFile,lsSelection=lsSelection,sTaxaFile=sTaxaFile,
                                     sAbundance=sAbundance,sSupervisedLabel=sSupervisedLabel,sStratify=sStratify,lsOther=lsOther)
 
-    def testCallFromCommandlineForCustomAlphaGoodCase(self):
+    def ntestCallFromCommandlineForCustomAlphaGoodCase(self):
         """
         Test commandline call for all selection using a custom alpha metric (observed_species because this is a new one)
         """
@@ -2498,7 +2498,7 @@ class MicroPITATest(unittest.TestCase):
         self._testCommandLineHelper(sMethodName=sMethodName,strAnswerFile=strAnswerFile,lsSelection=lsSelection,sTaxaFile=sTaxaFile,
                                     sAbundance=sAbundance,sSupervisedLabel=sSupervisedLabel,sStratify=sStratify,lsOther=lsOther)
 
-    def testCallFromCommandlineForCustomAlphaMetadataGoodCase(self):
+    def ntestCallFromCommandlineForCustomAlphaMetadataGoodCase(self):
         """
         Test commandline call for all selection using a custom alpha metadata
         """
@@ -2521,7 +2521,7 @@ class MicroPITATest(unittest.TestCase):
                                     sAbundance=sAbundance,sSupervisedLabel=sSupervisedLabel,sStratify=sStratify,lsOther=lsOther)
 
 ##########Test to make sure these new metrics run without error but no checking for accuracy
-    def testCallFromCommandlineForobserved_speciesGoodCase(self):
+    def ntestCallFromCommandlineForobserved_speciesGoodCase(self):
         """
         Test commandline call for all selection using a custom alpha metric (observed_species)
         """
@@ -2542,7 +2542,7 @@ class MicroPITATest(unittest.TestCase):
         self._testAnyReturnCommandLineHelper(sMethodName=sMethodName,strAnswerFile=strAnswerFile,lsSelection=lsSelection,sTaxaFile=sTaxaFile,
                                     sAbundance=sAbundance,sSupervisedLabel=sSupervisedLabel,sStratify=sStratify,lsOther=lsOther)
 
-    def testCallFromCommandlineFordominanceGoodCase(self):
+    def ntestCallFromCommandlineFordominanceGoodCase(self):
         """
         Test commandline call for all selection using a custom alpha metric (dominance). This is an inverted measurement and requires the -f.
         """
@@ -2563,7 +2563,7 @@ class MicroPITATest(unittest.TestCase):
         self._testCommandLineHelper(sMethodName=sMethodName,strAnswerFile=strAnswerFile,lsSelection=lsSelection,sTaxaFile=sTaxaFile,
                                     sAbundance=sAbundance,sSupervisedLabel=sSupervisedLabel,sStratify=sStratify,lsOther=lsOther)
 
-    def testCallFromCommandlineFormargalefGoodCase(self):
+    def ntestCallFromCommandlineFormargalefGoodCase(self):
         """
         Test commandline call for all selection using a custom alpha metric (margalef)
         """
@@ -2584,7 +2584,7 @@ class MicroPITATest(unittest.TestCase):
         self._testAnyReturnCommandLineHelper(sMethodName=sMethodName,strAnswerFile=strAnswerFile,lsSelection=lsSelection,sTaxaFile=sTaxaFile,
                                     sAbundance=sAbundance,sSupervisedLabel=sSupervisedLabel,sStratify=sStratify,lsOther=lsOther)
 
-    def testCallFromCommandlineFormenhinickGoodCase(self):
+    def ntestCallFromCommandlineFormenhinickGoodCase(self):
         """
         Test commandline call for all selection using a custom alpha metric (menhinick)
         """
@@ -2605,7 +2605,7 @@ class MicroPITATest(unittest.TestCase):
         self._testAnyReturnCommandLineHelper(sMethodName=sMethodName,strAnswerFile=strAnswerFile,lsSelection=lsSelection,sTaxaFile=sTaxaFile,
                                     sAbundance=sAbundance,sSupervisedLabel=sSupervisedLabel,sStratify=sStratify,lsOther=lsOther)
 
-    def testCallFromCommandlineFordominanceGoodCase(self):
+    def ntestCallFromCommandlineFordominanceGoodCase(self):
         """
         Test commandline call for all selection using a custom alpha metric (dominance)
         """
@@ -2626,7 +2626,7 @@ class MicroPITATest(unittest.TestCase):
         self._testAnyReturnCommandLineHelper(sMethodName=sMethodName,strAnswerFile=strAnswerFile,lsSelection=lsSelection,sTaxaFile=sTaxaFile,
                                     sAbundance=sAbundance,sSupervisedLabel=sSupervisedLabel,sStratify=sStratify,lsOther=lsOther)
 
-    def testCallFromCommandlineForreciprocal_simpsonGoodCase(self):
+    def ntestCallFromCommandlineForreciprocal_simpsonGoodCase(self):
         """
         Test commandline call for all selection using a custom alpha metric (reciprocal_simpson)
         """
@@ -2647,7 +2647,7 @@ class MicroPITATest(unittest.TestCase):
         self._testAnyReturnCommandLineHelper(sMethodName=sMethodName,strAnswerFile=strAnswerFile,lsSelection=lsSelection,sTaxaFile=sTaxaFile,
                                     sAbundance=sAbundance,sSupervisedLabel=sSupervisedLabel,sStratify=sStratify,lsOther=lsOther)
 
-    def testCallFromCommandlineForshannonGoodCase(self):
+    def ntestCallFromCommandlineForshannonGoodCase(self):
         """
         Test commandline call for all selection using a custom alpha metric (shannon)
         """
@@ -2668,7 +2668,7 @@ class MicroPITATest(unittest.TestCase):
         self._testAnyReturnCommandLineHelper(sMethodName=sMethodName,strAnswerFile=strAnswerFile,lsSelection=lsSelection,sTaxaFile=sTaxaFile,
                                     sAbundance=sAbundance,sSupervisedLabel=sSupervisedLabel,sStratify=sStratify,lsOther=lsOther)
 
-    def testCallFromCommandlineForequitabilityGoodCase(self):
+    def ntestCallFromCommandlineForequitabilityGoodCase(self):
         """
         Test commandline call for all selection using a custom alpha metric (equitability)
         """
@@ -2689,7 +2689,7 @@ class MicroPITATest(unittest.TestCase):
         self._testAnyReturnCommandLineHelper(sMethodName=sMethodName,strAnswerFile=strAnswerFile,lsSelection=lsSelection,sTaxaFile=sTaxaFile,
                                     sAbundance=sAbundance,sSupervisedLabel=sSupervisedLabel,sStratify=sStratify,lsOther=lsOther)
 
-    def testCallFromCommandlineForberger_parker_dGoodCase(self):
+    def ntestCallFromCommandlineForberger_parker_dGoodCase(self):
         """
         Test commandline call for all selection using a custom alpha metric (berger_parker_d)
         """
@@ -2710,7 +2710,7 @@ class MicroPITATest(unittest.TestCase):
         self._testAnyReturnCommandLineHelper(sMethodName=sMethodName,strAnswerFile=strAnswerFile,lsSelection=lsSelection,sTaxaFile=sTaxaFile,
                                     sAbundance=sAbundance,sSupervisedLabel=sSupervisedLabel,sStratify=sStratify,lsOther=lsOther)
 
-    def testCallFromCommandlineFormcintosh_dGoodCase(self):
+    def ntestCallFromCommandlineFormcintosh_dGoodCase(self):
         """
         Test commandline call for all selection using a custom alpha metric (mcintosh_d)
         """
@@ -2731,7 +2731,7 @@ class MicroPITATest(unittest.TestCase):
         self._testAnyReturnCommandLineHelper(sMethodName=sMethodName,strAnswerFile=strAnswerFile,lsSelection=lsSelection,sTaxaFile=sTaxaFile,
                                     sAbundance=sAbundance,sSupervisedLabel=sSupervisedLabel,sStratify=sStratify,lsOther=lsOther)
 
-    def testCallFromCommandlineForbrillouin_dGoodCase(self):
+    def ntestCallFromCommandlineForbrillouin_dGoodCase(self):
         """
         Test commandline call for all selection using a custom alpha metric (brillouin_d)
         """
@@ -2752,7 +2752,7 @@ class MicroPITATest(unittest.TestCase):
         self._testAnyReturnCommandLineHelper(sMethodName=sMethodName,strAnswerFile=strAnswerFile,lsSelection=lsSelection,sTaxaFile=sTaxaFile,
                                     sAbundance=sAbundance,sSupervisedLabel=sSupervisedLabel,sStratify=sStratify,lsOther=lsOther)
 
-    def testCallFromCommandlineForstrongGoodCase(self):
+    def ntestCallFromCommandlineForstrongGoodCase(self):
         """
         Test commandline call for all selection using a custom alpha metric (strong)
         """
@@ -2773,7 +2773,7 @@ class MicroPITATest(unittest.TestCase):
         self._testAnyReturnCommandLineHelper(sMethodName=sMethodName,strAnswerFile=strAnswerFile,lsSelection=lsSelection,sTaxaFile=sTaxaFile,
                                     sAbundance=sAbundance,sSupervisedLabel=sSupervisedLabel,sStratify=sStratify,lsOther=lsOther)
 
-    def testCallFromCommandlineForfisher_alphaGoodCase(self):
+    def ntestCallFromCommandlineForfisher_alphaGoodCase(self):
         """
         Test commandline call for all selection using a custom alpha metric (fisher_alpha)
         """
@@ -2794,7 +2794,7 @@ class MicroPITATest(unittest.TestCase):
         self._testAnyReturnCommandLineHelper(sMethodName=sMethodName,strAnswerFile=strAnswerFile,lsSelection=lsSelection,sTaxaFile=sTaxaFile,
                                     sAbundance=sAbundance,sSupervisedLabel=sSupervisedLabel,sStratify=sStratify,lsOther=lsOther)
 
-    def testCallFromCommandlineFormcintosh_eGoodCase(self):
+    def ntestCallFromCommandlineFormcintosh_eGoodCase(self):
         """
         Test commandline call for all selection using a custom alpha metric (mcintosh_e)
         """
@@ -2815,7 +2815,7 @@ class MicroPITATest(unittest.TestCase):
         self._testAnyReturnCommandLineHelper(sMethodName=sMethodName,strAnswerFile=strAnswerFile,lsSelection=lsSelection,sTaxaFile=sTaxaFile,
                                     sAbundance=sAbundance,sSupervisedLabel=sSupervisedLabel,sStratify=sStratify,lsOther=lsOther)
 
-    def testCallFromCommandlineForheip_eGoodCase(self):
+    def ntestCallFromCommandlineForheip_eGoodCase(self):
         """
         Test commandline call for all selection using a custom alpha metric (heip_e)
         """
@@ -2836,7 +2836,7 @@ class MicroPITATest(unittest.TestCase):
         self._testAnyReturnCommandLineHelper(sMethodName=sMethodName,strAnswerFile=strAnswerFile,lsSelection=lsSelection,sTaxaFile=sTaxaFile,
                                     sAbundance=sAbundance,sSupervisedLabel=sSupervisedLabel,sStratify=sStratify,lsOther=lsOther)
 
-    def testCallFromCommandlineForsimpson_eGoodCase(self):
+    def ntestCallFromCommandlineForsimpson_eGoodCase(self):
         """
         Test commandline call for all selection using a custom alpha metric (simpson_e)
         """
@@ -2857,7 +2857,7 @@ class MicroPITATest(unittest.TestCase):
         self._testAnyReturnCommandLineHelper(sMethodName=sMethodName,strAnswerFile=strAnswerFile,lsSelection=lsSelection,sTaxaFile=sTaxaFile,
                                     sAbundance=sAbundance,sSupervisedLabel=sSupervisedLabel,sStratify=sStratify,lsOther=lsOther)
 
-    def testCallFromCommandlineForrobbinsGoodCase(self):
+    def ntestCallFromCommandlineForrobbinsGoodCase(self):
         """
         Test commandline call for all selection using a custom alpha metric (robbins because this is a new one)
         """
@@ -2878,7 +2878,7 @@ class MicroPITATest(unittest.TestCase):
         self._testAnyReturnCommandLineHelper(sMethodName=sMethodName,strAnswerFile=strAnswerFile,lsSelection=lsSelection,sTaxaFile=sTaxaFile,
                                     sAbundance=sAbundance,sSupervisedLabel=sSupervisedLabel,sStratify=sStratify,lsOther=lsOther)
 
-    def testCallFromCommandlineFormichaelis_menten_fitGoodCase(self):
+    def ntestCallFromCommandlineFormichaelis_menten_fitGoodCase(self):
         """
         Test commandline call for all selection using a custom alpha metric (michaelis_menten_fit)
         """
@@ -2899,7 +2899,7 @@ class MicroPITATest(unittest.TestCase):
         self._testAnyReturnCommandLineHelper(sMethodName=sMethodName,strAnswerFile=strAnswerFile,lsSelection=lsSelection,sTaxaFile=sTaxaFile,
                                     sAbundance=sAbundance,sSupervisedLabel=sSupervisedLabel,sStratify=sStratify,lsOther=lsOther)
 
-    def testCallFromCommandlineForchao1GoodCase(self):
+    def ntestCallFromCommandlineForchao1GoodCase(self):
         """
         Test commandline call for all selection using a custom alpha metric (chao1)
         """
@@ -2920,7 +2920,7 @@ class MicroPITATest(unittest.TestCase):
         self._testAnyReturnCommandLineHelper(sMethodName=sMethodName,strAnswerFile=strAnswerFile,lsSelection=lsSelection,sTaxaFile=sTaxaFile,
                                     sAbundance=sAbundance,sSupervisedLabel=sSupervisedLabel,sStratify=sStratify,lsOther=lsOther)
 
-    def testCallFromCommandlineForACEGoodCase(self):
+    def ntestCallFromCommandlineForACEGoodCase(self):
         """
         Test commandline call for all selection using a custom alpha metric (ACE)
         """
@@ -2941,7 +2941,7 @@ class MicroPITATest(unittest.TestCase):
         self._testAnyReturnCommandLineHelper(sMethodName=sMethodName,strAnswerFile=strAnswerFile,lsSelection=lsSelection,sTaxaFile=sTaxaFile,
                                     sAbundance=sAbundance,sSupervisedLabel=sSupervisedLabel,sStratify=sStratify,lsOther=lsOther)
 
-    def testCallFromCommandlineForbraycurtisGoodCase(self):
+    def ntestCallFromCommandlineForbraycurtisGoodCase(self):
         """
         Test commandline call for all selection using a custom beta metric (braycurtis)
         """
@@ -2962,7 +2962,7 @@ class MicroPITATest(unittest.TestCase):
         self._testAnyReturnCommandLineHelper(sMethodName=sMethodName,strAnswerFile=strAnswerFile,lsSelection=lsSelection,sTaxaFile=sTaxaFile,
                                     sAbundance=sAbundance,sSupervisedLabel=sSupervisedLabel,sStratify=sStratify,lsOther=lsOther)
 
-    def testCallFromCommandlineForcanberraGoodCase(self):
+    def ntestCallFromCommandlineForcanberraGoodCase(self):
         """
         Test commandline call for all selection using a custom beta metric (canberra)
         """
@@ -2983,7 +2983,7 @@ class MicroPITATest(unittest.TestCase):
         self._testAnyReturnCommandLineHelper(sMethodName=sMethodName,strAnswerFile=strAnswerFile,lsSelection=lsSelection,sTaxaFile=sTaxaFile,
                                     sAbundance=sAbundance,sSupervisedLabel=sSupervisedLabel,sStratify=sStratify,lsOther=lsOther)
 
-    def testCallFromCommandlineForchebyshevGoodCase(self):
+    def ntestCallFromCommandlineForchebyshevGoodCase(self):
         """
         Test commandline call for all selection using a custom beta metric (chebyshev)
         """
@@ -3004,7 +3004,7 @@ class MicroPITATest(unittest.TestCase):
         self._testAnyReturnCommandLineHelper(sMethodName=sMethodName,strAnswerFile=strAnswerFile,lsSelection=lsSelection,sTaxaFile=sTaxaFile,
                                     sAbundance=sAbundance,sSupervisedLabel=sSupervisedLabel,sStratify=sStratify,lsOther=lsOther)
 
-    def testCallFromCommandlineForcityblockGoodCase(self):
+    def ntestCallFromCommandlineForcityblockGoodCase(self):
         """
         Test commandline call for all selection using a custom beta metric (cityblock)
         """
@@ -3025,7 +3025,7 @@ class MicroPITATest(unittest.TestCase):
         self._testAnyReturnCommandLineHelper(sMethodName=sMethodName,strAnswerFile=strAnswerFile,lsSelection=lsSelection,sTaxaFile=sTaxaFile,
                                     sAbundance=sAbundance,sSupervisedLabel=sSupervisedLabel,sStratify=sStratify,lsOther=lsOther)
 
-    def testCallFromCommandlineForcorrelationGoodCase(self):
+    def ntestCallFromCommandlineForcorrelationGoodCase(self):
         """
         Test commandline call for all selection using a custom beta metric (correlation)
         """
@@ -3046,7 +3046,7 @@ class MicroPITATest(unittest.TestCase):
         self._testAnyReturnCommandLineHelper(sMethodName=sMethodName,strAnswerFile=strAnswerFile,lsSelection=lsSelection,sTaxaFile=sTaxaFile,
                                     sAbundance=sAbundance,sSupervisedLabel=sSupervisedLabel,sStratify=sStratify,lsOther=lsOther)
 
-    def testCallFromCommandlineForcosineGoodCase(self):
+    def ntestCallFromCommandlineForcosineGoodCase(self):
         """
         Test commandline call for all selection using a custom beta metric (cosine)
         """
@@ -3067,7 +3067,7 @@ class MicroPITATest(unittest.TestCase):
         self._testAnyReturnCommandLineHelper(sMethodName=sMethodName,strAnswerFile=strAnswerFile,lsSelection=lsSelection,sTaxaFile=sTaxaFile,
                                     sAbundance=sAbundance,sSupervisedLabel=sSupervisedLabel,sStratify=sStratify,lsOther=lsOther)
 
-    def testCallFromCommandlineForeuclideanGoodCase(self):
+    def ntestCallFromCommandlineForeuclideanGoodCase(self):
         """
         Test commandline call for all selection using a custom beta metric (euclidean)
         """
@@ -3088,7 +3088,7 @@ class MicroPITATest(unittest.TestCase):
         self._testAnyReturnCommandLineHelper(sMethodName=sMethodName,strAnswerFile=strAnswerFile,lsSelection=lsSelection,sTaxaFile=sTaxaFile,
                                     sAbundance=sAbundance,sSupervisedLabel=sSupervisedLabel,sStratify=sStratify,lsOther=lsOther)
 
-    def testCallFromCommandlineForhammingGoodCase(self):
+    def ntestCallFromCommandlineForhammingGoodCase(self):
         """
         Test commandline call for all selection using a custom beta metric (hamming)
         """
@@ -3109,7 +3109,7 @@ class MicroPITATest(unittest.TestCase):
         self._testAnyReturnCommandLineHelper(sMethodName=sMethodName,strAnswerFile=strAnswerFile,lsSelection=lsSelection,sTaxaFile=sTaxaFile,
                                     sAbundance=sAbundance,sSupervisedLabel=sSupervisedLabel,sStratify=sStratify,lsOther=lsOther)
 
-    def testCallFromCommandlineForsqeuclideanGoodCase(self):
+    def ntestCallFromCommandlineForsqeuclideanGoodCase(self):
         """
         Test commandline call for all selection using a custom beta metric (sqeuclidean)
         """
@@ -3131,7 +3131,7 @@ class MicroPITATest(unittest.TestCase):
                                     sAbundance=sAbundance,sSupervisedLabel=sSupervisedLabel,sStratify=sStratify,lsOther=lsOther)
 
 ##########Test WriteToPredictFile 
-    def testWriteToPredictFileForGoodCase(self):
+    def ntestWriteToPredictFileForGoodCase(self):
         """
         Test writing to predict file.
         """
@@ -3172,7 +3172,7 @@ class MicroPITATest(unittest.TestCase):
         #Check result against answer
         self.assertEqual(str(result),str(answer),"".join([str(self),"::Expected=",str(answer),". Received=",str(result),"."]))
 
-    def testWriteToPredictFileForGoodCaseAllSamples(self):
+    def ntestWriteToPredictFileForGoodCaseAllSamples(self):
         """
         Test writing to predict file.
         """
@@ -3221,7 +3221,7 @@ class MicroPITATest(unittest.TestCase):
         #Check result against answer
         self.assertEqual(str(result),str(answer),"".join([str(self),"::Expected=",str(answer),". Received=",str(result),"."]))
 
-    def testUpdatePredictFileForGoodCase(self):
+    def ntestUpdatePredictFileForGoodCase(self):
         """
         Test updating predict file.
         """
@@ -3262,7 +3262,7 @@ class MicroPITATest(unittest.TestCase):
         #Check result against answer
         self.assertEqual(str(result),str(answer),"".join([str(self),"::Expected=",str(answer),". Received=",str(result),"."]))
 
-    def testUpdatePredictFileForGoodCaseAllBut2Samples(self):
+    def ntestUpdatePredictFileForGoodCaseAllBut2Samples(self):
         """
         Test updating predict file. All are updated execept 30 and 35
         """
