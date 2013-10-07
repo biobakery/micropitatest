@@ -1962,15 +1962,15 @@ class MicroPITATest(unittest.TestCase):
         self._testCommandLineHelper(sMethodName=sMethodName,strAnswerFile=strAnswerFile,lsSelection=lsSelection,sTaxaFile=sTaxaFile,
                                     sAbundance=sAbundance,sSupervisedLabel=sSupervisedLabel,sStratify=sStratify)
 
-    def testCallFromCommandlineForGoodCaseBIOME(self):
+    def testCallFromCommandlineForGoodCaseBIOM(self):
         """
         Test commandline call for good case BIOME file input.
         """
 
-        sMethodName = "testCallFromCommandlineForGoodCaseBIOME"
+        sMethodName = "testCallFromCommandlineForGoodCaseBIOM"
 
 	strBiomeFile = "".join([ConstantsMicropitaTest.c_strTestingInput+"micropita.biom"])
-        strAnswerFile = "".join([ConstantsMicropitaTest.c_strTestingTruth,"testFuncRunForGoodCase-Correct.txt"])
+        strAnswerFile = "".join([ConstantsMicropitaTest.c_strTestingTruth,"testFuncRunForGoodCase-CorrectBiom.txt"])
         lsSelection = [ConstantsMicropita.c_strDiversity,ConstantsMicropita.c_strExtreme,
                         ConstantsMicropita.c_strRepresentative,ConstantsMicropita.c_strFeature,
                         ConstantsMicropita.c_strDiscriminant,ConstantsMicropita.c_strDistinct]
